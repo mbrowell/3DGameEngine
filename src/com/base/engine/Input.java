@@ -158,8 +158,8 @@ public class Input
 	public static final int KEY_POWER           = 0xDE;
 	public static final int KEY_SLEEP           = 0xDF;
 	
-	private static boolean[] m_lastKeys = new boolean[NUM_KEYCODES];
-	private static boolean[] m_lastMouse = new boolean[NUM_MOUSEBUTTONS];
+	private static final boolean[] m_lastKeys = new boolean[NUM_KEYCODES];
+	private static final boolean[] m_lastMouse = new boolean[NUM_MOUSEBUTTONS];
 	
 	public static void update() {
             
@@ -220,7 +220,7 @@ public class Input
 	
 	public static void setMousePosition(Vector2f pos) {
             
-		Mouse.setCursorPosition((int)pos.GetX(), (int)pos.GetY());
+		Mouse.setCursorPosition((int)pos.getX(), (int)pos.getY());
                 
 	}
 	

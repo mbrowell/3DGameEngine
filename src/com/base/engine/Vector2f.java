@@ -32,45 +32,33 @@ public class Vector2f
                 
 	}
 
-	public float Length() {
+	public float length() {
             
 		return (float)Math.sqrt(m_x * m_x + m_y * m_y);
                 
 	}
 
-	public float Max() {
+	public float dot(Vector2f r) {
             
-		return Math.max(m_x, m_y);
-                
-	}
-
-	public float Dot(Vector2f r) {
-            
-		return m_x * r.GetX() + m_y * r.GetY();
+		return m_x * r.getX() + m_y * r.getY();
                 
 	}
 	
-	public Vector2f Normalized() {
+	public Vector2f normalized() {
             
-		float length = Length();
+		float length = length();
 		
 		return new Vector2f(m_x / length, m_y / length);
                 
 	}
 
-	public float Cross(Vector2f r) {
+	public float cross(Vector2f r) {
             
-		return m_x * r.GetY() - m_y * r.GetX();
+		return m_x * r.getY() - m_y * r.getX();
                 
 	}
 
-	public Vector2f Lerp(Vector2f dest, float lerpFactor) {
-            
-		return dest.Sub(this).Multiply(lerpFactor).Add(this);
-                
-	}
-
-	public Vector2f Rotate(float angle) {
+	public Vector2f rotate(float angle) {
             
 		double rad = Math.toRadians(angle);
 		double cos = Math.cos(rad);
@@ -80,57 +68,51 @@ public class Vector2f
                 
 	}
 	
-	public Vector2f Add(Vector2f r) {
+	public Vector2f add(Vector2f r) {
             
-		return new Vector2f(m_x + r.GetX(), m_y + r.GetY());
+		return new Vector2f(m_x + r.getX(), m_y + r.getY());
                 
 	}
 	
-	public Vector2f Add(float r) {
+	public Vector2f add(float r) {
             
 		return new Vector2f(m_x + r, m_y + r);
                 
 	}
 	
-	public Vector2f Sub(Vector2f r) {
+	public Vector2f subtract(Vector2f r) {
             
-		return new Vector2f(m_x - r.GetX(), m_y - r.GetY());
+		return new Vector2f(m_x - r.getX(), m_y - r.getY());
                 
 	}
 	
-	public Vector2f Sub(float r) {
+	public Vector2f subtract(float r) {
             
 		return new Vector2f(m_x - r, m_y - r);
                 
 	}
 	
-	public Vector2f Multiply(Vector2f r) {
+	public Vector2f multiply(Vector2f r) {
             
-		return new Vector2f(m_x * r.GetX(), m_y * r.GetY());
+		return new Vector2f(m_x * r.getX(), m_y * r.getY());
                 
 	}
 	
-	public Vector2f Multiply(float r) {
+	public Vector2f multiply(float r) {
             
 		return new Vector2f(m_x * r, m_y * r);
                 
 	}
 	
-	public Vector2f Divide(Vector2f r) {
+	public Vector2f divide(Vector2f r) {
             
-		return new Vector2f(m_x / r.GetX(), m_y / r.GetY());
+		return new Vector2f(m_x / r.getX(), m_y / r.getY());
                 
 	}
 	
-	public Vector2f Divide(float r) {
+	public Vector2f divide(float r) {
             
 		return new Vector2f(m_x / r, m_y / r);
-                
-	}
-	
-	public Vector2f Abs() {
-            
-		return new Vector2f(Math.abs(m_x), Math.abs(m_y));
                 
 	}
 	
@@ -139,29 +121,26 @@ public class Vector2f
 		return "(" + m_x + " " + m_y + ")";
                 
 	}
-
-	public Vector2f Set(float x, float y) { this.m_x = x; this.m_y = y; return this; }
-	public Vector2f Set(Vector2f r) { Set(r.GetX(), r.GetY()); return this; }
-
-	public float GetX() {
+        
+	public float getX() {
             
 		return m_x;
                 
 	}
 
-	public void SetX(float x) {
+	public void setX(float x) {
             
 		this.m_x = x;
                 
 	}
 
-	public float GetY() {
+	public float getY() {
             
 		return m_y;
                 
 	}
 
-	public void SetY(float y) {
+	public void setY(float y) {
             
 		this.m_y = y;
                 
@@ -169,7 +148,7 @@ public class Vector2f
 
 	public boolean equals(Vector2f r) {
             
-		return m_x == r.GetX() && m_y == r.GetY();
+		return m_x == r.getX() && m_y == r.getY();
                 
 	}
         

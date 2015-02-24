@@ -30,23 +30,28 @@ public class Game {
         
     }
     
-    public void Input() {
+    public void input() {
         
-        if(Input.GetKeyDown(Keyboard.KEY_UP)) {
+        if(Input.getKeyDown(Keyboard.KEY_UP)) {
             
             System.out.println("We've just pressed a up!");
+            
+        }
+        if(Input.getKeyUp(Keyboard.KEY_UP)) {
+            
+            System.out.println("We've just released up!");
             
         }
         
     }
     
-    public void Update() {
+    public void update() {
         
         
         
     }
     
-    public void Render() {
+    public void render() {
         
         
         

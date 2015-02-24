@@ -26,7 +26,7 @@ public class Time
         
         private static double delta;
 
-	public static long GetTime() {
+	public static long getTime() {
             
 		return System.nanoTime();
                 

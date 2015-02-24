@@ -34,138 +34,121 @@ public class Vector3f {
                 
 	}
 
-	public float Length() {
+	public float length() {
             
 		return (float)Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
                 
 	}
 
-	public float Max() {
+	public float dot(Vector3f r) {
             
-		return Math.max(m_x, Math.max(m_y, m_z));
-                
-	}
-
-	public float Dot(Vector3f r) {
-            
-		return m_x * r.GetX() + m_y * r.GetY() + m_z * r.GetZ();
+		return m_x * r.getX() + m_y * r.getY() + m_z * r.getZ();
                 
 	}
 	
-	public Vector3f Cross(Vector3f r) {
+	public Vector3f cross(Vector3f r) {
             
-		float x_ = m_y * r.GetZ() - m_z * r.GetY();
-		float y_ = m_z * r.GetX() - m_x * r.GetZ();
-		float z_ = m_x * r.GetY() - m_y * r.GetX();
+		float x_ = m_y * r.getZ() - m_z * r.getY();
+		float y_ = m_z * r.getX() - m_x * r.getZ();
+		float z_ = m_x * r.getY() - m_y * r.getX();
 		
 		return new Vector3f(x_, y_, z_);
                 
 	}
 	
-	public Vector3f Normalized() {
+	public Vector3f normalized() {
             
-		float length = Length();
+		float length = length();
 		
 		return new Vector3f(m_x / length, m_y / length, m_z / length);
                 
 	}
 
-	public Vector3f Rotate(Vector3f axis, float angle) {
+	public Vector3f Rotate() {
             
-		float sinAngle = (float)Math.sin(-angle);
-		float cosAngle = (float)Math.cos(-angle);
-
-		return this.Cross(axis.Multiply(sinAngle)).Add(           //Rotation on local X
-				(this.Multiply(cosAngle)).Add(                     //Rotation on local Z
-						axis.Multiply(this.Dot(axis.Multiply(1 - cosAngle))))); //Rotation on local Y
+		return null;
 	
         }
 
-	public Vector3f Rotate(Quaternion rotation) {
+	public Vector3f add(Vector3f r) {
             
-		return null;
-                
-	}
-
-	public Vector3f Add(Vector3f r) {
-            
-		return new Vector3f(m_x + r.GetX(), m_y + r.GetY(), m_z + r.GetZ());
+		return new Vector3f(m_x + r.getX(), m_y + r.getY(), m_z + r.getZ());
                 
 	}
 	
-	public Vector3f Add(float r) {
+	public Vector3f add(float r) {
             
 		return new Vector3f(m_x + r, m_y + r, m_z + r);
                 
 	}
 	
-	public Vector3f Sub(Vector3f r) {
+	public Vector3f subtract(Vector3f r) {
             
-		return new Vector3f(m_x - r.GetX(), m_y - r.GetY(), m_z - r.GetZ());
+		return new Vector3f(m_x - r.getX(), m_y - r.getY(), m_z - r.getZ());
                 
 	}
 	
-	public Vector3f Sub(float r) {
+	public Vector3f subtract(float r) {
             
 		return new Vector3f(m_x - r, m_y - r, m_z - r);
                 
 	}
 	
-	public Vector3f Multiply(Vector3f r) {
+	public Vector3f multiply(Vector3f r) {
             
-		return new Vector3f(m_x * r.GetX(), m_y * r.GetY(), m_z * r.GetZ());
+		return new Vector3f(m_x * r.getX(), m_y * r.getY(), m_z * r.getZ());
                 
 	}
 	
-	public Vector3f Multiply(float r) {
+	public Vector3f multiply(float r) {
             
 		return new Vector3f(m_x * r, m_y * r, m_z * r);
                 
 	}
 	
-	public Vector3f Divide(Vector3f r) {
+	public Vector3f divide(Vector3f r) {
             
-		return new Vector3f(m_x / r.GetX(), m_y / r.GetY(), m_z / r.GetZ());
+		return new Vector3f(m_x / r.getX(), m_y / r.getY(), m_z / r.getZ());
                 
 	}
 	
-	public Vector3f Divide(float r) {
+	public Vector3f divide(float r) {
             
 		return new Vector3f(m_x / r, m_y / r, m_z / r);
                 
 	}
 
-	public float GetX() {
+	public float getX() {
             
 		return m_x;
                 
 	}
 
-	public void SetX(float x) {
+	public void setX(float x) {
             
 		this.m_x = x;
                 
 	}
 
-	public float GetY() {
+	public float getY() {
             
 		return m_y;
                 
 	}
 
-	public void SetY(float y) {
+	public void setY(float y) {
             
 		this.m_y = y;
                 
 	}
 
-	public float GetZ() {
+	public float getZ() {
             
 		return m_z;
                 
 	}
 
-	public void SetZ(float z) {
+	public void setZ(float z) {
             
 		this.m_z = z;
                 

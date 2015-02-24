@@ -31,7 +31,7 @@ public class MainComponent {
     public static final double FRAME_CAP = 5000.0;
     
     private boolean m_isRunning;
-    private Game game;
+    private final Game game;
     
     public MainComponent() {
         
@@ -81,14 +81,14 @@ public class MainComponent {
         
         final double frameTime  = 1.0 / FRAME_CAP;
         
-        long lastTime = Time.GetTime();
+        long lastTime = Time.getTime();
         double unprocessedTime = 0;
         
         while(m_isRunning) {
             
             boolean render = false;
             
-            long startTime = Time.GetTime();
+            long startTime = Time.getTime();
             long passedTime = startTime - lastTime;
             lastTime = startTime;
             
@@ -101,14 +101,14 @@ public class MainComponent {
                 
                 unprocessedTime -= frameTime;
                 
-                if(Window.IsCloseRequested()) {
+                if(Window.isCloseRequested()) {
                 
                     Stop();
                 
                 }
                 
-                game.Input();
-                game.Update();
+                game.input();
+                game.update();
                 
                 if(frameCounter >= Time.SECOND) {
                 
@@ -148,20 +148,20 @@ public class MainComponent {
     
     private void Render() {
         
-        game.Render();
-        Window.Render();
+        game.render();
+        Window.render();
         
     }
     
     private void CleanUp() {
         
-        Window.Dispose();
+        Window.dispose();
         
     }
     
     public static void main(String[] args) {
         
-        Window.CreateWindow(WIDTH, HEIGHT, TITLE);
+        Window.createWindow(WIDTH, HEIGHT, TITLE);
         
         MainComponent game = new MainComponent();
         

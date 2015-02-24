@@ -36,91 +36,91 @@ public class Quaternion
                 
 	}
 
-	public float Length() {
+	public float length() {
             
 		return (float)Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z + m_w * m_w);
                 
 	}
 	
-	public Quaternion Normalized() {
+	public Quaternion normalized() {
             
-		float length = Length();
+		float length = length();
 		
 		return new Quaternion(m_x / length, m_y / length, m_z / length, m_w / length);
                 
 	}
 	
-	public Quaternion Conjugate() {
+	public Quaternion conjugate() {
             
 		return new Quaternion(-m_x, -m_y, -m_z, m_w);
                 
 	}
 
-	public Quaternion Mul(Quaternion r) {
+	public Quaternion multiply(Quaternion r) {
             
-		float w_ = m_w * r.GetW() - m_x * r.GetX() - m_y * r.GetY() - m_z * r.GetZ();
-		float x_ = m_x * r.GetW() + m_w * r.GetX() + m_y * r.GetZ() - m_z * r.GetY();
-		float y_ = m_y * r.GetW() + m_w * r.GetY() + m_z * r.GetX() - m_x * r.GetZ();
-		float z_ = m_z * r.GetW() + m_w * r.GetZ() + m_x * r.GetY() - m_y * r.GetX();
+		float w_ = m_w * r.getW() - m_x * r.getX() - m_y * r.getY() - m_z * r.getZ();
+		float x_ = m_x * r.getW() + m_w * r.getX() + m_y * r.getZ() - m_z * r.getY();
+		float y_ = m_y * r.getW() + m_w * r.getY() + m_z * r.getX() - m_x * r.getZ();
+		float z_ = m_z * r.getW() + m_w * r.getZ() + m_x * r.getY() - m_y * r.getX();
 		
 		return new Quaternion(x_, y_, z_, w_);
                 
 	}
 	
-	public Quaternion Mul(Vector3f r) {
+	public Quaternion multiply(Vector3f r) {
             
-		float w_ = -m_x * r.GetX() - m_y * r.GetY() - m_z * r.GetZ();
-		float x_ =  m_w * r.GetX() + m_y * r.GetZ() - m_z * r.GetY();
-		float y_ =  m_w * r.GetY() + m_z * r.GetX() - m_x * r.GetZ();
-		float z_ =  m_w * r.GetZ() + m_x * r.GetY() - m_y * r.GetX();
+		float w_ = -m_x * r.getX() - m_y * r.getY() - m_z * r.getZ();
+		float x_ =  m_w * r.getX() + m_y * r.getZ() - m_z * r.getY();
+		float y_ =  m_w * r.getY() + m_z * r.getX() - m_x * r.getZ();
+		float z_ =  m_w * r.getZ() + m_x * r.getY() - m_y * r.getX();
 		
 		return new Quaternion(x_, y_, z_, w_);
                 
 	}
         
-        public float GetX() {
+        public float getX() {
             
 		return m_x;
                 
 	}
 
-	public void SetX(float x) {
+	public void setX(float x) {
             
 		this.m_x = x;
                 
 	}
 
-	public float GetY() {
+	public float getY() {
             
 		return m_y;
                 
 	}
 
-	public void SetY(float m_y) {
+	public void setY(float m_y) {
             
 		this.m_y = m_y;
                 
 	}
 
-	public float GetZ() {
+	public float getZ() {
             
 		return m_z;
                 
 	}
 
-	public void SetZ(float z) {
+	public void setZ(float z) {
             
 		this.m_z = z;
                 
 	}
 
-	public float GetW() {
+	public float getW() {
             
 		return m_w;
                 
 	}
 
-	public void SetW(float w) {
+	public void setW(float w) {
             
 		this.m_w = w;
                 

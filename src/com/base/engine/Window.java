@@ -16,6 +16,8 @@
  */
 package com.base.engine;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -28,31 +30,29 @@ import org.lwjgl.opengl.DisplayMode;
  */
 public class Window 
 {
-	public static void CreateWindow(int width, int height, String title) {
+	public static void createWindow(int width, int height, String title) {
             
-		Display.setTitle(title);
-		try  {
-                    
-			Display.setDisplayMode(new DisplayMode(width, height));
-			Display.create();
-			Keyboard.create();
-			Mouse.create();
-                        
-		}  catch (LWJGLException e)  {
-                    
-			e.printStackTrace();
-                        
-		}
+            
+            Display.setTitle(title);
+            try {
+                Display.setDisplayMode(new DisplayMode(width, height));
+            
+                Display.create();
+                Keyboard.create();
+                Mouse.create();
+            } catch (LWJGLException ex) {
+                Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 
 	}
 	
-	public static void Render() {
+	public static void render() {
             
 		Display.update();
                 
 	}
 	
-	public static void Dispose() {
+	public static void dispose() {
             
 		Display.destroy();
 		Keyboard.destroy();
@@ -60,33 +60,33 @@ public class Window
                 
 	}
 	
-	public static boolean IsCloseRequested() {
+	public static boolean isCloseRequested() {
             
 		return Display.isCloseRequested();
                 
 	}
 	
-	public static int GetWidth() {
+	public static int getWidth() {
             
 		return Display.getDisplayMode().getWidth();
                 
 	}
 	
-	public static int GetHeight() {
+	public static int getHeight() {
             
 		return Display.getDisplayMode().getHeight();
                 
 	}
 	
-	public static String GetTitle() {
+	public static String getTitle() {
             
 		return Display.getTitle();
                 
 	}
 
-	public Vector2f GetCenter() {
+	public Vector2f getCenter() {
             
-		return new Vector2f(GetWidth()/2, GetHeight()/2);
+		return new Vector2f(getWidth()/2, getHeight()/2);
                 
 	}
         
