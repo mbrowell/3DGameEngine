@@ -24,7 +24,7 @@ import org.lwjgl.input.Keyboard;
  */
 public class Game {
     
-    private Mesh mesh;
+    private final Mesh mesh;
     
     public Game() {
         
