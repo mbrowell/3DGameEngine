@@ -16,7 +16,6 @@
  */
 package com.base.engine;
 
-import com.base.engine.core.Vector2f;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -29,57 +28,66 @@ import org.lwjgl.opengl.DisplayMode;
  */
 public class Window 
 {
-	public static void CreateWindow(int width, int height, String title)
-	{
+	public static void CreateWindow(int width, int height, String title) {
+            
 		Display.setTitle(title);
-		try 
-		{
+		try  {
+                    
 			Display.setDisplayMode(new DisplayMode(width, height));
 			Display.create();
 			Keyboard.create();
 			Mouse.create();
-		} 
-		catch (LWJGLException e) 
-		{
+                        
+		}  catch (LWJGLException e)  {
+                    
 			e.printStackTrace();
+                        
 		}
+                
 	}
 	
-	public static void Render()
-	{
+	public static void Render() {
+            
 		Display.update();
+                
 	}
 	
-	public static void Dispose()
-	{
+	public static void Dispose() {
+            
 		Display.destroy();
 		Keyboard.destroy();
 		Mouse.destroy();
+                
 	}
 	
-	public static boolean IsCloseRequested()
-	{
+	public static boolean IsCloseRequested() {
+            
 		return Display.isCloseRequested();
+                
 	}
 	
-	public static int GetWidth()
-	{
+	public static int GetWidth() {
+            
 		return Display.getDisplayMode().getWidth();
+                
 	}
 	
-	public static int GetHeight()
-	{
+	public static int GetHeight() {
+            
 		return Display.getDisplayMode().getHeight();
+                
 	}
 	
-	public static String GetTitle()
-	{
+	public static String GetTitle() {
+            
 		return Display.getTitle();
+                
 	}
 
-	public Vector2f GetCenter()
-	{
+	public Vector2f GetCenter() {
+            
 		return new Vector2f(GetWidth()/2, GetHeight()/2);
+                
 	}
         
 }

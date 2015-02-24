@@ -16,32 +16,40 @@
  */
 package com.base.engine;
 
+import org.lwjgl.input.Keyboard;
+
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Time 
-{
-	static final long SECOND = 1000000000L;
+public class Game {
+    
+    public Game() {
         
-        private static double delta;
-
-	public static long GetTime() {
-            
-		return System.nanoTime();
-                
-	}
         
-        public static double getDelta() {
+        
+    }
+    
+    public void Input() {
+        
+        if(Input.GetKeyDown(Keyboard.KEY_UP)) {
             
-            return delta;
+            System.out.println("We've just pressed a up!");
             
         }
         
-        public static void setDelta(double delta){
-            
-            Time.delta = delta;
-            
-        }
+    }
+    
+    public void Update() {
         
+        
+        
+    }
+    
+    public void Render() {
+        
+        
+        
+    }
+    
 }

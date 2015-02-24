@@ -16,6 +16,9 @@
  */
 package com.base.engine;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
@@ -25,41 +28,134 @@ public class MainComponent {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final String TITLE = "3d Game Engine";
+    public static final double FRAME_CAP = 5000.0;
     
-    private boolean isRunning;
+    private boolean m_isRunning;
+    private Game game;
     
     public MainComponent() {
         
-        isRunning = false;
+        m_isRunning = false;
+        game = new Game();
         
     }
     
     public void Start() {
         
-        Run();
+        if(m_isRunning) {
+            
+            return;
+            
+        }
+            
+        try {
+            
+            Run();
+            
+        } catch (InterruptedException e) {
+            
+            Logger.getLogger(MainComponent.class.getName()).log(Level.SEVERE, null, e);
+            
+        }
         
     }
     
     public void Stop() {
         
+        if(!m_isRunning) {
+            
+            return;
+            
+        }
         
+        m_isRunning = false;
         
     }
     
-    private void Run() {
+    private void Run() throws InterruptedException {
         
+        m_isRunning = true;
         
+        int frames = 0;
+        long frameCounter = 0;
+        
+        final double frameTime  = 1.0 / FRAME_CAP;
+        
+        long lastTime = Time.GetTime();
+        double unprocessedTime = 0;
+        
+        while(m_isRunning) {
+            
+            boolean render = false;
+            
+            long startTime = Time.GetTime();
+            long passedTime = startTime - lastTime;
+            lastTime = startTime;
+            
+            unprocessedTime += passedTime / (double)Time.SECOND;
+            frameCounter += passedTime;
+            
+            while(unprocessedTime > frameTime) {
+                
+                render = true;
+                
+                unprocessedTime -= frameTime;
+                
+                if(Window.IsCloseRequested()) {
+                
+                    Stop();
+                
+                }
+                
+                game.Input();
+                game.Update();
+                
+                if(frameCounter >= Time.SECOND) {
+                
+                    System.out.println(frames);
+                    frames = 0;
+                    frameCounter = 0;
+                    
+                }
+                
+            }
+            
+            if(render) {
+                
+                Render();
+                frames++;
+                
+            } else {
+                
+                try {
+                    
+                    Thread.sleep(1);
+                    
+                } catch(InterruptedException e) {
+                    
+                    Logger.getLogger(MainComponent.class.getName()).log(Level.SEVERE, null, e);
+                    
+                }
+                
+            }
+                
+            
+        }
+        
+        CleanUp();
         
     }
     
     private void Render() {
         
+        game.Render();
+        Window.Render();
         
     }
     
     private void CleanUp() {
         
-        
+        Window.Dispose();
         
     }
     
@@ -69,7 +165,7 @@ public class MainComponent {
         
         MainComponent game = new MainComponent();
         
-        game.start();
+        game.Start();
         
     }
     
