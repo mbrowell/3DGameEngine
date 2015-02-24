@@ -161,70 +161,70 @@ public class Input
 	private static boolean[] m_lastKeys = new boolean[NUM_KEYCODES];
 	private static boolean[] m_lastMouse = new boolean[NUM_MOUSEBUTTONS];
 	
-	public static void Update() {
+	public static void update() {
             
 		for(int i = 0; i < NUM_KEYCODES; i++) {
                     
-			m_lastKeys[i] = GetKey(i);
+			m_lastKeys[i] = getKey(i);
                         
                 }
 		
 		for(int i = 0; i < NUM_MOUSEBUTTONS; i++) {
                     
-			m_lastMouse[i] = GetMouse(i);
+			m_lastMouse[i] = getMouse(i);
                         
                 }
                 
 	}
 	
-	public static boolean GetKey(int keyCode) {
+	public static boolean getKey(int keyCode) {
             
 		return Keyboard.isKeyDown(keyCode);
                 
 	}
 	
-	public static boolean GetKeyDown(int keyCode) {
+	public static boolean getKeyDown(int keyCode) {
             
-		return GetKey(keyCode) && !m_lastKeys[keyCode];
+		return getKey(keyCode) && !m_lastKeys[keyCode];
                 
 	}
 	
-	public static boolean GetKeyUp(int keyCode) {
+	public static boolean getKeyUp(int keyCode) {
             
-		return !GetKey(keyCode) && m_lastKeys[keyCode];
+		return !getKey(keyCode) && m_lastKeys[keyCode];
                 
 	}
 	
-	public static boolean GetMouse(int mouseButton) {
+	public static boolean getMouse(int mouseButton) {
             
 		return Mouse.isButtonDown(mouseButton);
                 
 	}
 	
-	public static boolean GetMouseDown(int mouseButton) {
+	public static boolean getMouseDown(int mouseButton) {
             
-		return GetMouse(mouseButton) && !m_lastMouse[mouseButton];
+		return getMouse(mouseButton) && !m_lastMouse[mouseButton];
 	}
 	
-	public static boolean GetMouseUp(int mouseButton) {
+	public static boolean getMouseUp(int mouseButton) {
             
-		return !GetMouse(mouseButton) && m_lastMouse[mouseButton];
+		return !getMouse(mouseButton) && m_lastMouse[mouseButton];
                 
 	}
 	
-	public static Vector2f GetMousePosition() {
+	public static Vector2f getMousePosition() {
             
 		return new Vector2f(Mouse.getX(), Mouse.getY());
                 
 	}
 	
-	public static void SetMousePosition(Vector2f pos) {
+	public static void setMousePosition(Vector2f pos) {
             
 		Mouse.setCursorPosition((int)pos.GetX(), (int)pos.GetY());
                 
 	}
 	
-	public static void SetCursor(boolean enabled) {
+	public static void setCursor(boolean enabled) {
             
 		Mouse.setGrabbed(!enabled);
                 
