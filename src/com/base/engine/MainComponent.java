@@ -35,6 +35,8 @@ public class MainComponent {
     
     public MainComponent() {
         
+        System.out.println(RenderUtil.getOpenGLVersion());
+        RenderUtil.initGraphics();
         m_isRunning = false;
         game = new Game();
         
@@ -108,6 +110,8 @@ public class MainComponent {
                 }
                 
                 game.input();
+                Input.update();
+                
                 game.update();
                 
                 if(frameCounter >= Time.SECOND) {
@@ -148,6 +152,7 @@ public class MainComponent {
     
     private void Render() {
         
+        RenderUtil.clearScreen();
         game.render();
         Window.render();
         
