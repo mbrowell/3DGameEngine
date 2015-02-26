@@ -20,77 +20,158 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Matrix4f
-{
-	private float[][] m;
-	
-	public Matrix4f()
-	{
-		m = new float[4][4];
-	}
+public class Matrix4f {
 
-	public Matrix4f initIdentity() {
-            
-		m[0][0] = 1;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = 0;
-		m[1][0] = 0;	m[1][1] = 1;	m[1][2] = 0;	m[1][3] = 0;
-		m[2][0] = 0;	m[2][1] = 0;	m[2][2] = 1;	m[2][3] = 0;
-		m[3][0] = 0;	m[3][1] = 0;	m[3][2] = 0;	m[3][3] = 1;
+    private float[][] m;
 
-		return this;
-                
-	}
-	
-	public Matrix4f multiply(Matrix4f r) {
-            
-		Matrix4f result = new Matrix4f();
-		
-		for(int i = 0; i < 4; i++) {
-                    
-			for(int j = 0; j < 4; j++) {
-                            
-				result.set(i, j, m[i][0] * r.get(0, j) +
-						 m[i][1] * r.get(1, j) +
-						 m[i][2] * r.get(2, j) +
-						 m[i][3] * r.get(3, j));
-                                
-			}
-                        
-		}
-		
-		return result;
-                
-	}
-	
-	public float[][] getM() {
-            
-		float[][] result = new float[4][4];
-		
-		for(int i = 0; i < 4; i++) {
-                    
-                    System.arraycopy(m[i], 0, result[i], 0, 4);
-                        
-                }
-		
-		return result;
-                
-	}
-	
-	public float get(int x, int y) {
-            
-		return m[x][y];
-                
-	}
+    public Matrix4f() {
+        m = new float[4][4];
+    }
 
-	public void setM(float[][] m) {
-            
-		this.m = m;
-                
-	}
-	
-	public void set(int x, int y, float value) {
-            
-		m[x][y] = value;
-                
-	}
+    /**
+     *
+     * @return
+     */
+    public Matrix4f initIdentity() {
+
+        m[0][0] = 1;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = 0;
+        m[1][0] = 0;    m[1][1] = 1;    m[1][2] = 0;    m[1][3] = 0;
+        m[2][0] = 0;    m[2][1] = 0;    m[2][2] = 1;    m[2][3] = 0;
+        m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+
+        return this;
+
+    }
+    
+    public Matrix4f initTranslation(float x, float y, float z) {
+
+        m[0][0] = 1;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = x;
+        m[1][0] = 0;    m[1][1] = 1;    m[1][2] = 0;    m[1][3] = y;
+        m[2][0] = 0;    m[2][1] = 0;    m[2][2] = 1;    m[2][3] = z;
+        m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+
+        return this;
+
+    }
+    
+    public Matrix4f initRotation(float x, float y, float z) {
         
+        Matrix4f rotationX = new Matrix4f();
+        Matrix4f rotationY = new Matrix4f();
+        Matrix4f rotationZ = new Matrix4f();
+        
+        x = (float)Math.toRadians(x);
+        y = (float)Math.toRadians(y);
+        z = (float)Math.toRadians(z);
+
+        rotationZ.m[0][0] = (float)Math.cos(z); rotationZ.m[0][1] = -(float)Math.sin(z); rotationZ.m[0][2] = 0;                   rotationZ.m[0][3] = 0;
+        rotationZ.m[1][0] = (float)Math.sin(z); rotationZ.m[1][1] = (float)Math.cos(z);  rotationZ.m[1][2] = 0;                   rotationZ.m[1][3] = 0;
+        rotationZ.m[2][0] = 0;                  rotationZ.m[2][1] = 0;                   rotationZ.m[2][2] = 1;                   rotationZ.m[2][3] = 0;
+        rotationZ.m[3][0] = 0;                  rotationZ.m[3][1] = 0;                   rotationZ.m[3][2] = 0;                   rotationZ.m[3][3] = 1;
+        
+        rotationX.m[0][0] = 1;                  rotationX.m[0][1] = 0;                   rotationX.m[0][2] = 0;                   rotationX.m[0][3] = 0;
+        rotationX.m[1][0] = 0;                  rotationX.m[1][1] = (float)Math.cos(x);  rotationX.m[1][2] = -(float)Math.sin(x); rotationX.m[1][3] = 0;
+        rotationX.m[2][0] = 0;                  rotationX.m[2][1] = (float)Math.sin(x);  rotationX.m[2][2] = (float)Math.cos(x);  rotationX.m[2][3] = 0;
+        rotationX.m[3][0] = 0;                  rotationX.m[3][1] = 0;                   rotationX.m[3][2] = 0;                   rotationX.m[3][3] = 1;
+        
+        rotationY.m[0][0] = (float)Math.cos(y); rotationY.m[0][1] = 0;                   rotationY.m[0][2] = -(float)Math.sin(y); rotationY.m[0][3] = 0;
+        rotationY.m[1][0] = 0;                  rotationY.m[1][1] = 1;                   rotationY.m[1][2] = 0;                   rotationY.m[1][3] = 0;
+        rotationY.m[2][0] = (float)Math.sin(y); rotationY.m[2][1] = 0;                   rotationY.m[2][2] = (float)Math.cos(y);  rotationY.m[2][3] = 0;
+        rotationY.m[3][0] = 0;                  rotationY.m[3][1] = 0;                   rotationY.m[3][2] = 0;                   rotationY.m[3][3] = 1;
+
+        m = rotationZ.multiply(rotationY.multiply(rotationX)).getM();
+        
+        return this;
+
+    }
+    
+    public Matrix4f initScale(float x, float y, float z) {
+
+        m[0][0] = x;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = 0;
+        m[1][0] = 0;    m[1][1] = y;    m[1][2] = 0;    m[1][3] = 0;
+        m[2][0] = 0;    m[2][1] = 0;    m[2][2] = z;    m[2][3] = 0;
+        m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+
+        return this;
+
+    }
+
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Matrix4f multiply(Matrix4f r) {
+
+        Matrix4f result = new Matrix4f();
+
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                result.set(i, j, m[i][0] * r.get(0, j)
+                        + m[i][1] * r.get(1, j)
+                        + m[i][2] * r.get(2, j)
+                        + m[i][3] * r.get(3, j));
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float[][] getM() {
+
+        float[][] result = new float[4][4];
+
+        for (int i = 0; i < 4; i++) {
+
+            System.arraycopy(m[i], 0, result[i], 0, 4);
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    public float get(int x, int y) {
+
+        return m[x][y];
+
+    }
+
+    /**
+     *
+     * @param m
+     */
+    public void setM(float[][] m) {
+
+        this.m = m;
+
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param value
+     */
+    public void set(int x, int y, float value) {
+
+        m[x][y] = value;
+
+    }
+
 }

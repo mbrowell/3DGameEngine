@@ -17,6 +17,9 @@
 
 package com.base.engine;
 
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
@@ -26,10 +29,15 @@ import static org.lwjgl.opengl.GL20.glAttachShader;
 import static org.lwjgl.opengl.GL20.glCompileShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
 import static org.lwjgl.opengl.GL20.glCreateShader;
-import static org.lwjgl.opengl.GL20.glGetShader;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
+import static org.lwjgl.opengl.GL20.glGetProgram;
+import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
+import static org.lwjgl.opengl.GL20.glGetUniformLocation;
 import static org.lwjgl.opengl.GL20.glLinkProgram;
 import static org.lwjgl.opengl.GL20.glShaderSource;
+import static org.lwjgl.opengl.GL20.glUniform1f;
+import static org.lwjgl.opengl.GL20.glUniform1i;
+import static org.lwjgl.opengl.GL20.glUniform3f;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL20.glValidateProgram;
 import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
@@ -41,10 +49,12 @@ import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 public class Shader {
 
     private final int m_program;
+    private final HashMap<String, Integer> m_uniforms;
     
     public Shader() {
         
         m_program = glCreateProgram();
+        m_uniforms = new HashMap<>();
         
         if(m_program == 0) {
             
@@ -55,46 +65,84 @@ public class Shader {
         
     }
     
+    /**
+     *
+     */
     public void bind() {
         
         glUseProgram(m_program);
         
     }
     
+    /**
+     *
+     * @param uniform
+     */
+    public void addUniform(String uniform) {
+        
+        int uniformLocation = glGetUniformLocation(m_program, uniform);
+        
+        if(uniformLocation == 0xFFFFFFFF) {
+            
+            System.err.println("Error: Could not find uniform: " + uniform);
+            Logger.getLogger(Shader.class.getName()).log(Level.SEVERE, null, new Exception());
+            System.exit(1);
+            
+        }
+        
+        m_uniforms.put(uniform, uniformLocation);
+        
+    }
+    
+    /**
+     *
+     * @param text
+     */
     public void addVertexShader(String text) {
         
         addProgram(text, GL_VERTEX_SHADER);
         
     }
     
+    /**
+     *
+     * @param text
+     */
     public void addGeometryShader(String text) {
         
         addProgram(text, GL_GEOMETRY_SHADER);
         
     }
     
+    /**
+     *
+     * @param text
+     */
     public void addFragmentShader(String text) {
         
         addProgram(text, GL_FRAGMENT_SHADER);
         
     }
     
-    private void linkShader() {
+    /**
+     *
+     */
+    public void linkShader() {
         
         glLinkProgram(m_program);
         
-        if(glGetShader(m_program, GL_LINK_STATUS) == 0) {
+        if(glGetProgram(m_program, GL_LINK_STATUS) == 0) {
             
-            System.err.println(glGetShaderInfoLog(m_program, 1024));
+            System.err.println(glGetProgramInfoLog(m_program, 1024));
             System.exit(1);
             
         }
         
         glValidateProgram(m_program);
         
-        if(glGetShader(m_program, GL_VALIDATE_STATUS) == 0) {
+        if(glGetProgram(m_program, GL_VALIDATE_STATUS) == 0) {
             
-            System.err.println(glGetShaderInfoLog(m_program, 1024));
+            System.err.println(glGetProgramInfoLog(m_program, 1024));
             System.exit(1);
             
         }
@@ -115,14 +163,58 @@ public class Shader {
         glShaderSource(shader, text);
         glCompileShader(shader);
         
-        if(glGetShader(shader, GL_COMPILE_STATUS) == 0) {
+        if(glGetProgram(shader, GL_COMPILE_STATUS) == 0) {
             
-            System.err.println(glGetShaderInfoLog(shader, 1024));
+            System.err.println(glGetProgramInfoLog(shader, 1024));
             System.exit(1);
             
-        }
+        } 
         
-        glAttachShader(shader, m_program);
+        glAttachShader(m_program, shader);
+        
+    }
+    
+    /**
+     *
+     * @param uniformName
+     * @param value
+     */
+    public void setUniformi(String uniformName, int value) {
+        
+        glUniform1i(m_uniforms.get(uniformName), value);
+        
+    }
+    
+    /**
+     *
+     * @param uniformName
+     * @param value
+     */
+    public void setUniformf(String uniformName, float value) {
+        
+        glUniform1f(m_uniforms.get(uniformName), value);
+        
+    }
+    
+    /**
+     *
+     * @param uniformName
+     * @param value
+     */
+    public void setUniform(String uniformName, Vector3f value) {
+        
+        glUniform3f(m_uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
+        
+    }
+    
+    /**
+     *
+     * @param uniformName
+     * @param value
+     */
+    public void setUniform(String uniformName, Matrix4f value) {
+        
+        glUniformMatrix4(m_uniforms.get(uniformName), true, Util.createFlippedBuffer(value));
         
     }
 

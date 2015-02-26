@@ -19,8 +19,10 @@ package com.base.engine;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
@@ -35,25 +37,38 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
  */
 public class Mesh {
 
-    private final int m_vbo;
+    private final int m_vbo;  // Vertex buffer object
+    private final int m_ibo;  // Index buffer object
     private int m_size;
 
     public Mesh() {
         
         this.m_vbo = glGenBuffers();
+        this.m_ibo = glGenBuffers();
         this.m_size = 0;
         
     }
     
-    public void addVertices(Vertex[] vertices) {
+    /**
+     *
+     * @param vertices
+     * @param indices
+     */
+    public void addVertices(Vertex[] vertices, int[] indices) {
         
-        m_size = vertices.length;
+        m_size = indices.length;
         
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glBufferData(GL_ARRAY_BUFFER, Util.createFlippedBuffer(vertices), GL_STATIC_DRAW);
         
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, Util.createFlippedBuffer(indices), GL_STATIC_DRAW);
+        
     }
     
+    /**
+     *
+     */
     public void draw() {
         
         glEnableVertexAttribArray(0);
@@ -61,7 +76,8 @@ public class Mesh {
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
         
-        glDrawArrays(GL_TRIANGLES, 0, m_size);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+        glDrawElements(GL_TRIANGLES, m_size, GL_UNSIGNED_INT, 0);
         
         glDisableVertexAttribArray(0);
 

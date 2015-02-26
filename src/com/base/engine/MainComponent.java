@@ -42,6 +42,9 @@ public class MainComponent {
         
     }
     
+    /**
+     *
+     */
     public void Start() {
         
         if(m_isRunning) {
@@ -62,6 +65,9 @@ public class MainComponent {
         
     }
     
+    /**
+     *
+     */
     public void Stop() {
         
         if(!m_isRunning) {
@@ -108,6 +114,8 @@ public class MainComponent {
                     Stop();
                 
                 }
+                
+                Time.setDelta((float)frameTime);
                 
                 game.input();
                 Input.update();
@@ -164,6 +172,10 @@ public class MainComponent {
         
     }
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         
         Window.createWindow(WIDTH, HEIGHT, TITLE);

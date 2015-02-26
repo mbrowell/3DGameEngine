@@ -20,136 +20,230 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Vector2f 
-{
-	private float m_x;
-	private float m_y;
+public class Vector2f {
+    
+    private float m_x;
+    private float m_y;
 	
-	public Vector2f(float x, float y) {
+    /**
+     *
+     * @param x
+     * @param y
+     */
+    public Vector2f(float x, float y) {
             
-		this.m_x = x;
-		this.m_y = y;
+        this.m_x = x;
+        this.m_y = y;
                 
-	}
+    }
 
-	public float length() {
+    /**
+     *
+     * @return
+     */
+    public float length() {
             
-		return (float)Math.sqrt(m_x * m_x + m_y * m_y);
+        return (float)Math.sqrt(m_x * m_x + m_y * m_y);
                 
-	}
+    }
 
-	public float dot(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public float dot(Vector2f r) {
             
-		return m_x * r.getX() + m_y * r.getY();
+        return m_x * r.getX() + m_y * r.getY();
                 
-	}
+    }
 	
-	public Vector2f normalized() {
+    /**
+     *
+     * @return
+     */
+    public Vector2f normalized() {
             
-		float length = length();
+        float length = length();
 		
-		return new Vector2f(m_x / length, m_y / length);
+        return new Vector2f(m_x / length, m_y / length);
                 
-	}
+    }
 
-	public float cross(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public float cross(Vector2f r) {
             
-		return m_x * r.getY() - m_y * r.getX();
+        return m_x * r.getY() - m_y * r.getX();
                 
-	}
+    }
 
-	public Vector2f rotate(float angle) {
+    /**
+     *
+     * @param angle
+     * @return
+     */
+    public Vector2f rotate(float angle) {
             
-		double rad = Math.toRadians(angle);
-		double cos = Math.cos(rad);
-		double sin = Math.sin(rad);
+        double rad = Math.toRadians(angle);
+        double cos = Math.cos(rad);
+        double sin = Math.sin(rad);
 		
-		return new Vector2f((float)(m_x * cos - m_y * sin),(float)(m_x * sin + m_y * cos));
+        return new Vector2f((float)(m_x * cos - m_y * sin),(float)(m_x * sin + m_y * cos));
                 
-	}
+    }
 	
-	public Vector2f add(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f add(Vector2f r) {
             
-		return new Vector2f(m_x + r.getX(), m_y + r.getY());
+        return new Vector2f(m_x + r.getX(), m_y + r.getY());
                 
-	}
+    }
 	
-	public Vector2f add(float r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f add(float r) {
             
-		return new Vector2f(m_x + r, m_y + r);
+        return new Vector2f(m_x + r, m_y + r);
                 
-	}
+    }
 	
-	public Vector2f subtract(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f subtract(Vector2f r) {
             
-		return new Vector2f(m_x - r.getX(), m_y - r.getY());
+        return new Vector2f(m_x - r.getX(), m_y - r.getY());
                 
-	}
+    }
 	
-	public Vector2f subtract(float r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f subtract(float r) {
             
-		return new Vector2f(m_x - r, m_y - r);
+        return new Vector2f(m_x - r, m_y - r);
                 
-	}
+    }
 	
-	public Vector2f multiply(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f multiply(Vector2f r) {
             
-		return new Vector2f(m_x * r.getX(), m_y * r.getY());
+        return new Vector2f(m_x * r.getX(), m_y * r.getY());
                 
-	}
+    }
 	
-	public Vector2f multiply(float r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f multiply(float r) {
             
-		return new Vector2f(m_x * r, m_y * r);
+        return new Vector2f(m_x * r, m_y * r);
                 
-	}
+    }
 	
-	public Vector2f divide(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f divide(Vector2f r) {
             
-		return new Vector2f(m_x / r.getX(), m_y / r.getY());
+        return new Vector2f(m_x / r.getX(), m_y / r.getY());
                 
-	}
+    }
 	
-	public Vector2f divide(float r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public Vector2f divide(float r) {
             
-		return new Vector2f(m_x / r, m_y / r);
+        return new Vector2f(m_x / r, m_y / r);
                 
-	}
+    }
 	
-	public String toString() {
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
             
-		return "(" + m_x + " " + m_y + ")";
+        return "(" + m_x + " " + m_y + ")";
                 
-	}
+    }
         
-	public float getX() {
+    /**
+     *
+     * @return
+     */
+    public float getX() {
             
-		return m_x;
+        return m_x;
                 
-	}
+    }
 
-	public void setX(float x) {
+    /**
+     *
+     * @param x
+     */
+    public void setX(float x) {
             
-		this.m_x = x;
+        this.m_x = x;
                 
-	}
+    }
 
-	public float getY() {
+    /**
+     *
+     * @return
+     */
+    public float getY() {
             
-		return m_y;
+        return m_y;
                 
-	}
+    }
 
-	public void setY(float y) {
+    /**
+     *
+     * @param y
+     */
+    public void setY(float y) {
             
-		this.m_y = y;
+        this.m_y = y;
                 
-	}
+    }
 
-	public boolean equals(Vector2f r) {
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public boolean equals(Vector2f r) {
             
-		return m_x == r.getX() && m_y == r.getY();
+        return m_x == r.getX() && m_y == r.getY();
                 
-	}
-        
+    }
+    
 }

@@ -24,21 +24,39 @@ import org.lwjgl.input.Keyboard;
  */
 public class Game {
     
-    private final Mesh mesh;
+    private final Mesh mesh;    
+    private final Shader shader;
+    private final Transform transform;
     
     public Game() {
         
-        mesh = new Mesh();
+        mesh = ResourceLoader.loadMesh("box.obj"); //new Mesh();
+        shader = new Shader();
+        transform = new Transform();
         
-        Vertex[] data;
-        data = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0)),
-                             new Vertex(new Vector3f(0, 1, 0)),
-                             new Vertex(new Vector3f(1, -1, 0))};
+//        Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0)),
+//                                          new Vertex(new Vector3f(0, 1, 0)),
+//                                          new Vertex(new Vector3f(1, -1, 0)),
+//                                          new Vertex(new Vector3f(0, -1, 1))};
+//        
+//        int[] indices = new int[] {0, 1, 3,
+//                                   3, 1, 2,
+//                                   2, 1, 0,
+//                                   0, 2, 3};
+//        
+//        mesh.addVertices(vertices, indices);
         
-        mesh.addVertices(data);
+        shader.addVertexShader(ResourceLoader.loadShader("basicShader.vs"));
+        shader.addFragmentShader(ResourceLoader.loadShader("basicShader.fs"));
+        shader.linkShader();
+        
+        shader.addUniform("transform");
         
     }
     
+    /**
+     *
+     */
     public void input() {
         
         if(Input.getKeyDown(Keyboard.KEY_UP)) {
@@ -65,14 +83,29 @@ public class Game {
         
     }
     
+    float temp = 0.0f;
+    
+    /**
+     *
+     */
     public void update() {
         
+        temp += Time.getDelta();
+        float sinTemp = (float)Math.sin(temp);
         
-        
+        transform.setM_translation(sinTemp, 0, 0);
+        transform.setM_rotation(0 , sinTemp * 180, 0);
+        transform.setM_scale(0.7f, 0.7f, 0.7f);
+
     }
     
+    /**
+     *
+     */
     public void render() {
         
+        shader.bind();
+        shader.setUniform("transform", transform.getTransformation());
         mesh.draw();
         
     }

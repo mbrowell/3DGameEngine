@@ -20,25 +20,37 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Time 
-{
-	static final long SECOND = 1000000000L;
+public class Time {
+    
+    static final long SECOND = 1000000000L;
         
-        private static double delta;
+    private static float delta;
 
-	public static long getTime() {
+    /**
+     *
+     * @return
+     */
+    public static long getTime() {
             
-		return System.nanoTime();
+        return System.nanoTime();
                 
-	}
+    }
         
-        public static double getDelta() {
+    /**
+     *
+     * @return
+     */
+    public static float getDelta() {
             
             return delta;
             
         }
         
-        public static void setDelta(double delta){
+    /**
+     *
+     * @param delta
+     */
+    public static void setDelta(float delta){
             
             Time.delta = delta;
             

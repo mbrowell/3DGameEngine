@@ -37,6 +37,9 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_SRGB;
  */
 public class RenderUtil {
     
+    /**
+     *
+     */
     public static void clearScreen() {
         
         //TODO: Stencil Buffer
@@ -44,6 +47,9 @@ public class RenderUtil {
         
     }
     
+    /**
+     *
+     */
     public static void initGraphics() {
         
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -59,6 +65,10 @@ public class RenderUtil {
         
     }
     
+    /**
+     *
+     * @return
+     */
     public static String getOpenGLVersion() {
         
         return glGetString(GL_VERSION);

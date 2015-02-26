@@ -1,0 +1,123 @@
+/*
+ * Copyright (C) 2015 Michael Browell <mbrowell1984@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.base.engine;
+
+/**
+ *
+ * @author Michael Browell <mbrowell1984@gmail.com>
+ */
+public class Transform {
+
+    private Vector3f m_translation;
+    private Vector3f m_rotation;
+    private Vector3f m_scale;
+    
+    /**
+     *
+     */
+    public Transform() {
+        
+        m_translation = new Vector3f(0, 0, 0);
+        m_rotation = new Vector3f(0, 0, 0);
+        m_scale = new Vector3f(1, 1, 1);
+        
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public Matrix4f getTransformation() {
+        
+        Matrix4f translation = new Matrix4f().initTranslation(m_translation.getX(), m_translation.getY(), m_translation.getZ());
+        Matrix4f rotation = new Matrix4f().initRotation(m_rotation.getX(), m_rotation.getY(), m_rotation.getZ());
+        Matrix4f scale = new Matrix4f().initScale(m_scale.getX(), m_scale.getY(), m_scale.getZ());
+        
+        return translation.multiply(rotation.multiply(scale));
+        
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Vector3f getM_translation() {
+        
+        return m_translation;
+        
+    }
+
+    /**
+     *
+     * @param m_translation
+     */
+    public void setM_translation(Vector3f m_translation) {
+        
+        this.m_translation = m_translation;
+        
+    }
+    
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void setM_translation(float x, float y, float z) {
+        
+        this.m_translation = new Vector3f(x, y, z);
+        
+    }
+
+    public Vector3f getM_rotation() {
+        
+        return m_rotation;
+        
+    }
+
+    public void setM_rotation(Vector3f rotation) {
+        
+        this.m_rotation = rotation;
+        
+    }
+    
+    public void setM_rotation(float x, float y, float z) {
+        
+        this.m_rotation = new Vector3f(x, y, z);
+        
+    }
+
+    public Vector3f getM_scale() {
+        
+        return m_scale;
+        
+    }
+
+    public void setM_scale(Vector3f m_scale) {
+        
+        this.m_scale = m_scale;
+        
+    }
+    
+    public void setM_scale(float x, float y, float z) {
+        
+        this.m_scale = new Vector3f(x, y, z);
+        
+    }
+    
+}
