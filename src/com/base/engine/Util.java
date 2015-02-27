@@ -66,9 +66,12 @@ public class Util {
         
         for (Vertex vertex : vertices) {
             
-            buffer.put(vertex.getPos().getX());
-            buffer.put(vertex.getPos().getY());
-            buffer.put(vertex.getPos().getZ());
+            buffer.put(vertex.getM_pos().getX());
+            buffer.put(vertex.getM_pos().getY());
+            buffer.put(vertex.getM_pos().getZ());
+            
+            buffer.put(vertex.getM_textCoord().getX());
+            buffer.put(vertex.getM_textCoord().getY());
             
         }
         

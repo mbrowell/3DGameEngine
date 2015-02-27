@@ -22,10 +22,12 @@ import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
 import static org.lwjgl.opengl.GL11.GL_CW;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glCullFace;
+import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glFrontFace;
 import static org.lwjgl.opengl.GL11.glGetString;
@@ -47,6 +49,20 @@ public class RenderUtil {
         
     }
     
+    public static void setTextures(boolean enabled) {
+        
+        if(enabled) {
+            
+            glEnable(GL_TEXTURE_2D);
+            
+        } else {
+            
+            glDisable(GL_TEXTURE_2D);
+            
+        }
+        
+    }
+    
     /**
      *
      */
@@ -61,6 +77,7 @@ public class RenderUtil {
         
         //TODO: Depth clamp
         
+        glEnable(GL_TEXTURE_2D);
         glEnable(GL_FRAMEBUFFER_SRGB);
         
     }

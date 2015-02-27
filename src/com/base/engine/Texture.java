@@ -14,73 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.base.engine;
+
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Vertex {
-    
-    public static final int SIZE = 5;
-    
-    private Vector3f m_pos;
-    private Vector2f m_textCoord;
+public class Texture {
 
-    /**
-     *
-     * @param pos
-     */
-    public Vertex(Vector3f pos) {
+    private int m_id;
+    
+    public Texture(int id) {
         
-        this(pos, new Vector2f(0, 0));
+        this.m_id = id;
         
     }
     
-    public Vertex(Vector3f pos, Vector2f textCoord) {
+    public void bind() {
         
-        this.m_pos = pos;
-        this.m_textCoord = textCoord;
-        
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Vector3f getM_pos() {
-        
-        return m_pos;
+        glBindTexture(GL_TEXTURE_2D, m_id);
         
     }
 
-    /**
-     *
-     * @param pos
-     */
-    public void setM_pos(Vector3f pos) {
+    public int getM_id() {
         
-        this.m_pos = pos;
-        
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Vector2f getM_textCoord() {
-        
-        return m_textCoord;
-        
-    }
-
-    /**
-     *
-     * @param m_textCoord
-     */
-    public void setM_textCoord(Vector2f m_textCoord) {
-        
-        this.m_textCoord = m_textCoord;
+        return m_id;
         
     }
     
