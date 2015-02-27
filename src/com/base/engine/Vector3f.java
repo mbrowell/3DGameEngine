@@ -40,7 +40,7 @@ public class Vector3f {
      */
     public float length() {
 
-        return (float) Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+        return (float)Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 
     }
 
@@ -102,12 +102,8 @@ public class Vector3f {
         Quaternion conjugate = rotation.conjugate();
         
         Quaternion w = rotation.multiply(this).multiply(conjugate);
-        
-        m_x = w.getX();
-        m_y = w.getY();
-        m_z = w.getZ();
 
-        return this;
+        return new Vector3f(w.getX(), w.getY(), w.getZ());
 
     }
 
@@ -197,6 +193,12 @@ public class Vector3f {
 
         return new Vector3f(m_x / r, m_y / r, m_z / r);
 
+    }
+    
+    public Vector3f abs() {
+        
+        return new Vector3f(Math.abs(m_x), Math.abs(m_y), Math.abs(m_z));
+        
     }
 
     /**

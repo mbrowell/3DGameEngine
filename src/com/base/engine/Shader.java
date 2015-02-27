@@ -74,6 +74,12 @@ public class Shader {
         
     }
     
+    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
+        
+        
+        
+    }
+    
     /**
      *
      * @param uniform

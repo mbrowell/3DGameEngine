@@ -95,6 +95,12 @@ public class Vector2f {
         return new Vector2f((float)(m_x * cos - m_y * sin),(float)(m_x * sin + m_y * cos));
                 
     }
+    
+    public Vector2f abs() {
+        
+        return new Vector2f(Math.abs(m_x), Math.abs(m_y));
+        
+    }
 	
     /**
      *

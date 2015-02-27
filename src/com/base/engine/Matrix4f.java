@@ -71,10 +71,10 @@ public class Matrix4f {
     
     public Matrix4f initCamera(Vector3f forward, Vector3f up) {
         
-        forward.normalized();
+        forward = forward.normalized();
         
         Vector3f right = up;
-        right.normalized();
+        right = right.normalized();
         right = right.cross(forward);
         
         up = forward.cross(right);

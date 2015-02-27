@@ -38,21 +38,39 @@ public class Camera {
     public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
         
         this.m_pos = pos;
-        this.m_forward = forward;
-        this.m_up = up;
         
-        up.normalized();
-        forward.normalized();
+        this.m_up = up.normalized();
+        this.m_forward = forward.normalized();
         
     }
+    
+    boolean mouseLocked = false;
+    Vector2f centrePosition = new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2);
     
     /**
      *
      */
     public void input() {
         
+        
+        
+        float sensitivity = 0.3f;
         float moveAmt = (float)(10 * Time.getDelta());
-        float rotAmt = (float)(100 * Time.getDelta());
+        //float rotAmt = (float)(100 * Time.getDelta());
+        
+        if(Input.getKey(Input.KEY_ESCAPE)) {
+            
+            Input.setCursor(true);
+            mouseLocked = false;
+            
+        }
+        if(Input.getMouseDown(0)) {
+            
+            Input.setMousePosition(centrePosition);
+            Input.setCursor(false);
+            mouseLocked = true;
+            
+        }
         
         if(Input.getKey(Input.KEY_W)) {
             
@@ -74,26 +92,53 @@ public class Camera {
             
         }
         
-        if(Input.getKey(Input.KEY_UP)) {
+        if(mouseLocked) {
             
-            rotateX(-rotAmt);
+            Vector2f deltaPos = Input.getMousePosition().subtract(centrePosition);
             
+            boolean rotY = deltaPos.getX() != 0;
+            boolean rotX = deltaPos.getY() != 0;
+            
+            if(rotY) {
+                
+                rotateY(deltaPos.getX() * sensitivity);
+                
+            }
+            if(rotX) {
+                
+                rotateX(-deltaPos.getY() * sensitivity);
+                System.out.println(Input.getMousePosition().toString());
+                
+            }
+            
+            if (rotY || rotX) {
+                
+                Input.setMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
+                
+            }
+            
+        }
+        
+        /*        if(Input.getKey(Input.KEY_UP)) {
+        
+        rotateX(-rotAmt);
+        
         }
         if(Input.getKey(Input.KEY_LEFT)) {
-            
-            rotateY(-rotAmt);
-            
+        
+        rotateY(-rotAmt);
+        
         }
         if(Input.getKey(Input.KEY_RIGHT)) {
-            
-            rotateY(rotAmt);
-            
+        
+        rotateY(rotAmt);
+        
         }
         if(Input.getKey(Input.KEY_DOWN)) {
-            
-            rotateX(rotAmt);
-            
-        }
+        
+        rotateX(rotAmt);
+        
+        }*/
         
     }
     
@@ -114,14 +159,11 @@ public class Camera {
      */
     public void rotateY(float angle) {
         
-        Vector3f hAxis = m_yAxis.cross(m_forward);
-        hAxis.normalized();
+        Vector3f hAxis = m_yAxis.cross(m_forward).normalized();
         
-        m_forward.rotate(angle, m_yAxis);
-        m_forward.normalized();
+        m_forward.rotate(angle, m_yAxis).normalized();
         
-        m_up = m_forward.cross(hAxis);
-        m_up.normalized();
+        m_up = m_forward.cross(hAxis).normalized();
         
     }
     
@@ -131,14 +173,11 @@ public class Camera {
      */
     public void rotateX(float angle) {
         
-        Vector3f hAxis = m_yAxis.cross(m_forward);
-        hAxis.normalized();
+        Vector3f hAxis = m_yAxis.cross(m_forward).normalized();
         
-        m_forward.rotate(angle, hAxis);
-        m_forward.normalized();
+        m_forward = m_forward.rotate(angle, hAxis).normalized();
         
-        m_up = m_forward.cross(hAxis);
-        m_up.normalized();
+        m_up = m_forward.cross(hAxis).normalized();
         
     }
     
@@ -148,9 +187,7 @@ public class Camera {
      */
     public Vector3f getLeft() {
         
-        Vector3f left = m_forward.cross(m_up);
-        left.normalized();
-        return left;
+        return m_forward.cross(m_up).normalized();
         
     }
     
@@ -160,9 +197,7 @@ public class Camera {
      */
     public Vector3f getRight() {
         
-        Vector3f right = m_up.cross(m_forward);
-        right.normalized();
-        return right;
+        return m_up.cross(m_forward).normalized();
         
     }
     

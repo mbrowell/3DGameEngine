@@ -24,6 +24,7 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_VERSION;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glCullFace;
@@ -60,6 +61,18 @@ public class RenderUtil {
             glDisable(GL_TEXTURE_2D);
             
         }
+        
+    }
+    
+    public static void unbindTextures() {
+        
+        glBindTexture(GL_TEXTURE_2D, 0);
+        
+    }
+    
+    public static void setClearColour(Vector3f colour) {
+        
+        glClearColor(colour.getX(), colour.getY(), colour.getZ(), 1.0f);
         
     }
     

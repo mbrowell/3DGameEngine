@@ -17,33 +17,44 @@
 
 package com.base.engine;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Texture {
+public class Material {
 
-    private final int m_id;
-    
-    public Texture(int id) {
+    private Texture texture;
+    private Vector3f colour;
+
+    public Material(Texture texture, Vector3f colour) {
         
-        this.m_id = id;
-        
-    }
-    
-    public void bind() {
-        
-        glBindTexture(GL_TEXTURE_2D, m_id);
+        this.texture = texture;
+        this.colour = colour;
         
     }
 
-    public int getM_id() {
+    public Texture getTexture() {
         
-        return m_id;
+        return texture;
         
     }
-    
+
+    public void setTexture(Texture texture) {
+        
+        this.texture = texture;
+        
+    }
+
+    public Vector3f getColour() {
+        
+        return colour;
+        
+    }
+
+    public void setColour(Vector3f colour) {
+        
+        this.colour = colour;
+        
+    }
+
 }

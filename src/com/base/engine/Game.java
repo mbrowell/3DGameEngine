@@ -16,8 +16,6 @@
  */
 package com.base.engine;
 
-import org.lwjgl.input.Keyboard;
-
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
@@ -25,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 public class Game {
     
     private final Mesh mesh;
-    private final Texture texture;
+    private final Material material;
     private final Shader shader;
     private final Transform transform;
     private final Camera camera;
@@ -33,8 +31,8 @@ public class Game {
     public Game() {
         
         mesh = new Mesh(); // ResourceLoader.loadMesh("box.obj");
-        texture = ResourceLoader.loadTexture("test.png");
-        shader = new Shader();
+        material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
+        shader = new BasicShader();
         camera = new Camera();
         
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
@@ -52,12 +50,6 @@ public class Game {
                                    0, 2, 3};
         
         mesh.addVertices(vertices, indices);
-        
-        shader.addVertexShader(ResourceLoader.loadShader("basicShader.vs"));
-        shader.addFragmentShader(ResourceLoader.loadShader("basicShader.fs"));
-        shader.linkShader();
-        
-        shader.addUniform("transform");
         
     }
     
@@ -102,7 +94,7 @@ public class Game {
         temp += Time.getDelta();
         float sinTemp = (float)Math.sin(temp);
         
-        transform.setM_translation(sinTemp, 0, 5);
+        transform.setM_translation(sinTemp*20, 0, 5);
         transform.setM_rotation(0 , sinTemp * 180, 0);
         //transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
 
@@ -113,9 +105,9 @@ public class Game {
      */
     public void render() {
         
-        texture.bind();
+        RenderUtil.setClearColour(Transform.getCamera().getM_pos().divide(2048f).abs());
         shader.bind();
-        shader.setUniform("transform", transform.getProjectedTransformation());
+        shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
         mesh.draw();
         
     }
