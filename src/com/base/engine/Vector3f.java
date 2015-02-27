@@ -84,11 +84,30 @@ public class Vector3f {
 
     /**
      *
+     * @param angle
+     * @param axis
      * @return
      */
-    public Vector3f Rotate() {
+    public Vector3f rotate(float angle, Vector3f axis) {
+        
+        float sinHalfAngle = (float)Math.sin(Math.toRadians(angle / 2));
+        float cosHalfAngle = (float)Math.cos(Math.toRadians(angle / 2));
+        
+        float rX = axis.getX() * sinHalfAngle;
+        float rY = axis.getY() * sinHalfAngle;
+        float rZ = axis.getZ() * sinHalfAngle;
+        float rW = cosHalfAngle;
+        
+        Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
+        Quaternion conjugate = rotation.conjugate();
+        
+        Quaternion w = rotation.multiply(this).multiply(conjugate);
+        
+        m_x = w.getX();
+        m_y = w.getY();
+        m_z = w.getZ();
 
-        return null;
+        return this;
 
     }
 
