@@ -50,6 +50,10 @@ public class RenderUtil {
         
     }
     
+    /**
+     *
+     * @param enabled
+     */
     public static void setTextures(boolean enabled) {
         
         if(enabled) {
@@ -64,12 +68,19 @@ public class RenderUtil {
         
     }
     
+    /**
+     *
+     */
     public static void unbindTextures() {
         
         glBindTexture(GL_TEXTURE_2D, 0);
         
     }
     
+    /**
+     *
+     * @param colour
+     */
     public static void setClearColour(Vector3f colour) {
         
         glClearColor(colour.getX(), colour.getY(), colour.getZ(), 1.0f);

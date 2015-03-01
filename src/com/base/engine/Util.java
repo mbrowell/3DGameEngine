@@ -39,12 +39,22 @@ public class Util {
         
     }
     
+    /**
+     *
+     * @param size
+     * @return
+     */
     public static IntBuffer createIntBuffer(int size) {
         
         return BufferUtils.createIntBuffer(size);
         
     }
     
+    /**
+     *
+     * @param values
+     * @return
+     */
     public static IntBuffer createFlippedBuffer(int... values) {
         
         IntBuffer buffer = createIntBuffer(values.length);  
@@ -106,6 +116,11 @@ public class Util {
         
     }
     
+    /**
+     *
+     * @param data
+     * @return
+     */
     public static String[] removeEmptyStrings(String[] data) {
         
         ArrayList<String> result = new ArrayList<>();
@@ -127,6 +142,11 @@ public class Util {
         
     }
     
+    /**
+     *
+     * @param data
+     * @return
+     */
     public static int[] toIntArray(Integer[] data) {
         
         int[] result = new int[data.length];

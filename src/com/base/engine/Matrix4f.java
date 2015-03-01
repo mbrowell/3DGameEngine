@@ -24,8 +24,13 @@ public class Matrix4f {
 
     private float[][] m;
 
+    /**
+     *
+     */
     public Matrix4f() {
+        
         m = new float[4][4];
+        
     }
 
     /**
@@ -43,6 +48,13 @@ public class Matrix4f {
 
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
     public Matrix4f initTranslation(float x, float y, float z) {
 
         m[0][0] = 1;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = x;
@@ -54,6 +66,15 @@ public class Matrix4f {
 
     }
     
+    /**
+     *
+     * @param fov
+     * @param width
+     * @param height
+     * @param zNear
+     * @param zFar
+     * @return
+     */
     public Matrix4f initProjection(float fov, float width, float height, float zNear, float zFar) {
         
         float aspectRatio = width / height;
@@ -69,6 +90,12 @@ public class Matrix4f {
 
     }
     
+    /**
+     *
+     * @param forward
+     * @param up
+     * @return
+     */
     public Matrix4f initCamera(Vector3f forward, Vector3f up) {
         
         forward = forward.normalized();
@@ -88,6 +115,13 @@ public class Matrix4f {
 
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
     public Matrix4f initRotation(float x, float y, float z) {
         
         Matrix4f rotationX = new Matrix4f();
@@ -119,6 +153,13 @@ public class Matrix4f {
 
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
     public Matrix4f initScale(float x, float y, float z) {
 
         m[0][0] = x;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = 0;

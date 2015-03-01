@@ -37,6 +37,11 @@ public class Vertex {
         
     }
     
+    /**
+     *
+     * @param pos
+     * @param textCoord
+     */
     public Vertex(Vector3f pos, Vector2f textCoord) {
         
         this.m_pos = pos;

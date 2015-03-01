@@ -20,23 +20,26 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Game {
+public class Game extends Camera {
     
     private final Mesh mesh;
     private final Material material;
     private final Shader shader;
     private final Transform transform;
-    private final Camera camera;
+    //private final Camera camera;
     
+    /**
+     *
+     */
+    @SuppressWarnings("LeakingThisInConstructor")
     public Game() {
+        
+        super();
         
         mesh = new Mesh(); // ResourceLoader.loadMesh("box.obj");
         material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
-        shader = new BasicShader();
-        camera = new Camera();
-        
-        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-        Transform.setCamera(camera);
+        shader = BasicShader.getM_instance();
+        //camera = new Camera();
         transform = new Transform();
         
         Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0), new Vector2f(0, 0)),
@@ -51,12 +54,17 @@ public class Game {
         
         mesh.addVertices(vertices, indices);
         
+        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
+        Transform.setCamera(this);
+        
+        //PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
+        
     }
     
     /**
      *
      */
-    public void input() {
+    //public void input() {
         
 //        if(Input.getKeyDown(Keyboard.KEY_UP)) {
 //            
@@ -80,21 +88,21 @@ public class Game {
 //            
 //        }
         
-        camera.input();
+        //camera.input();
         
-    }
+    //}
     
     float temp = 0.0f;
     
     /**
      *
      */
-    public void update() {
+    public void updateGame() {
         
         temp += Time.getDelta();
         float sinTemp = (float)Math.sin(temp);
         
-        transform.setM_translation(sinTemp*20, 0, 5);
+        transform.setM_translation(sinTemp * 5, 0, 5);
         transform.setM_rotation(0 , sinTemp * 180, 0);
         //transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
 

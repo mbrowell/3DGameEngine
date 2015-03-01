@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class MainComponent {
+public class MainComponent extends Game {
     
     public static final int WIDTH = 1024;
     public static final int HEIGHT = 768;
@@ -31,21 +31,24 @@ public class MainComponent {
     public static final double FRAME_CAP = 5000.0;
     
     private boolean m_isRunning;
-    private final Game game;
     
+    /**
+     *
+     */
     public MainComponent() {
+        
+        super();
         
         System.out.println(RenderUtil.getOpenGLVersion());
         RenderUtil.initGraphics();
         m_isRunning = false;
-        game = new Game();
         
     }
     
     /**
      *
      */
-    public void Start() {
+    public void start() {
         
         if(m_isRunning) {
             
@@ -68,7 +71,7 @@ public class MainComponent {
     /**
      *
      */
-    public void Stop() {
+    public void stop() {
         
         if(!m_isRunning) {
             
@@ -111,16 +114,16 @@ public class MainComponent {
                 
                 if(Window.isCloseRequested()) {
                 
-                    Stop();
+                    stop();
                 
                 }
                 
                 Time.setDelta((float)frameTime);
                 
-                game.input();
-                Input.update();
+                input();
                 
-                game.update();
+                
+                updateGame();
                 
                 if(frameCounter >= Time.SECOND) {
                 
@@ -134,7 +137,7 @@ public class MainComponent {
             
             if(render) {
                 
-                Render();
+                doRender();
                 frames++;
                 
             } else {
@@ -154,19 +157,19 @@ public class MainComponent {
             
         }
         
-        CleanUp();
+        cleanUp();
         
     }
     
-    private void Render() {
+    private void doRender() {
         
         RenderUtil.clearScreen();
-        game.render();
+        super.render();
         Window.render();
         
     }
     
-    private void CleanUp() {
+    private void cleanUp() {
         
         Window.dispose();
         
@@ -182,7 +185,7 @@ public class MainComponent {
         
         MainComponent game = new MainComponent();
         
-        game.Start();
+        game.start();
         
     }
     

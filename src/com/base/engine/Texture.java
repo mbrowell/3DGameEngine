@@ -28,18 +28,29 @@ public class Texture {
 
     private final int m_id;
     
+    /**
+     *
+     * @param id
+     */
     public Texture(int id) {
         
         this.m_id = id;
         
     }
     
+    /**
+     *
+     */
     public void bind() {
         
         glBindTexture(GL_TEXTURE_2D, m_id);
         
     }
 
+    /**
+     *
+     * @return
+     */
     public int getM_id() {
         
         return m_id;

@@ -26,6 +26,11 @@ public class Material {
     private Texture texture;
     private Vector3f colour;
 
+    /**
+     *
+     * @param texture
+     * @param colour
+     */
     public Material(Texture texture, Vector3f colour) {
         
         this.texture = texture;
@@ -33,24 +38,40 @@ public class Material {
         
     }
 
+    /**
+     *
+     * @return
+     */
     public Texture getTexture() {
         
         return texture;
         
     }
 
+    /**
+     *
+     * @param texture
+     */
     public void setTexture(Texture texture) {
         
         this.texture = texture;
         
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector3f getColour() {
         
         return colour;
         
     }
 
+    /**
+     *
+     * @param colour
+     */
     public void setColour(Vector3f colour) {
         
         this.colour = colour;

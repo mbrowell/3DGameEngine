@@ -20,16 +20,19 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Vector3f {
+public class Vector3f extends Vector2f {
 
-    private float m_x;
-    private float m_y;
     private float m_z;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
     public Vector3f(float x, float y, float z) {
-
-        this.m_x = x;
-        this.m_y = y;
+        
+        super(x, y);
         this.m_z = z;
 
     }
@@ -38,9 +41,10 @@ public class Vector3f {
      *
      * @return
      */
+    @Override
     public float length() {
 
-        return (float)Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+        return (float)Math.sqrt(super.getX() * super.getX() + super.getY() * super.getY() + m_z * m_z);
 
     }
 
@@ -51,7 +55,7 @@ public class Vector3f {
      */
     public float dot(Vector3f r) {
 
-        return m_x * r.getX() + m_y * r.getY() + m_z * r.getZ();
+        return super.getX() * r.getX() + super.getY() * r.getY() + m_z * r.getZ();
 
     }
 
@@ -62,9 +66,9 @@ public class Vector3f {
      */
     public Vector3f cross(Vector3f r) {
 
-        float x_ = m_y * r.getZ() - m_z * r.getY();
-        float y_ = m_z * r.getX() - m_x * r.getZ();
-        float z_ = m_x * r.getY() - m_y * r.getX();
+        float x_ = super.getY() * r.getZ() - m_z * r.getY();
+        float y_ = m_z * r.getX() - super.getX() * r.getZ();
+        float z_ = super.getX() * r.getY() - super.getY() * r.getX();
 
         return new Vector3f(x_, y_, z_);
 
@@ -74,11 +78,12 @@ public class Vector3f {
      *
      * @return
      */
+    @Override
     public Vector3f normalized() {
 
         float length = length();
 
-        return new Vector3f(m_x / length, m_y / length, m_z / length);
+        return new Vector3f(super.getX() / length, super.getY() / length, m_z / length);
 
     }
 
@@ -114,7 +119,7 @@ public class Vector3f {
      */
     public Vector3f add(Vector3f r) {
 
-        return new Vector3f(m_x + r.getX(), m_y + r.getY(), m_z + r.getZ());
+        return new Vector3f(super.getX() + r.getX(), super.getY() + r.getY(), m_z + r.getZ());
 
     }
 
@@ -123,9 +128,10 @@ public class Vector3f {
      * @param r
      * @return
      */
+    @Override
     public Vector3f add(float r) {
 
-        return new Vector3f(m_x + r, m_y + r, m_z + r);
+        return new Vector3f(super.getX() + r, super.getY() + r, m_z + r);
 
     }
 
@@ -136,7 +142,7 @@ public class Vector3f {
      */
     public Vector3f subtract(Vector3f r) {
 
-        return new Vector3f(m_x - r.getX(), m_y - r.getY(), m_z - r.getZ());
+        return new Vector3f(super.getX() - r.getX(), super.getY() - r.getY(), m_z - r.getZ());
 
     }
 
@@ -145,9 +151,10 @@ public class Vector3f {
      * @param r
      * @return
      */
+    @Override
     public Vector3f subtract(float r) {
 
-        return new Vector3f(m_x - r, m_y - r, m_z - r);
+        return new Vector3f(super.getX() - r, super.getY() - r, m_z - r);
 
     }
 
@@ -158,7 +165,7 @@ public class Vector3f {
      */
     public Vector3f multiply(Vector3f r) {
 
-        return new Vector3f(m_x * r.getX(), m_y * r.getY(), m_z * r.getZ());
+        return new Vector3f(super.getX() * r.getX(), super.getY() * r.getY(), m_z * r.getZ());
 
     }
 
@@ -167,9 +174,10 @@ public class Vector3f {
      * @param r
      * @return
      */
+    @Override
     public Vector3f multiply(float r) {
 
-        return new Vector3f(m_x * r, m_y * r, m_z * r);
+        return new Vector3f(super.getX() * r, super.getY() * r, m_z * r);
 
     }
 
@@ -180,7 +188,7 @@ public class Vector3f {
      */
     public Vector3f divide(Vector3f r) {
 
-        return new Vector3f(m_x / r.getX(), m_y / r.getY(), m_z / r.getZ());
+        return new Vector3f(super.getX() / r.getX(), super.getY() / r.getY(), m_z / r.getZ());
 
     }
 
@@ -189,56 +197,22 @@ public class Vector3f {
      * @param r
      * @return
      */
+    @Override
     public Vector3f divide(float r) {
 
-        return new Vector3f(m_x / r, m_y / r, m_z / r);
+        return new Vector3f(super.getX() / r, super.getY() / r, m_z / r);
 
     }
     
+    /**
+     *
+     * @return
+     */
+    @Override
     public Vector3f abs() {
         
-        return new Vector3f(Math.abs(m_x), Math.abs(m_y), Math.abs(m_z));
+        return new Vector3f(Math.abs(super.getX()), Math.abs(super.getY()), Math.abs(m_z));
         
-    }
-
-    /**
-     *
-     * @return
-     */
-    public float getX() {
-
-        return m_x;
-
-    }
-
-    /**
-     *
-     * @param x
-     */
-    public void setX(float x) {
-
-        this.m_x = x;
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public float getY() {
-
-        return m_y;
-
-    }
-
-    /**
-     *
-     * @param y
-     */
-    public void setY(float y) {
-
-        this.m_y = y;
-
     }
 
     /**

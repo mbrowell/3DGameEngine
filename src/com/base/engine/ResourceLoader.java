@@ -35,6 +35,11 @@ import org.newdawn.slick.opengl.TextureLoader;
  */
 public class ResourceLoader {
     
+    /**
+     *
+     * @param fileName
+     * @return
+     */
     public static Texture loadTexture(String fileName) {
         
         String[] splitArray = fileName.split("\\.");
@@ -96,6 +101,11 @@ public class ResourceLoader {
         
     }
     
+    /**
+     *
+     * @param fileName
+     * @return
+     */
     @SuppressWarnings("null")
     public static Mesh loadMesh(String fileName) {
         
@@ -113,6 +123,7 @@ public class ResourceLoader {
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Integer> indices = new ArrayList<>();
         
+        @SuppressWarnings("UnusedAssignment")
         BufferedReader meshReader = null;
         
         try {

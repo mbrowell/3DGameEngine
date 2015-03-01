@@ -96,6 +96,10 @@ public class Vector2f {
                 
     }
     
+    /**
+     *
+     * @return
+     */
     public Vector2f abs() {
         
         return new Vector2f(Math.abs(m_x), Math.abs(m_y));

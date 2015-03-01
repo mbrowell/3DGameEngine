@@ -41,6 +41,9 @@ public class Mesh {
     private final int m_ibo;  // Index buffer object
     private int m_size;
 
+    /**
+     *
+     */
     public Mesh() {
         
         this.m_vbo = glGenBuffers();

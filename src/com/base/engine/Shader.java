@@ -51,6 +51,9 @@ public class Shader {
     private final int m_program;
     private final HashMap<String, Integer> m_uniforms;
     
+    /**
+     *
+     */
     public Shader() {
         
         m_program = glCreateProgram();

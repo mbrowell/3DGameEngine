@@ -21,23 +21,26 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class BasicShader extends Shader {
+public class PhongShader extends Shader {
+
+    private static final PhongShader m_instance = new PhongShader();
     
-    private static final BasicShader m_instance = new BasicShader();
+    private static Vector3f m_ambientLight;
 
     /**
      *
      */
-    public BasicShader() {
+    public PhongShader() {
         
         super();
         
-        addVertexShader(ResourceLoader.loadShader("basicShader.vs"));
-        addFragmentShader(ResourceLoader.loadShader("basicShader.fs"));
+        addVertexShader(ResourceLoader.loadShader("phongShader.vs"));
+        addFragmentShader(ResourceLoader.loadShader("phongShader.fs"));
         linkShader();
         
         addUniform("transform");
-        addUniform("colour");
+        addUniform("baseColour");
+        addUniform("ambientLight");
         
     }
     
@@ -61,7 +64,28 @@ public class BasicShader extends Shader {
         }
         
         setUniform("transform", projectedMatrix);
-        setUniform("colour", material.getColour());
+        setUniform("baseColour", material.getColour());
+        setUniform("ambientLight", m_ambientLight);
+        
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Vector3f getM_ambientLight() {
+        
+        return m_ambientLight;
+        
+    }
+
+    /**
+     *
+     * @param ambientLight
+     */
+    public static void setM_ambientLight(Vector3f ambientLight) {
+        
+        PhongShader.m_ambientLight = ambientLight;
         
     }
     
@@ -69,10 +93,10 @@ public class BasicShader extends Shader {
      *
      * @return
      */
-    public static BasicShader getM_instance() {
+    public static PhongShader getM_instance() {
         
         return m_instance;
         
     }
-
+    
 }

@@ -21,14 +21,17 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Camera {
+public class Camera extends Input {
 
-    public static final Vector3f m_yAxis = new Vector3f(0 , 1, 0);
+    public static Vector3f m_yAxis = new Vector3f(0 , 1, 0);
     
     private Vector3f m_pos;
     private Vector3f m_forward;
     private Vector3f m_up;
     
+    /**
+     *
+     */
     public Camera() {
         
         this(new Vector3f(0, 0, 0), new Vector3f(0, 0, 1), new Vector3f(0, 1, 0));
@@ -36,6 +39,8 @@ public class Camera {
     }
     
     public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
+        
+        super();
         
         this.m_pos = pos;
         
@@ -51,8 +56,6 @@ public class Camera {
      *
      */
     public void input() {
-        
-        
         
         float sensitivity = 0.3f;
         float moveAmt = (float)(10 * Time.getDelta());
@@ -107,7 +110,6 @@ public class Camera {
             if(rotX) {
                 
                 rotateX(-deltaPos.getY() * sensitivity);
-                System.out.println(Input.getMousePosition().toString());
                 
             }
             
@@ -118,23 +120,25 @@ public class Camera {
             }
             
         }
+            
+        //}
         
-        /*        if(Input.getKey(Input.KEY_UP)) {
+        /*        if(getKey(KEY_UP)) {
         
         rotateX(-rotAmt);
         
         }
-        if(Input.getKey(Input.KEY_LEFT)) {
+        if(getKey(KEY_LEFT)) {
         
         rotateY(-rotAmt);
         
         }
-        if(Input.getKey(Input.KEY_RIGHT)) {
+        if(getKey(KEY_RIGHT)) {
         
         rotateY(rotAmt);
         
         }
-        if(Input.getKey(Input.KEY_DOWN)) {
+        if(getKey(KEY_DOWN)) {
         
         rotateX(rotAmt);
         
