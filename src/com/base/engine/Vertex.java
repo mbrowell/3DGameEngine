@@ -22,6 +22,9 @@ package com.base.engine;
  */
 public class Vertex {
     
+    /**
+     *
+     */
     public static final int SIZE = 5;
     
     private Vector3f m_pos;

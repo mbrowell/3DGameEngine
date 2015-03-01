@@ -60,6 +60,10 @@ public class Transform {
         
     }
     
+    /**
+     *
+     * @return
+     */
     public Matrix4f getProjectedTransformation() {
         
         Matrix4f transformationMatrix = getTransformation();
@@ -71,12 +75,20 @@ public class Transform {
         
     }
 
+    /**
+     *
+     * @return
+     */
     public static Camera getCamera() {
         
         return camera;
         
     }
 
+    /**
+     *
+     * @param camera
+     */
     public static void setCamera(Camera camera) {
         
         Transform.camera = camera;
@@ -95,6 +107,14 @@ public class Transform {
         
     }
     
+    /**
+     *
+     * @param fov
+     * @param width
+     * @param height
+     * @param zNear
+     * @param zFar
+     */
     public static void setProjection(float fov, float width, float height, float zNear, float zFar) {
         
         Transform.m_fov = fov;
@@ -127,36 +147,64 @@ public class Transform {
         
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector3f getM_rotation() {
         
         return m_rotation;
         
     }
 
+    /**
+     *
+     * @param rotation
+     */
     public void setM_rotation(Vector3f rotation) {
         
         this.m_rotation = rotation;
         
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
     public void setM_rotation(float x, float y, float z) {
         
         this.m_rotation = new Vector3f(x, y, z);
         
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector3f getM_scale() {
         
         return m_scale;
         
     }
 
+    /**
+     *
+     * @param m_scale
+     */
     public void setM_scale(Vector3f m_scale) {
         
         this.m_scale = m_scale;
         
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
     public void setM_scale(float x, float y, float z) {
         
         this.m_scale = new Vector3f(x, y, z);

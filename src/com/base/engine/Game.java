@@ -26,7 +26,6 @@ public class Game extends Camera {
     private final Material material;
     private final Shader shader;
     private final Transform transform;
-    //private final Camera camera;
     
     /**
      *
@@ -36,10 +35,9 @@ public class Game extends Camera {
         
         super();
         
-        mesh = new Mesh(); // ResourceLoader.loadMesh("box.obj");
+        mesh = new Mesh(); // mesh = ResourceLoader.loadMesh("box.obj");
         material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
-        shader = BasicShader.getM_instance();
-        //camera = new Camera();
+        shader = PhongShader.getM_instance();
         transform = new Transform();
         
         Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0), new Vector2f(0, 0)),
@@ -57,7 +55,7 @@ public class Game extends Camera {
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
         Transform.setCamera(this);
         
-        //PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
+        PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
         
     }
     

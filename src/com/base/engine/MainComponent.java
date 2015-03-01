@@ -25,9 +25,24 @@ import java.util.logging.Logger;
  */
 public class MainComponent extends Game {
     
+    /**
+     *
+     */
     public static final int WIDTH = 1024;
+
+    /**
+     *
+     */
     public static final int HEIGHT = 768;
+
+    /**
+     *
+     */
     public static final String TITLE = "3d Game Engine";
+
+    /**
+     *
+     */
     public static final double FRAME_CAP = 5000.0;
     
     private boolean m_isRunning;

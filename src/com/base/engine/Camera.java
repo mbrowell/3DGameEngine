@@ -23,6 +23,9 @@ package com.base.engine;
  */
 public class Camera extends Input {
 
+    /**
+     *
+     */
     public static Vector3f m_yAxis = new Vector3f(0 , 1, 0);
     
     private Vector3f m_pos;
@@ -38,6 +41,12 @@ public class Camera extends Input {
         
     }
     
+    /**
+     *
+     * @param pos
+     * @param forward
+     * @param up
+     */
     public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
         
         super();
@@ -169,6 +178,8 @@ public class Camera extends Input {
         
         m_up = m_forward.cross(hAxis).normalized();
         
+        System.out.println(m_up);
+        
     }
     
     /**
@@ -182,6 +193,8 @@ public class Camera extends Input {
         m_forward = m_forward.rotate(angle, hAxis).normalized();
         
         m_up = m_forward.cross(hAxis).normalized();
+        
+        System.out.println(m_up);
         
     }
     
