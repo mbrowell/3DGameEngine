@@ -84,21 +84,21 @@ public class Camera extends Input {
             
         }
         
-        if(Input.getKey(Input.KEY_W)) {
+        if(getKey(KEY_W)) {
             
             move(getM_forward(), moveAmt);
             
         }
-        if(Input.getKey(Input.KEY_A)) {
+        if(getKey(KEY_A)) {
             
             move(getLeft(), moveAmt);
             
         }
-        if(Input.getKey(Input.KEY_S)) {
+        if(getKey(KEY_S)) {
             
             move(getM_forward(), -moveAmt);
             
-        }if(Input.getKey(Input.KEY_D)) {
+        }if(getKey(KEY_D)) {
             
             move(getRight(), moveAmt);
             
@@ -106,7 +106,7 @@ public class Camera extends Input {
         
         if(mouseLocked) {
             
-            Vector2f deltaPos = Input.getMousePosition().subtract(centrePosition);
+            Vector2f deltaPos = getMousePosition().subtract(centrePosition);
             
             boolean rotY = deltaPos.getX() != 0;
             boolean rotX = deltaPos.getY() != 0;
@@ -124,34 +124,11 @@ public class Camera extends Input {
             
             if (rotY || rotX) {
                 
-                Input.setMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
+                setMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
                 
             }
             
         }
-            
-        //}
-        
-        /*        if(getKey(KEY_UP)) {
-        
-        rotateX(-rotAmt);
-        
-        }
-        if(getKey(KEY_LEFT)) {
-        
-        rotateY(-rotAmt);
-        
-        }
-        if(getKey(KEY_RIGHT)) {
-        
-        rotateY(rotAmt);
-        
-        }
-        if(getKey(KEY_DOWN)) {
-        
-        rotateX(rotAmt);
-        
-        }*/
         
     }
     

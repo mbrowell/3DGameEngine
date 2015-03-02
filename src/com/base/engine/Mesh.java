@@ -52,12 +52,25 @@ public class Mesh {
         
     }
     
+    public void addVertices(Vertex[] vertices, int[] indices) {
+        
+        addVertices(vertices, indices, false);
+        
+    }
+    
     /**
      *
      * @param vertices
      * @param indices
+     * @param calcNormals
      */
-    public void addVertices(Vertex[] vertices, int[] indices) {
+    public void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals) {
+        
+        if(calcNormals) {
+            
+            calcNormals(vertices, indices);
+            
+        }
         
         m_size = indices.length;
         
@@ -76,16 +89,47 @@ public class Mesh {
         
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
         
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
         glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
+        glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
         glDrawElements(GL_TRIANGLES, m_size, GL_UNSIGNED_INT, 0);
         
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
 
+    }
+    
+    private void calcNormals(Vertex[] vertices, int[] indices) {
+        
+        for(int i = 0; i < indices.length; i += 3) {
+            
+            int index0 = indices[i];
+            int index1 = indices[i + 1];
+            int index2 = indices[i + 2];
+            
+            Vector3f vector0 = vertices[index1].getM_pos().subtract(vertices[index0].getM_pos());
+            Vector3f vector1 = vertices[index0].getM_pos().subtract(vertices[index2].getM_pos());
+            
+            Vector3f normal = vector0.cross(vector1).normalized();
+            
+            vertices[index0].setM_normal(vertices[index0].getM_normal().add(normal));
+            vertices[index1].setM_normal(vertices[index0].getM_normal().add(normal));
+            vertices[index2].setM_normal(vertices[index0].getM_normal().add(normal));
+            
+        }
+        
+        for(int i = 0; i < vertices.length; i++) {
+            
+            vertices[i].setM_normal(vertices[i].getM_normal().normalized());
+            
+        }
+        
     }
 
 }

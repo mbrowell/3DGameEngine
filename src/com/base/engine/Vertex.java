@@ -25,10 +25,11 @@ public class Vertex {
     /**
      *
      */
-    public static final int SIZE = 5;
+    public static final int SIZE = 8;
     
     private Vector3f m_pos;
     private Vector2f m_textCoord;
+    private Vector3f m_normal;
 
     /**
      *
@@ -47,8 +48,21 @@ public class Vertex {
      */
     public Vertex(Vector3f pos, Vector2f textCoord) {
         
+        this(pos, textCoord, new Vector3f(0, 0, 0));
+        
+    }
+    
+    /**
+     *
+     * @param pos
+     * @param textCoord
+     * @param normal
+     */
+    public Vertex(Vector3f pos, Vector2f textCoord, Vector3f normal) {
+        
         this.m_pos = pos;
         this.m_textCoord = textCoord;
+        this.m_normal = normal;
         
     }
 
@@ -84,11 +98,31 @@ public class Vertex {
 
     /**
      *
-     * @param m_textCoord
+     * @param textCoord
      */
-    public void setM_textCoord(Vector2f m_textCoord) {
+    public void setM_textCoord(Vector2f textCoord) {
         
-        this.m_textCoord = m_textCoord;
+        this.m_textCoord = textCoord;
+        
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Vector3f getM_normal() {
+        
+        return m_normal;
+        
+    }
+    
+    /**
+     *
+     * @param normal
+     */
+    public void setM_normal(Vector3f normal) {
+        
+        this.m_normal = normal;
         
     }
     

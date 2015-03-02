@@ -83,6 +83,10 @@ public class Util {
             buffer.put(vertex.getM_textCoord().getX());
             buffer.put(vertex.getM_textCoord().getY());
             
+            buffer.put(vertex.getM_normal().getX());
+            buffer.put(vertex.getM_normal().getY());
+            buffer.put(vertex.getM_normal().getZ());
+            
         }
         
         buffer.flip();

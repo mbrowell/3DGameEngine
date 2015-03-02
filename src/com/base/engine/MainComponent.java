@@ -73,7 +73,7 @@ public class MainComponent extends Game {
             
         try {
             
-            Run();
+            run();
             
         } catch (InterruptedException e) {
             
@@ -98,7 +98,8 @@ public class MainComponent extends Game {
         
     }
     
-    private void Run() throws InterruptedException {
+    @SuppressWarnings("SleepWhileInLoop")
+    private void run() throws InterruptedException {
         
         m_isRunning = true;
         
@@ -198,9 +199,9 @@ public class MainComponent extends Game {
         
         Window.createWindow(WIDTH, HEIGHT, TITLE);
         
-        MainComponent game = new MainComponent();
+        MainComponent mainComponent = new MainComponent();
         
-        game.start();
+        mainComponent.start();
         
     }
     
