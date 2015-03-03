@@ -114,13 +114,13 @@ public class Mesh {
             int index2 = indices[i + 2];
             
             Vector3f vector0 = vertices[index1].getM_pos().subtract(vertices[index0].getM_pos());
-            Vector3f vector1 = vertices[index0].getM_pos().subtract(vertices[index2].getM_pos());
+            Vector3f vector1 = vertices[index2].getM_pos().subtract(vertices[index0].getM_pos());
             
             Vector3f normal = vector0.cross(vector1).normalized();
             
             vertices[index0].setM_normal(vertices[index0].getM_normal().add(normal));
-            vertices[index1].setM_normal(vertices[index0].getM_normal().add(normal));
-            vertices[index2].setM_normal(vertices[index0].getM_normal().add(normal));
+            vertices[index1].setM_normal(vertices[index1].getM_normal().add(normal));
+            vertices[index2].setM_normal(vertices[index2].getM_normal().add(normal));
             
         }
         
