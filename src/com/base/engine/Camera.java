@@ -66,20 +66,20 @@ public class Camera extends Input {
      */
     public void input() {
         
-        float sensitivity = 0.3f;
+        float sensitivity = 0.5f;
         float moveAmt = (float)(10 * Time.getDelta());
         //float rotAmt = (float)(100 * Time.getDelta());
         
-        if(Input.getKey(Input.KEY_ESCAPE)) {
+        if(getKey(KEY_ESCAPE)) {
             
-            Input.setCursor(true);
+            setCursor(true);
             mouseLocked = false;
             
         }
         if(Input.getMouseDown(0)) {
             
-            Input.setMousePosition(centrePosition);
-            Input.setCursor(false);
+            setMousePosition(centrePosition);
+            setCursor(false);
             mouseLocked = true;
             
         }
@@ -151,11 +151,9 @@ public class Camera extends Input {
         
         Vector3f hAxis = m_yAxis.cross(m_forward).normalized();
         
-        m_forward.rotate(angle, m_yAxis).normalized();
+        m_forward = m_forward.rotate(angle, m_yAxis).normalized();
         
         m_up = m_forward.cross(hAxis).normalized();
-        
-        System.out.println(m_up);
         
     }
     
@@ -170,8 +168,6 @@ public class Camera extends Input {
         m_forward = m_forward.rotate(angle, hAxis).normalized();
         
         m_up = m_forward.cross(hAxis).normalized();
-        
-        System.out.println(m_up);
         
     }
     

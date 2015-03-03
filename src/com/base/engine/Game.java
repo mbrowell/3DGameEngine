@@ -70,7 +70,7 @@ public class Game extends Camera {
         temp += Time.getDelta();
         float sinTemp = (float)Math.sin(temp);
         
-        transform.setM_translation(0, 0, 5);
+        transform.setM_translation(0, 0, 0);
         transform.setM_rotation(0 , sinTemp * 180, 0);
         //transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
 
