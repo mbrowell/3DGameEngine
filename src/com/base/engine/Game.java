@@ -38,8 +38,8 @@ public class Game extends Camera {
         
         super();
         
-        
-        m_material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
+        m_mesh = new Mesh(); // mesh = ResourceLoader.loadMesh("box.obj");
+        m_material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         m_shader = PhongShader.getM_instance();
         m_transform = new Transform();
         
@@ -64,15 +64,15 @@ public class Game extends Camera {
         int indices[] = {0, 1, 2,
                          2, 1, 3};
         
-        m_mesh = new Mesh(vertices, indices, true); // mesh = ResourceLoader.loadMesh("box.obj");
+        m_mesh.addVertices(vertices, indices, true);
         
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
         Transform.setM_camera(this);
         
         PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
-        PhongShader.setM_directionalLight(new DirectionalLight(new Vector3f(1, 1, 1), 0.1f, new Vector3f(1, 1, 1)));
+        //PhongShader.setM_directionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
         
-        PhongShader.setM_pointLights(m_pLights);
+        //PhongShader.setM_pointLights(m_pLights);
         PhongShader.setM_spotLights(new SpotLight[] {m_sLight1});
         
     }
