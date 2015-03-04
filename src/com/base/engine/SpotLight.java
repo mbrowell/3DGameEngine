@@ -21,21 +21,16 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class DirectionalLight extends BaseLight {
+public class SpotLight extends PointLight {
 
     private Vector3f m_direction;
-    
-    /**
-     *
-     * @param colour
-     * @param intensity
-     * @param base
-     * @param direction
-     */
-    public DirectionalLight(Vector3f colour, float intensity, Vector3f direction) {
+    private float m_cutoff;
+
+    public SpotLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range, Vector3f direction, float cutoff) {
         
-        super(colour, intensity);
+        super(colour, intensity, atten, position, range);
         this.m_direction = direction.normalized();
+        this.m_cutoff = cutoff;
         
     }
 
@@ -44,10 +39,22 @@ public class DirectionalLight extends BaseLight {
         return m_direction;
         
     }
-    
+
     public void setM_direction(Vector3f direction) {
         
         this.m_direction = direction;
+        
+    }
+
+    public float getM_cutoff() {
+        
+        return m_cutoff;
+        
+    }
+
+    public void setM_cutoff(float cutoff) {
+        
+        this.m_cutoff = cutoff;
         
     }
     

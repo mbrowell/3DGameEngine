@@ -21,31 +21,18 @@ package com.base.engine;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class PointLight {
+public class PointLight extends BaseLight {
 
-    private BaseLight m_baseLight;
     private Attenuation m_atten;
     private Vector3f m_position;
     private float m_range;
 
-    public PointLight(BaseLight baseLight, Attenuation atten, Vector3f position, float range) {
+    public PointLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range) {
         
-        this.m_baseLight = baseLight;
+        super(colour, intensity);
         this.m_atten = atten;
         this.m_position = position;
         this.m_range = range;
-        
-    }
-
-    public BaseLight getM_baseLight() {
-        
-        return m_baseLight;
-        
-    }
-
-    public void setM_baseLight(BaseLight baseLight) {
-        
-        this.m_baseLight = baseLight;
         
     }
 

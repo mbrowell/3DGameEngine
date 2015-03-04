@@ -23,8 +23,8 @@ package com.base.engine;
  */
 public class BaseLight {
 
-    Vector3f m_colour;
-    float m_intensity;
+    private Vector3f m_colour;
+    private float m_intensity;
     
     public BaseLight(Vector3f colour, float intensity) {
         

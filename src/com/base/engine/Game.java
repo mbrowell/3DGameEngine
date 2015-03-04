@@ -26,8 +26,9 @@ public class Game extends Camera {
     private final Material m_material;
     private final Shader m_shader;
     private final Transform m_transform;
-    PointLight[] m_pLight = new PointLight[]{new PointLight(new BaseLight(new Vector3f(1, 0.5f, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(-2, 0, 6f), 10),
-                                             new PointLight(new BaseLight(new Vector3f(0, 0.5f, 1), 0.8f), new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f), 10)};
+    PointLight[] m_pLights = new PointLight[]{new PointLight(new Vector3f(1, 0.5f, 0), 0.8f, new Attenuation(0, 0, 1), new Vector3f(-2, 0, 5f), 10),
+                                             new PointLight(new Vector3f(0, 0.5f, 1), 0.8f, new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f), 10)};
+    SpotLight m_sLight1 = new SpotLight(new Vector3f(0, 1, 1), 0.8f, new Attenuation(0, 0, 0.01f), new Vector3f(-2, 0, 5f), 30, new Vector3f(1, 1, 1), 0.7f);
     
     /**
      *
@@ -71,7 +72,8 @@ public class Game extends Camera {
         PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
         //PhongShader.setM_directionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
         
-        PhongShader.setM_pointLights(m_pLight);
+        //PhongShader.setM_pointLights(m_pLights);
+        PhongShader.setM_spotLights(new SpotLight[] {m_sLight1});
         
     }
     
@@ -89,10 +91,12 @@ public class Game extends Camera {
         m_transform.setM_translation(0, -1, 5);
         //m_transform.setM_rotation(0 , sinTemp * 180, 0);
         
-        m_pLight[0].setM_position(new Vector3f(3, 0, 8 * (sinTemp + 1/2) + 10));
-        m_pLight[1].setM_position(new Vector3f(7, 0, 8 * (cosTemp + 1/2) + 10));
+        m_pLights[0].setM_position(new Vector3f(3, 0, 8 * (sinTemp + 1/2) + 10));
+        m_pLights[1].setM_position(new Vector3f(7, 0, 8 * (cosTemp + 1/2) + 10));
         
         //m_transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
+        m_sLight1.setM_position(super.getM_pos());
+        m_sLight1.setM_direction(super.getM_forward());
 
     }
     
