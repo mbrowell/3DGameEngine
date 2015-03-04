@@ -23,7 +23,7 @@ package com.base.engine;
  */
 public class Transform {
     
-    private static Camera camera;
+    private static Camera m_camera;
     
     private static float m_zNear;
     private static float m_zFar;
@@ -68,8 +68,8 @@ public class Transform {
         
         Matrix4f transformationMatrix = getTransformation();
         Matrix4f projectionMatrix = new Matrix4f().initProjection(m_fov, m_width, m_height, m_zNear, m_zFar);
-        Matrix4f cameraRotation = new Matrix4f().initCamera(camera.getM_forward(), camera.getM_up());
-        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-camera.getM_pos().getX(), -camera.getM_pos().getY(), -camera.getM_pos().getZ());
+        Matrix4f cameraRotation = new Matrix4f().initCamera(m_camera.getM_forward(), m_camera.getM_up());
+        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-m_camera.getM_pos().getX(), -m_camera.getM_pos().getY(), -m_camera.getM_pos().getZ());
         
         return projectionMatrix.multiply(cameraRotation.multiply(cameraTranslation.multiply(transformationMatrix)));
         
@@ -79,9 +79,9 @@ public class Transform {
      *
      * @return
      */
-    public static Camera getCamera() {
+    public static Camera getM_camera() {
         
-        return camera;
+        return m_camera;
         
     }
 
@@ -89,9 +89,9 @@ public class Transform {
      *
      * @param camera
      */
-    public static void setCamera(Camera camera) {
+    public static void setM_camera(Camera camera) {
         
-        Transform.camera = camera;
+        Transform.m_camera = camera;
         
     }
     

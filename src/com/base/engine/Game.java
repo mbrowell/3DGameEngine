@@ -22,10 +22,12 @@ package com.base.engine;
  */
 public class Game extends Camera {
     
-    private final Mesh mesh;
-    private final Material material;
-    private final Shader shader;
-    private final Transform transform;
+    private final Mesh m_mesh;
+    private final Material m_material;
+    private final Shader m_shader;
+    private final Transform m_transform;
+    PointLight[] m_pLight = new PointLight[]{new PointLight(new BaseLight(new Vector3f(1, 0.5f, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(-2, 0, 6f)),
+                                               new PointLight(new BaseLight(new Vector3f(0, 0.5f, 1), 0.8f), new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f))};
     
     /**
      *
@@ -35,28 +37,41 @@ public class Game extends Camera {
         
         super();
         
-        mesh = new Mesh(); // mesh = ResourceLoader.loadMesh("box.obj");
-        material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
-        shader = PhongShader.getM_instance();
-        transform = new Transform();
+        m_mesh = new Mesh(); // mesh = ResourceLoader.loadMesh("box.obj");
+        m_material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(1, 1, 1), 1, 8);
+        m_shader = PhongShader.getM_instance();
+        m_transform = new Transform();
         
-        Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0.5773f), new Vector2f(0, 0)),
-                                          new Vertex(new Vector3f(0, -1, -1.15475f), new Vector2f(0.5f, 0)),
-                                          new Vertex(new Vector3f(1, -1, 0.5773f), new Vector2f(1, 0)),
-                                          new Vertex(new Vector3f(0, 1, 0), new Vector2f(0.5f, 1))};
+//        Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0.5773f), new Vector2f(0, 0)),
+//                                          new Vertex(new Vector3f(0, -1, -1.15475f), new Vector2f(0.5f, 0)),
+//                                          new Vertex(new Vector3f(1, -1, 0.5773f), new Vector2f(1, 0)),
+//                                          new Vertex(new Vector3f(0, 1, 0), new Vector2f(0.5f, 1))};
+//        
+//        int[] indices = new int[] {0, 3, 1,
+//                                   1, 3, 2,
+//                                   2, 3, 0,
+//                                   1, 2, 0};
         
-        int[] indices = new int[] {0, 3, 1,
-                                   1, 3, 2,
-                                   2, 3, 0,
-                                   1, 2, 0};
+        float fieldDepth = 10.0f;
+        float fieldWidth = 10.0f;
         
-        mesh.addVertices(vertices, indices, true);
+        Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-fieldWidth, 0.0f, -fieldDepth), new Vector2f (0, 0)),
+                                          new Vertex(new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f (0, 1)),
+                                          new Vertex(new Vector3f(fieldWidth * 3, 0.0f, -fieldDepth), new Vector2f (1, 0)),
+                                          new Vertex(new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f (1, 1))};
+    
+        int indices[] = {0, 1, 2,
+                         2, 1, 3};
+        
+        m_mesh.addVertices(vertices, indices, true);
         
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-        Transform.setCamera(this);
+        Transform.setM_camera(this);
         
         PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
-        PhongShader.setM_directionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
+        //PhongShader.setM_directionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
+        
+        PhongShader.setM_pointLights(m_pLight);
         
     }
     
@@ -67,12 +82,17 @@ public class Game extends Camera {
      */
     public void updateGame() {
         
-        temp += Time.getDelta();
+        temp += Time.getM_delta();
         float sinTemp = (float)Math.sin(temp);
+        float cosTemp = (float)Math.cos(temp);
         
-        transform.setM_translation(0, 0, 0);
-        transform.setM_rotation(0 , sinTemp * 180, 0);
-        //transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
+        m_transform.setM_translation(0, -1, 5);
+        //m_transform.setM_rotation(0 , sinTemp * 180, 0);
+        
+        m_pLight[0].setM_position(new Vector3f(3, 0, 8 * (sinTemp + 1/2) + 10));
+        m_pLight[1].setM_position(new Vector3f(7, 0, 8 * (cosTemp + 1/2) + 10));
+        
+        //m_transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
 
     }
     
@@ -81,10 +101,10 @@ public class Game extends Camera {
      */
     public void render() {
         
-        RenderUtil.setClearColour(Transform.getCamera().getM_pos().divide(2048f).abs());
-        shader.bind();
-        shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
-        mesh.draw();
+        RenderUtil.setClearColour(Transform.getM_camera().getM_pos().divide(2048f).abs());
+        m_shader.bind();
+        m_shader.updateUniforms(m_transform.getTransformation(), m_transform.getProjectedTransformation(), m_material);
+        m_mesh.draw();
         
     }
     

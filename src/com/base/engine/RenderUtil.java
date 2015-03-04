@@ -32,7 +32,7 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glFrontFace;
 import static org.lwjgl.opengl.GL11.glGetString;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_SRGB;
+import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 /**
  *
@@ -99,10 +99,9 @@ public class RenderUtil {
         glEnable(GL_CULL_FACE);
         glEnable(GL_DEPTH_TEST);
         
-        //TODO: Depth clamp
+        glEnable(GL_DEPTH_CLAMP);
         
         glEnable(GL_TEXTURE_2D);
-        glEnable(GL_FRAMEBUFFER_SRGB);
         
     }
     

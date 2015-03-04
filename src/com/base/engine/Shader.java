@@ -82,6 +82,7 @@ public class Shader {
      * @param worldMatrix
      * @param projectedMatrix
      * @param material
+     * @param camera
      */
     public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
         
