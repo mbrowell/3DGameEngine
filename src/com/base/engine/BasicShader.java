@@ -32,8 +32,8 @@ public class BasicShader extends Shader {
         
         super();
         
-        addVertexShader(ResourceLoader.loadShader("basicShader.vs"));
-        addFragmentShader(ResourceLoader.loadShader("basicShader.fs"));
+        addVertexShaderFromFile("basicShader.vs");
+        addFragmentShaderFromFile("basicShader.fs");
         linkShader();
         
         addUniform("transform");

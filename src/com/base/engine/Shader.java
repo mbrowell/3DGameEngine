@@ -17,6 +17,10 @@
 
 package com.base.engine;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,6 +116,36 @@ public class Shader {
     
     /**
      *
+     * @param fileName
+     */
+    public void addVertexShaderFromFile(String fileName) {
+        
+        addProgram(loadShader(fileName), GL_VERTEX_SHADER);
+        
+    }
+    
+    /**
+     *
+     * @param fileName
+     */
+    public void addGeometryShaderFromFile(String fileName) {
+        
+        addProgram(loadShader(fileName), GL_GEOMETRY_SHADER);
+        
+    }
+    
+    /**
+     *
+     * @param fileName
+     */
+    public void addFragmentShaderFromFile(String fileName) {
+        
+        addProgram(loadShader(fileName), GL_FRAGMENT_SHADER);
+        
+    }
+    
+    /**
+     *
      * @param text
      */
     public void addVertexShader(String text) {
@@ -187,6 +221,42 @@ public class Shader {
         } 
         
         glAttachShader(m_program, shader);
+        
+    }
+    
+    @SuppressWarnings("null")
+    private static String loadShader(String fileName) {
+        
+        StringBuilder shaderSource = new StringBuilder();
+        BufferedReader shaderReader = null;
+        
+        try {
+            
+            shaderReader = new BufferedReader(new FileReader("./res/shaders/" + fileName));
+            
+        } catch (FileNotFoundException ex) {
+            
+            Logger.getLogger(Shader.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        String line;
+        
+        try {
+            
+            while((line = shaderReader.readLine()) != null) {
+                
+                shaderSource.append(line).append("\n");
+                               
+            }
+            
+        } catch (IOException ex) {
+            
+            Logger.getLogger(Shader.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        return shaderSource.toString();
         
     }
     

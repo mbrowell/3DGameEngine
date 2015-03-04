@@ -43,8 +43,8 @@ public class PhongShader extends Shader {
         
         super();
         
-        addVertexShader(ResourceLoader.loadShader("phongShader.vs"));
-        addFragmentShader(ResourceLoader.loadShader("phongShader.fs"));
+        addVertexShaderFromFile("phongShader.vs");
+        addFragmentShaderFromFile("phongShader.fs");
         linkShader();
         
         addUniform("transform");

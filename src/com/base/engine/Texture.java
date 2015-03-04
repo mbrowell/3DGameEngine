@@ -17,8 +17,14 @@
 
 package com.base.engine;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBindTexture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 /**
  *
@@ -27,6 +33,16 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 public class Texture {
 
     private final int m_id;
+    
+    /**
+     *
+     * @param fileName
+     */
+    public Texture(String fileName) {
+        
+        this(loadTexture(fileName));
+        
+    }
     
     /**
      *
@@ -44,6 +60,27 @@ public class Texture {
     public void bind() {
         
         glBindTexture(GL_TEXTURE_2D, m_id);
+        
+    }
+    
+     private static int loadTexture(String fileName) {
+        
+        String[] splitArray = fileName.split("\\.");
+        String extension = splitArray[splitArray.length - 1];
+        
+        try {
+            
+            int id = TextureLoader.getTexture(extension, new FileInputStream(new File("./res/textures/" + fileName))).getTextureID();
+            
+            return id;
+            
+        } catch (IOException ex) {
+            
+            Logger.getLogger(Texture.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        return 0;
         
     }
 

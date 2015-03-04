@@ -17,6 +17,13 @@
 
 package com.base.engine;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
@@ -37,24 +44,21 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
  */
 public class Mesh {
 
-    private final int m_vbo;  // Vertex buffer object
-    private final int m_ibo;  // Index buffer object
+    private int m_vbo;  // Vertex buffer object
+    private int m_ibo;  // Index buffer object
     private int m_size;
-
-    /**
-     *
-     */
-    public Mesh() {
+    
+    public Mesh(String fileName) {
         
-        this.m_vbo = glGenBuffers();
-        this.m_ibo = glGenBuffers();
-        this.m_size = 0;
+        initMeshData();
+        
+        loadMesh("fileName");
         
     }
     
-    public void addVertices(Vertex[] vertices, int[] indices) {
+    public Mesh(Vertex[] vertices, int[] indices) {
         
-        addVertices(vertices, indices, false);
+        this(vertices, indices, false);
         
     }
     
@@ -64,7 +68,29 @@ public class Mesh {
      * @param indices
      * @param calcNormals
      */
-    public void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals) {
+    public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals) {
+        
+        initMeshData();
+        
+        addVertices(vertices, indices, calcNormals);
+        
+    }
+    
+    private void initMeshData() {
+        
+        this.m_vbo = glGenBuffers();
+        this.m_ibo = glGenBuffers();
+        this.m_size = 0;
+        
+    }
+    
+    /**
+     *
+     * @param vertices
+     * @param indices
+     * @param calcNormals
+     */
+    private void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals) {
         
         if(calcNormals) {
             
@@ -124,12 +150,99 @@ public class Mesh {
             
         }
         
-        for(int i = 0; i < vertices.length; i++) {
+        for (Vertex vertex : vertices) {
             
-            vertices[i].setM_normal(vertices[i].getM_normal().normalized());
+            vertex.setM_normal(vertex.getM_normal().normalized());
             
         }
         
     }
+    
+    @SuppressWarnings("null")
+    private Mesh loadMesh(String fileName) {
+        
+        String[] splitArray = fileName.split("\\.");
+        String extension = splitArray[splitArray.length - 1];
+        
+        if(!extension.equals("obj")) {
+            
+            System.err.println("Error: File format not supported for mesh data: " + extension);
+            Logger.getLogger(Mesh.class.getName()).log(Level.SEVERE, null, new Exception());
+            System.exit(1);
+            
+        }
+        
+        ArrayList<Vertex> vertices = new ArrayList<>();
+        ArrayList<Integer> indices = new ArrayList<>();
+        
+        @SuppressWarnings("UnusedAssignment")
+        BufferedReader meshReader = null;
+        
+        try {
+            
+            meshReader = new BufferedReader(new FileReader("./res/models/" + fileName));
+            
+        } catch (FileNotFoundException ex) {
+            
+            Logger.getLogger(Mesh.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
+            
+        }
+        
+        String line;
+        
+        try {
+            
+            while((line = meshReader.readLine()) != null) {
+                
+                String[] tokens = line.split(" ");
+                tokens = Util.removeEmptyStrings(tokens);
+                
+                if(tokens.length == 0 || tokens[0].equals("#")) {
+                } else if(tokens[0].equals("v")) {
+                    
+                    vertices.add(new Vertex(new Vector3f(Float.valueOf(tokens[1]),
+                                                         Float.valueOf(tokens[2]),
+                                                         Float.valueOf(tokens[3]))));
+                    
+                } else if(tokens[0].equals("f")) {
+                    
+                    indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[2].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+                    
+                    if(tokens.length > 4) {
+                    
+                    indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[4].split("/")[0]) - 1);
+                    
+                }
+                    
+                }
+                               
+            }
+            
+            meshReader.close();
+            
+        } catch (IOException ex) {
+            
+            Logger.getLogger(Mesh.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+            
+        Vertex[] vertexData = new Vertex[vertices.size()];
+        vertices.toArray(vertexData);
+            
+        Integer[] indexData = new Integer[indices.size()];
+        indices.toArray(indexData);
+        
+        addVertices(vertexData, Util.toIntArray(indexData), true);
+        
+        return null;
+        
+    }
+    
+    
 
 }
