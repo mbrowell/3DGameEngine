@@ -134,7 +134,7 @@ public class MainComponent extends Game {
                 
                 }
                 
-                Time.setDelta((float)frameTime);
+                Time.setM_delta((float)frameTime);
                 
                 input();
                 

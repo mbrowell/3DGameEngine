@@ -17,16 +17,26 @@
 
 package com.base.engine;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
 public class PhongShader extends Shader {
+    
+    private static final int MAX_POINT_LIGHTS = 4;
 
     private static final PhongShader m_instance = new PhongShader();
     
     private static Vector3f m_ambientLight = new Vector3f(0.1f, 0.1f, 0.1f);
     private static DirectionalLight m_directionalLight = new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0), new Vector3f(0, 0, 0));
+    private static PointLight[] m_pointLights = new PointLight[] {};
 
     /**
      *
@@ -42,11 +52,26 @@ public class PhongShader extends Shader {
         addUniform("transform");
         addUniform("transformProjected");
         addUniform("baseColour");
-        addUniform("ambientLight");
         
+        addUniform("specularIntensity");
+        addUniform("specularExponent");
+        addUniform("eyePos");
+        
+        addUniform("ambientLight");
         addUniform("directionalLight.base.colour");
         addUniform("directionalLight.base.intensity");
         addUniform("directionalLight.direction");
+        for(int i = 0; i < MAX_POINT_LIGHTS; i++) {
+            
+            addUniform("pointLights[" + i + "].base.colour");
+            addUniform("pointLights[" + i + "].base.intensity");
+            addUniform("pointLights[" + i + "].atten.constant");
+            addUniform("pointLights[" + i + "].atten.linear");
+            addUniform("pointLights[" + i + "].atten.exponent");
+            addUniform("pointLights[" + i + "].position");
+            addUniform("pointLights[" + i + "].range");
+            
+        }
         
     }
     
@@ -59,9 +84,9 @@ public class PhongShader extends Shader {
     @Override
     public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
         
-        if(material.getTexture() != null) {
+        if(material.getM_texture() != null) {
             
-            material.getTexture().bind();
+            material.getM_texture().bind();
             
         } else {
             
@@ -71,10 +96,22 @@ public class PhongShader extends Shader {
         
         setUniform("transform", worldMatrix);
         setUniform("transformProjected", projectedMatrix);
-        setUniform("baseColour", material.getColour());
-        setUniform("ambientLight", m_ambientLight);
+        setUniform("baseColour", material.getM_colour());
         
+        setUniform("eyePos", Transform.getM_camera().getM_pos());
+        
+        setUniform("ambientLight", m_ambientLight);
         setUniform("directionalLight", m_directionalLight);
+        for (int i = 0; i < m_pointLights.length; i++) {
+            
+            setUniform("pointLights[" + i + "]", m_pointLights[i]);
+            
+        }
+        
+        setUniformf("specularIntensity", material.getM_specularIntensity());
+        setUniformf("specularExponent", material.getM_specularExponent());
+        
+        
         
     }
 
@@ -109,6 +146,21 @@ public class PhongShader extends Shader {
         PhongShader.m_directionalLight = directionalLight;
         
     }
+
+    public static void setM_pointLights(PointLight[] pointLights) {
+        
+        if(pointLights.length > MAX_POINT_LIGHTS) {
+            
+            System.err.println("Error: You passed in too many point lights."
+                    + "/nMax allowed: " + MAX_POINT_LIGHTS + ".  You passed: " + pointLights.length);
+            Logger.getLogger(PhongShader.class.getName()).log(Level.SEVERE, null, new Exception());
+            System.exit(1);
+            
+        }
+        
+        PhongShader.m_pointLights = pointLights;
+        
+    }
     
     /**
      *
@@ -131,6 +183,23 @@ public class PhongShader extends Shader {
         
         setUniform(uniformName + ".base", directionalLight.getM_base());
         setUniform(uniformName + ".direction", directionalLight.getM_direction());
+        
+    }
+    
+    public void setUniform(String uniformName, PointLight pointLight) {
+        
+        setUniform(uniformName + ".base", pointLight.getM_baseLight());
+        setUniform(uniformName + ".atten", pointLight.getM_atten());
+        setUniform(uniformName + ".position", pointLight.getM_position());
+        setUniformf(uniformName + ".range", pointLight.getM_range());
+        
+    }
+    
+    public void setUniform(String uniformName, Attenuation attenuation) {
+        
+        setUniformf(uniformName + ".constant", attenuation.getM_constant());
+        setUniformf(uniformName + ".linear", attenuation.getM_linear());
+        setUniformf(uniformName + ".exponent", attenuation.getM_exponent());
         
     }
     

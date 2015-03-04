@@ -22,14 +22,14 @@ package com.base.engine;
  */
 public class Matrix4f {
 
-    private float[][] m;
+    private float[][] m_m;
 
     /**
      *
      */
     public Matrix4f() {
         
-        m = new float[4][4];
+        m_m = new float[4][4];
         
     }
 
@@ -39,10 +39,10 @@ public class Matrix4f {
      */
     public Matrix4f initIdentity() {
 
-        m[0][0] = 1;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = 0;
-        m[1][0] = 0;    m[1][1] = 1;    m[1][2] = 0;    m[1][3] = 0;
-        m[2][0] = 0;    m[2][1] = 0;    m[2][2] = 1;    m[2][3] = 0;
-        m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+        m_m[0][0] = 1;    m_m[0][1] = 0;    m_m[0][2] = 0;    m_m[0][3] = 0;
+        m_m[1][0] = 0;    m_m[1][1] = 1;    m_m[1][2] = 0;    m_m[1][3] = 0;
+        m_m[2][0] = 0;    m_m[2][1] = 0;    m_m[2][2] = 1;    m_m[2][3] = 0;
+        m_m[3][0] = 0;    m_m[3][1] = 0;    m_m[3][2] = 0;    m_m[3][3] = 1;
 
         return this;
 
@@ -57,10 +57,10 @@ public class Matrix4f {
      */
     public Matrix4f initTranslation(float x, float y, float z) {
 
-        m[0][0] = 1;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = x;
-        m[1][0] = 0;    m[1][1] = 1;    m[1][2] = 0;    m[1][3] = y;
-        m[2][0] = 0;    m[2][1] = 0;    m[2][2] = 1;    m[2][3] = z;
-        m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+        m_m[0][0] = 1;    m_m[0][1] = 0;    m_m[0][2] = 0;    m_m[0][3] = x;
+        m_m[1][0] = 0;    m_m[1][1] = 1;    m_m[1][2] = 0;    m_m[1][3] = y;
+        m_m[2][0] = 0;    m_m[2][1] = 0;    m_m[2][2] = 1;    m_m[2][3] = z;
+        m_m[3][0] = 0;    m_m[3][1] = 0;    m_m[3][2] = 0;    m_m[3][3] = 1;
 
         return this;
 
@@ -81,10 +81,10 @@ public class Matrix4f {
         float tanHalfFOV = (float)Math.tan(Math.toRadians(fov / 2));
         float zRange = zNear - zFar;
 
-        m[0][0] = 1.0f / (tanHalfFOV * aspectRatio); m[0][1] = 0;                 m[0][2] = 0;                        m[0][3] = 0;
-        m[1][0] = 0;                                 m[1][1] = 1.0f / tanHalfFOV; m[1][2] = 0;                        m[1][3] = 0;
-        m[2][0] = 0;                                 m[2][1] = 0;                 m[2][2] = (-zNear - zFar) / zRange; m[2][3] = 2 * zNear * zFar / zRange;
-        m[3][0] = 0;                                 m[3][1] = 0;                 m[3][2] = 1;                        m[3][3] = 1;
+        m_m[0][0] = 1.0f / (tanHalfFOV * aspectRatio); m_m[0][1] = 0;                 m_m[0][2] = 0;                        m_m[0][3] = 0;
+        m_m[1][0] = 0;                                 m_m[1][1] = 1.0f / tanHalfFOV; m_m[1][2] = 0;                        m_m[1][3] = 0;
+        m_m[2][0] = 0;                                 m_m[2][1] = 0;                 m_m[2][2] = (-zNear - zFar) / zRange; m_m[2][3] = 2 * zNear * zFar / zRange;
+        m_m[3][0] = 0;                                 m_m[3][1] = 0;                 m_m[3][2] = 1;                        m_m[3][3] = 1;
 
         return this;
 
@@ -106,10 +106,10 @@ public class Matrix4f {
         
         up = forward.cross(right);
 
-        m[0][0] = right.getX();   m[0][1] = right.getY();   m[0][2] = right.getZ();   m[0][3] = 0;
-        m[1][0] = up.getX();      m[1][1] = up.getY();      m[1][2] = up.getZ();      m[1][3] = 0;
-        m[2][0] = forward.getX(); m[2][1] = forward.getY(); m[2][2] = forward.getZ(); m[2][3] = 0;
-        m[3][0] = 0;              m[3][1] = 0;              m[3][2] = 0;              m[3][3] = 1;
+        m_m[0][0] = right.getX();   m_m[0][1] = right.getY();   m_m[0][2] = right.getZ();   m_m[0][3] = 0;
+        m_m[1][0] = up.getX();      m_m[1][1] = up.getY();      m_m[1][2] = up.getZ();      m_m[1][3] = 0;
+        m_m[2][0] = forward.getX(); m_m[2][1] = forward.getY(); m_m[2][2] = forward.getZ(); m_m[2][3] = 0;
+        m_m[3][0] = 0;              m_m[3][1] = 0;              m_m[3][2] = 0;              m_m[3][3] = 1;
 
         return this;
 
@@ -132,22 +132,22 @@ public class Matrix4f {
         y = (float)Math.toRadians(y);
         z = (float)Math.toRadians(z);
 
-        rotationZ.m[0][0] = (float)Math.cos(z); rotationZ.m[0][1] = -(float)Math.sin(z); rotationZ.m[0][2] = 0;                   rotationZ.m[0][3] = 0;
-        rotationZ.m[1][0] = (float)Math.sin(z); rotationZ.m[1][1] = (float)Math.cos(z);  rotationZ.m[1][2] = 0;                   rotationZ.m[1][3] = 0;
-        rotationZ.m[2][0] = 0;                  rotationZ.m[2][1] = 0;                   rotationZ.m[2][2] = 1;                   rotationZ.m[2][3] = 0;
-        rotationZ.m[3][0] = 0;                  rotationZ.m[3][1] = 0;                   rotationZ.m[3][2] = 0;                   rotationZ.m[3][3] = 1;
+        rotationZ.m_m[0][0] = (float)Math.cos(z); rotationZ.m_m[0][1] = -(float)Math.sin(z); rotationZ.m_m[0][2] = 0;                   rotationZ.m_m[0][3] = 0;
+        rotationZ.m_m[1][0] = (float)Math.sin(z); rotationZ.m_m[1][1] = (float)Math.cos(z);  rotationZ.m_m[1][2] = 0;                   rotationZ.m_m[1][3] = 0;
+        rotationZ.m_m[2][0] = 0;                  rotationZ.m_m[2][1] = 0;                   rotationZ.m_m[2][2] = 1;                   rotationZ.m_m[2][3] = 0;
+        rotationZ.m_m[3][0] = 0;                  rotationZ.m_m[3][1] = 0;                   rotationZ.m_m[3][2] = 0;                   rotationZ.m_m[3][3] = 1;
         
-        rotationX.m[0][0] = 1;                  rotationX.m[0][1] = 0;                   rotationX.m[0][2] = 0;                   rotationX.m[0][3] = 0;
-        rotationX.m[1][0] = 0;                  rotationX.m[1][1] = (float)Math.cos(x);  rotationX.m[1][2] = -(float)Math.sin(x); rotationX.m[1][3] = 0;
-        rotationX.m[2][0] = 0;                  rotationX.m[2][1] = (float)Math.sin(x);  rotationX.m[2][2] = (float)Math.cos(x);  rotationX.m[2][3] = 0;
-        rotationX.m[3][0] = 0;                  rotationX.m[3][1] = 0;                   rotationX.m[3][2] = 0;                   rotationX.m[3][3] = 1;
+        rotationX.m_m[0][0] = 1;                  rotationX.m_m[0][1] = 0;                   rotationX.m_m[0][2] = 0;                   rotationX.m_m[0][3] = 0;
+        rotationX.m_m[1][0] = 0;                  rotationX.m_m[1][1] = (float)Math.cos(x);  rotationX.m_m[1][2] = -(float)Math.sin(x); rotationX.m_m[1][3] = 0;
+        rotationX.m_m[2][0] = 0;                  rotationX.m_m[2][1] = (float)Math.sin(x);  rotationX.m_m[2][2] = (float)Math.cos(x);  rotationX.m_m[2][3] = 0;
+        rotationX.m_m[3][0] = 0;                  rotationX.m_m[3][1] = 0;                   rotationX.m_m[3][2] = 0;                   rotationX.m_m[3][3] = 1;
         
-        rotationY.m[0][0] = (float)Math.cos(y); rotationY.m[0][1] = 0;                   rotationY.m[0][2] = -(float)Math.sin(y); rotationY.m[0][3] = 0;
-        rotationY.m[1][0] = 0;                  rotationY.m[1][1] = 1;                   rotationY.m[1][2] = 0;                   rotationY.m[1][3] = 0;
-        rotationY.m[2][0] = (float)Math.sin(y); rotationY.m[2][1] = 0;                   rotationY.m[2][2] = (float)Math.cos(y);  rotationY.m[2][3] = 0;
-        rotationY.m[3][0] = 0;                  rotationY.m[3][1] = 0;                   rotationY.m[3][2] = 0;                   rotationY.m[3][3] = 1;
+        rotationY.m_m[0][0] = (float)Math.cos(y); rotationY.m_m[0][1] = 0;                   rotationY.m_m[0][2] = -(float)Math.sin(y); rotationY.m_m[0][3] = 0;
+        rotationY.m_m[1][0] = 0;                  rotationY.m_m[1][1] = 1;                   rotationY.m_m[1][2] = 0;                   rotationY.m_m[1][3] = 0;
+        rotationY.m_m[2][0] = (float)Math.sin(y); rotationY.m_m[2][1] = 0;                   rotationY.m_m[2][2] = (float)Math.cos(y);  rotationY.m_m[2][3] = 0;
+        rotationY.m_m[3][0] = 0;                  rotationY.m_m[3][1] = 0;                   rotationY.m_m[3][2] = 0;                   rotationY.m_m[3][3] = 1;
 
-        m = rotationZ.multiply(rotationY.multiply(rotationX)).getM();
+        m_m = rotationZ.multiply(rotationY.multiply(rotationX)).getM();
         
         return this;
 
@@ -162,10 +162,10 @@ public class Matrix4f {
      */
     public Matrix4f initScale(float x, float y, float z) {
 
-        m[0][0] = x;    m[0][1] = 0;    m[0][2] = 0;    m[0][3] = 0;
-        m[1][0] = 0;    m[1][1] = y;    m[1][2] = 0;    m[1][3] = 0;
-        m[2][0] = 0;    m[2][1] = 0;    m[2][2] = z;    m[2][3] = 0;
-        m[3][0] = 0;    m[3][1] = 0;    m[3][2] = 0;    m[3][3] = 1;
+        m_m[0][0] = x;    m_m[0][1] = 0;    m_m[0][2] = 0;    m_m[0][3] = 0;
+        m_m[1][0] = 0;    m_m[1][1] = y;    m_m[1][2] = 0;    m_m[1][3] = 0;
+        m_m[2][0] = 0;    m_m[2][1] = 0;    m_m[2][2] = z;    m_m[2][3] = 0;
+        m_m[3][0] = 0;    m_m[3][1] = 0;    m_m[3][2] = 0;    m_m[3][3] = 1;
 
         return this;
 
@@ -184,10 +184,10 @@ public class Matrix4f {
 
             for (int j = 0; j < 4; j++) {
 
-                result.set(i, j, m[i][0] * r.get(0, j)
-                        + m[i][1] * r.get(1, j)
-                        + m[i][2] * r.get(2, j)
-                        + m[i][3] * r.get(3, j));
+                result.setM_m(i, j, m_m[i][0] * r.get(0, j)
+                        + m_m[i][1] * r.get(1, j)
+                        + m_m[i][2] * r.get(2, j)
+                        + m_m[i][3] * r.get(3, j));
 
             }
 
@@ -207,7 +207,7 @@ public class Matrix4f {
 
         for (int i = 0; i < 4; i++) {
 
-            System.arraycopy(m[i], 0, result[i], 0, 4);
+            System.arraycopy(m_m[i], 0, result[i], 0, 4);
 
         }
 
@@ -223,7 +223,7 @@ public class Matrix4f {
      */
     public float get(int x, int y) {
 
-        return m[x][y];
+        return m_m[x][y];
 
     }
 
@@ -231,9 +231,9 @@ public class Matrix4f {
      *
      * @param m
      */
-    public void setM(float[][] m) {
+    public void setM_m(float[][] m) {
 
-        this.m = m;
+        this.m_m = m;
 
     }
 
@@ -243,9 +243,9 @@ public class Matrix4f {
      * @param y
      * @param value
      */
-    public void set(int x, int y, float value) {
+    public void setM_m(int x, int y, float value) {
 
-        m[x][y] = value;
+        m_m[x][y] = value;
 
     }
 

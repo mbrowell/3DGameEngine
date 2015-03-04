@@ -23,8 +23,20 @@ package com.base.engine;
  */
 public class Material {
 
-    private Texture texture;
-    private Vector3f colour;
+    private Texture m_texture;
+    private Vector3f m_colour;
+    private float m_specularIntensity;
+    private float m_specularExponent;
+    
+    /**
+     *
+     * @param texture
+     */
+    public Material(Texture texture) {
+        
+        this(texture, new Vector3f(1, 1, 1));
+        
+    }
 
     /**
      *
@@ -33,8 +45,23 @@ public class Material {
      */
     public Material(Texture texture, Vector3f colour) {
         
-        this.texture = texture;
-        this.colour = colour;
+        this(texture, colour, 2, 32);
+        
+    }
+    
+    /**
+     *
+     * @param texture
+     * @param colour
+     * @param specularIntensity
+     * @param specularExponent
+     */
+    public Material(Texture texture, Vector3f colour, float specularIntensity, float specularExponent) {
+        
+        this.m_texture = texture;
+        this.m_colour = colour;
+        this.m_specularIntensity = specularIntensity;
+        this.m_specularExponent = specularExponent;
         
     }
 
@@ -42,9 +69,9 @@ public class Material {
      *
      * @return
      */
-    public Texture getTexture() {
+    public Texture getM_texture() {
         
-        return texture;
+        return m_texture;
         
     }
 
@@ -52,9 +79,9 @@ public class Material {
      *
      * @param texture
      */
-    public void setTexture(Texture texture) {
+    public void setM_texture(Texture texture) {
         
-        this.texture = texture;
+        this.m_texture = texture;
         
     }
 
@@ -62,9 +89,9 @@ public class Material {
      *
      * @return
      */
-    public Vector3f getColour() {
+    public Vector3f getM_colour() {
         
-        return colour;
+        return m_colour;
         
     }
 
@@ -72,10 +99,34 @@ public class Material {
      *
      * @param colour
      */
-    public void setColour(Vector3f colour) {
+    public void setM_colour(Vector3f colour) {
         
-        this.colour = colour;
+        this.m_colour = colour;
         
     }
 
+    public float getM_specularIntensity() {
+        
+        return m_specularIntensity;
+        
+    }
+
+    public void setM_specularIntensity(float specularIntensity) {
+        
+        this.m_specularIntensity = specularIntensity;
+        
+    }
+
+    public float getM_specularExponent() {
+        
+        return m_specularExponent;
+        
+    }
+
+    public void setM_specularExponent(float specularExponent) {
+        
+        this.m_specularExponent = specularExponent;
+        
+    }
+    
 }

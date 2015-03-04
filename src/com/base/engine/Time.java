@@ -24,7 +24,7 @@ public class Time {
     
     static final long SECOND = 1000000000L;
         
-    private static float delta;
+    private static float m_delta;
 
     /**
      *
@@ -40,9 +40,9 @@ public class Time {
      *
      * @return
      */
-    public static float getDelta() {
+    public static float getM_delta() {
             
-            return delta;
+            return m_delta;
             
         }
         
@@ -50,9 +50,9 @@ public class Time {
      *
      * @param delta
      */
-    public static void setDelta(float delta){
+    public static void setM_delta(float delta){
             
-            Time.delta = delta;
+            Time.m_delta = delta;
             
         }
         

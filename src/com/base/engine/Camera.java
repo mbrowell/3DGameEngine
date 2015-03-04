@@ -67,8 +67,8 @@ public class Camera extends Input {
     public void input() {
         
         float sensitivity = 0.5f;
-        float moveAmt = (float)(10 * Time.getDelta());
-        //float rotAmt = (float)(100 * Time.getDelta());
+        float moveAmt = (float)(10 * Time.getM_delta());
+        //float rotAmt = (float)(100 * Time.getM_delta());
         
         if(getKey(KEY_ESCAPE)) {
             
