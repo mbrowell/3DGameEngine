@@ -48,7 +48,7 @@ public class Mesh {
     private int m_ibo;  // Index buffer object
     private int m_size;
     
-    public Mesh(String fileName)  throws IOException {
+    public Mesh(String fileName) {
         
         initMeshData();
         

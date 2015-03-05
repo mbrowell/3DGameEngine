@@ -119,7 +119,7 @@ public class Shader {
      * @param fileName
      * @throws java.io.IOException
      */
-    public void addVertexShaderFromFile(String fileName) throws IOException {
+    public void addVertexShaderFromFile(String fileName) {
         
         try {
             
@@ -138,7 +138,7 @@ public class Shader {
      * @param fileName
      * @throws java.io.IOException
      */
-    public void addGeometryShaderFromFile(String fileName) throws IOException {
+    public void addGeometryShaderFromFile(String fileName) {
         
         try {
             
@@ -157,7 +157,7 @@ public class Shader {
      * @param fileName
      * @throws java.io.IOException
      */
-    public void addFragmentShaderFromFile(String fileName) throws IOException {
+    public void addFragmentShaderFromFile(String fileName) {
         
         try {
             
