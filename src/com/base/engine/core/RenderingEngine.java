@@ -18,6 +18,9 @@
 package com.base.engine.core;
 
 import com.base.engine.rendering.BasicShader;
+import com.base.engine.rendering.Camera;
+import com.base.engine.rendering.Shader;
+import com.base.engine.rendering.Window;
 import static org.lwjgl.opengl.GL11.GL_BACK;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
@@ -42,6 +45,8 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
  */
 public class RenderingEngine {
     
+    private Camera m_mainCamera;
+    
     public RenderingEngine() {
         
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -54,12 +59,24 @@ public class RenderingEngine {
         glEnable(GL_DEPTH_CLAMP);
         
         glEnable(GL_TEXTURE_2D);
-
+        
+        m_mainCamera = new Camera((float)Math.toRadians(70), (float)Window.getWidth() / (float)Window.getHeight(), 0.1f, 1000);
+        
+    }
+    
+    public void input() {
+        
+        m_mainCamera.input();
+        
     }
     
     public void render(GameObject gameObject) {
         
         clearScreen();
+        
+        Shader shader = BasicShader.getM_instance();
+        shader.setRenderingEngine(this);
+        
         gameObject.render(BasicShader.getM_instance());
         
     }
@@ -118,6 +135,18 @@ public class RenderingEngine {
     public static String getOpenGLVersion() {
         
         return glGetString(GL_VERSION);
+        
+    }
+
+    public Camera getM_mainCamera() {
+        
+        return m_mainCamera;
+        
+    }
+
+    public void setM_mainCamera(Camera mainCamera) {
+        
+        this.m_mainCamera = mainCamera;
         
     }
 

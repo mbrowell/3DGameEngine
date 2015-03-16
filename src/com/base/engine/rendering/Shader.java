@@ -18,9 +18,10 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Matrix4f;
+import com.base.engine.core.RenderingEngine;
+import com.base.engine.core.Transform;
 import com.base.engine.core.Util;
 import com.base.engine.core.Vector3f;
-import com.base.engine.rendering.Material;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -55,8 +56,10 @@ import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
 public class Shader {
-
+    
+    private RenderingEngine m_renderingEngine;
     private final int m_program;
+    
     private final HashMap<String, Integer> m_uniforms;
     
     /**
@@ -85,14 +88,19 @@ public class Shader {
         
     }
     
+    public void setRenderingEngine(RenderingEngine renderingEngine) {
+        
+        m_renderingEngine = renderingEngine;
+        
+    }
+    
     /**
      *
-     * @param worldMatrix
-     * @param projectedMatrix
+     * @param transform
      * @param material
      * @param camera
      */
-    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
+    public void updateUniforms(Transform transform, Material material) {
         
         
         
@@ -322,4 +330,10 @@ public class Shader {
         
     }
 
+    public RenderingEngine getM_renderingEngine() {
+        
+        return m_renderingEngine;
+        
+    }
+    
 }

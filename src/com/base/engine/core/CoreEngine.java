@@ -140,6 +140,8 @@ public class CoreEngine {
                 Time.setM_delta((float)m_frameTime);
                 
                 m_game.update();
+                m_renderingEngine.input();
+                Input.update();
                 
                 m_game.input();
                 

@@ -17,7 +17,6 @@
 
 package com.base.engine.core;
 
-import com.base.engine.core.Matrix4f;
 import com.base.engine.rendering.Camera;
 
 /**
@@ -25,14 +24,6 @@ import com.base.engine.rendering.Camera;
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
 public class Transform {
-    
-    private static Camera m_camera;
-    
-    private static float m_zNear;
-    private static float m_zFar;
-    private static float m_width;
-    private static float m_height;
-    private static float m_fov; // Field of view.
 
     private Vector3f m_translation;
     private Vector3f m_rotation;
@@ -62,43 +53,6 @@ public class Transform {
         return translation.multiply(rotation.multiply(scale));
         
     }
-    
-    /**
-     *
-     * @return
-     */
-    public Matrix4f getProjectedTransformation() {
-        
-        Matrix4f transformationMatrix = getTransformation();
-        Matrix4f projectionMatrix = new Matrix4f().initProjection(m_fov, m_width, m_height, m_zNear, m_zFar);
-        Matrix4f cameraRotation = new Matrix4f().initCamera(m_camera.getM_forward(), m_camera.getM_up());
-        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-m_camera.getM_pos().getX(), -m_camera.getM_pos().getY(), -m_camera.getM_pos().getZ());
-        
-        return projectionMatrix.multiply(cameraRotation.multiply(cameraTranslation.multiply(transformationMatrix)));
-        
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static Camera getM_camera() {
-        
-        return m_camera;
-        
-    }
-
-    /**
-     *
-     * @param camera
-     */
-    public static void setM_camera(Camera camera) {
-        
-        Transform.m_camera = camera;
-        
-    }
-    
-    
 
     /**
      *
@@ -107,24 +61,6 @@ public class Transform {
     public Vector3f getM_translation() {
         
         return m_translation;
-        
-    }
-    
-    /**
-     *
-     * @param fov
-     * @param width
-     * @param height
-     * @param zNear
-     * @param zFar
-     */
-    public static void setProjection(float fov, float width, float height, float zNear, float zFar) {
-        
-        Transform.m_fov = fov;
-        Transform.m_width = width;
-        Transform.m_height = height;
-        Transform.m_zNear = zNear;
-        Transform.m_zFar = zFar;
         
     }
 

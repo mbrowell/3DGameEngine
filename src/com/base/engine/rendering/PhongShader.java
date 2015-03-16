@@ -96,7 +96,10 @@ public class PhongShader extends Shader {
      * @param material
      */
     @Override
-    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
+    public void updateUniforms(Transform transform, Material material) {
+        
+        Matrix4f worldMatrix = transform.getTransformation();
+        Matrix4f projectedMatrix = getM_renderingEngine().getM_mainCamera().getViewProjection().multiply(worldMatrix);
         
         material.getM_texture().bind();
         
@@ -104,7 +107,7 @@ public class PhongShader extends Shader {
         setUniform("transformProjected", projectedMatrix);
         setUniform("baseColour", material.getM_colour());
         
-        setUniform("eyePos", Transform.getM_camera().getM_pos());
+        setUniform("eyePos", getM_renderingEngine().getM_mainCamera().getM_pos());
         
         setUniform("ambientLight", m_ambientLight);
         setUniform("directionalLight", m_directionalLight);

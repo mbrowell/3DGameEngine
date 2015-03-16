@@ -18,6 +18,7 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Input;
+import com.base.engine.core.Matrix4f;
 import com.base.engine.core.Time;
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
@@ -36,28 +37,30 @@ public class Camera {
     private Vector3f m_pos;
     private Vector3f m_forward;
     private Vector3f m_up;
+    private Matrix4f m_projection;
     
     /**
      *
+     * @param fov
+     * @param aspectRatio
+     * @param zNear
+     * @param zFar
      */
-    public Camera() {
+    public Camera(float fov, float aspectRatio, float zNear, float zFar) {
         
-        this(new Vector3f(0, 0, 0), new Vector3f(0, 0, 1), new Vector3f(0, 1, 0));
+        this.m_pos = new Vector3f(0, 0, 0);
+        this.m_forward = new Vector3f(0, 0, 1).normalized();
+        this.m_up = new Vector3f(0, 1, 0).normalized();
+        this.m_projection = new Matrix4f().initPerspective(fov, aspectRatio, zNear, zFar);
         
     }
     
-    /**
-     *
-     * @param pos
-     * @param forward
-     * @param up
-     */
-    public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
+    public Matrix4f getViewProjection() {
         
-        this.m_pos = pos;
+        Matrix4f cameraRotation = new Matrix4f().initRotation(m_forward, m_up);
+        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-m_pos.getX(), -m_pos.getY(), -m_pos.getZ());
         
-        this.m_up = up.normalized();
-        this.m_forward = forward.normalized();
+        return m_projection.multiply(cameraRotation.multiply(cameraTranslation));
         
     }
     

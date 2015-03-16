@@ -53,7 +53,7 @@ public class MeshRenderer implements GameComponent {
     public void render(Transform transform, Shader shader){
         
         shader.bind();
-        shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), m_material);
+        shader.updateUniforms(transform, m_material);
         m_mesh.draw();
         
     }
