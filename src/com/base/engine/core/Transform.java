@@ -15,7 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.core;
+
+import com.base.engine.core.Matrix4f;
+import com.base.engine.rendering.Camera;
 
 /**
  *

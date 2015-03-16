@@ -15,13 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.rendering;
+
+import com.base.engine.core.Input;
+import com.base.engine.core.Time;
+import com.base.engine.core.Vector2f;
+import com.base.engine.core.Vector3f;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Camera extends Input {
+public class Camera {
 
     /**
      *
@@ -49,8 +54,6 @@ public class Camera extends Input {
      */
     public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
         
-        super();
-        
         this.m_pos = pos;
         
         this.m_up = up.normalized();
@@ -70,35 +73,35 @@ public class Camera extends Input {
         float moveAmt = (float)(10 * Time.getM_delta());
         //float rotAmt = (float)(100 * Time.getM_delta());
         
-        if(getKey(KEY_ESCAPE)) {
+        if(Input.getKey(Input.KEY_ESCAPE)) {
             
-            setCursor(true);
+            Input.setCursor(true);
             mouseLocked = false;
             
         }
         if(Input.getMouseDown(0)) {
             
-            setMousePosition(centrePosition);
-            setCursor(false);
+            Input.setMousePosition(centrePosition);
+            Input.setCursor(false);
             mouseLocked = true;
             
         }
         
-        if(getKey(KEY_W)) {
+        if(Input.getKey(Input.KEY_W)) {
             
             move(getM_forward(), moveAmt);
             
         }
-        if(getKey(KEY_A)) {
+        if(Input.getKey(Input.KEY_A)) {
             
             move(getLeft(), moveAmt);
             
         }
-        if(getKey(KEY_S)) {
+        if(Input.getKey(Input.KEY_S)) {
             
             move(getM_forward(), -moveAmt);
             
-        }if(getKey(KEY_D)) {
+        }if(Input.getKey(Input.KEY_D)) {
             
             move(getRight(), moveAmt);
             
@@ -106,7 +109,7 @@ public class Camera extends Input {
         
         if(mouseLocked) {
             
-            Vector2f deltaPos = getMousePosition().subtract(centrePosition);
+            Vector2f deltaPos = Input.getMousePosition().subtract(centrePosition);
             
             boolean rotY = deltaPos.getX() != 0;
             boolean rotX = deltaPos.getY() != 0;
@@ -124,7 +127,7 @@ public class Camera extends Input {
             
             if (rotY || rotX) {
                 
-                setMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
+                Input.setMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
                 
             }
             

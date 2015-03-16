@@ -14,8 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.base.engine;
+package com.base.engine.core;
 
+import com.base.engine.rendering.Window;
+import com.base.engine.rendering.RenderUtil;
+import com.base.game.Game;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,40 +26,46 @@ import java.util.logging.Logger;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class MainComponent extends Game {
-    
-    /**
-     *
-     */
-    public static final int WIDTH = 1024;
-
-    /**
-     *
-     */
-    public static final int HEIGHT = 768;
-
-    /**
-     *
-     */
-    public static final String TITLE = "3d Game Engine";
-
-    /**
-     *
-     */
-    public static final double FRAME_CAP = 5000.0;
+public class CoreEngine {
     
     private boolean m_isRunning;
+    private final Game m_game;
+    
+    private final int m_width;
+    private final int m_height;
+    
+    private final double m_frameTime;
     
     /**
      *
+     * @param width
+     * @param height
+     * @param frameRate
+     * @param game
      */
-    public MainComponent() {
+    public CoreEngine(int width, int height, double frameRate, Game game) {
         
-        super();
+        m_isRunning = false;
+        m_game = game;
+        
+        m_width = width;
+        m_height = height;
+        
+        m_frameTime = 1 / frameRate;
+        
+    }
+    
+    private void initializeRenderingSystem() {
         
         System.out.println(RenderUtil.getOpenGLVersion());
         RenderUtil.initGraphics();
-        m_isRunning = false;
+        
+    }
+    
+    public void createWindow(String title) {
+        
+        Window.createWindow(m_width, m_height, title);
+        initializeRenderingSystem();
         
     }
     
@@ -77,7 +86,7 @@ public class MainComponent extends Game {
             
         } catch (InterruptedException e) {
             
-            Logger.getLogger(MainComponent.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CoreEngine.class.getName()).log(Level.SEVERE, null, e);
             
         }
         
@@ -106,7 +115,7 @@ public class MainComponent extends Game {
         int frames = 0;
         long frameCounter = 0;
         
-        final double frameTime  = 1.0 / FRAME_CAP;
+        m_game.init();
         
         long lastTime = Time.getTime();
         double unprocessedTime = 0;
@@ -122,11 +131,11 @@ public class MainComponent extends Game {
             unprocessedTime += passedTime / (double)Time.SECOND;
             frameCounter += passedTime;
             
-            while(unprocessedTime > frameTime) {
+            while(unprocessedTime > m_frameTime) {
                 
                 render = true;
                 
-                unprocessedTime -= frameTime;
+                unprocessedTime -= m_frameTime;
                 
                 if(Window.isCloseRequested()) {
                 
@@ -134,12 +143,11 @@ public class MainComponent extends Game {
                 
                 }
                 
-                Time.setM_delta((float)frameTime);
+                Time.setM_delta((float)m_frameTime);
                 
-                input();
+                m_game.update();
                 
-                
-                updateGame();
+                m_game.input();
                 
                 if(frameCounter >= Time.SECOND) {
                 
@@ -164,7 +172,7 @@ public class MainComponent extends Game {
                     
                 } catch(InterruptedException e) {
                     
-                    Logger.getLogger(MainComponent.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(CoreEngine.class.getName()).log(Level.SEVERE, null, e);
                     
                 }
                 
@@ -180,7 +188,7 @@ public class MainComponent extends Game {
     private void doRender() {
         
         RenderUtil.clearScreen();
-        super.render();
+        m_game.render();
         Window.render();
         
     }
@@ -188,20 +196,6 @@ public class MainComponent extends Game {
     private void cleanUp() {
         
         Window.dispose();
-        
-    }
-    
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        
-        Window.createWindow(WIDTH, HEIGHT, TITLE);
-        
-        MainComponent mainComponent = new MainComponent();
-        
-        mainComponent.start();
         
     }
     

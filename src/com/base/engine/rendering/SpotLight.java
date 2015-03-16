@@ -15,56 +15,51 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.rendering;
+
+import com.base.engine.core.Vector3f;
+import com.base.engine.rendering.PointLight;
+import com.base.engine.rendering.Attenuation;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class PointLight extends BaseLight {
+public class SpotLight extends PointLight {
 
-    private Attenuation m_atten;
-    private Vector3f m_position;
-    private float m_range;
+    private Vector3f m_direction;
+    private float m_cutoff;
 
-    public PointLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range) {
+    public SpotLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range, Vector3f direction, float cutoff) {
         
-        super(colour, intensity);
-        this.m_atten = atten;
-        this.m_position = position;
-        this.m_range = range;
+        super(colour, intensity, atten, position, range);
+        this.m_direction = direction.normalized();
+        this.m_cutoff = cutoff;
         
     }
 
-    public Attenuation getM_atten() {
+    public Vector3f getM_direction() {
         
-        return m_atten;
-        
-    }
-
-    public void setM_atten(Attenuation atten) {
-        
-        this.m_atten = atten;
+        return m_direction;
         
     }
 
-    public Vector3f getM_position() {
+    public void setM_direction(Vector3f direction) {
         
-        return m_position;
-    }
-
-    public void setM_position(Vector3f position) {
-        
-        this.m_position = position;
+        this.m_direction = direction;
         
     }
 
-    public float getM_range() {
-        return m_range;
+    public float getM_cutoff() {
+        
+        return m_cutoff;
+        
     }
 
-    public void setM_range(float m_range) {
-        this.m_range = m_range;
+    public void setM_cutoff(float cutoff) {
+        
+        this.m_cutoff = cutoff;
+        
     }
     
 }

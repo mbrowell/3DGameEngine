@@ -14,46 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.base.engine;
+package com.base.game;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Time {
+public interface Game {
     
-    static final long SECOND = 1000000000L;
-        
-    private static float m_delta;
-
-    /**
-     *
-     * @return
-     */
-    public static long getTime() {
-            
-        return System.nanoTime();
-                
-    }
-        
-    /**
-     *
-     * @return
-     */
-    public static float getM_delta() {
-            
-            return m_delta;
-            
-        }
-        
-    /**
-     *
-     * @param delta
-     */
-    public static void setM_delta(float delta){
-            
-            Time.m_delta = delta;
-            
-        }
-        
+    public void init();
+    public void input();
+    public void update();
+    public void render();
+    
 }

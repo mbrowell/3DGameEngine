@@ -14,18 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.base.engine;
+
+package com.base.game;
+
+import com.base.engine.core.Time;
+import com.base.engine.core.Transform;
+import com.base.engine.core.Vector2f;
+import com.base.engine.core.Vector3f;
+import com.base.engine.rendering.Attenuation;
+import com.base.engine.rendering.Camera;
+import com.base.engine.rendering.DirectionalLight;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.Mesh;
+import com.base.engine.rendering.PhongShader;
+import com.base.engine.rendering.PointLight;
+import com.base.engine.rendering.RenderUtil;
+import com.base.engine.rendering.Shader;
+import com.base.engine.rendering.SpotLight;
+import com.base.engine.rendering.Texture;
+import com.base.engine.rendering.Vertex;
+import com.base.engine.rendering.Window;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Game extends Camera {
-    
-    private final Mesh m_mesh;
-    private final Material m_material;
-    private final Shader m_shader;
-    private final Transform m_transform;
+public class TestGame implements Game {
+
+    private Mesh m_mesh;
+    private Material m_material;
+    private Shader m_shader;
+    private Transform m_transform;
+    private Camera m_camera;
     PointLight[] m_pLights = new PointLight[]{new PointLight(new Vector3f(1, 0.5f, 0), 0.8f, new Attenuation(0, 0, 1), new Vector3f(-2, 0, 5f), 10),
                                              new PointLight(new Vector3f(0, 0.5f, 1), 0.8f, new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f), 10)};
     SpotLight m_sLight1 = new SpotLight(new Vector3f(0, 1, 1), 0.8f, new Attenuation(0, 0, 0.01f), new Vector3f(-2, 0, 5f), 30, new Vector3f(1, 1, 1), 0.7f);
@@ -33,15 +53,13 @@ public class Game extends Camera {
     /**
      *
      */
-    @SuppressWarnings("LeakingThisInConstructor")
-    public Game() {
-        
-        super();
-        
+    @Override
+    public void init() {
         
         m_material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         m_shader = PhongShader.getM_instance();
         m_transform = new Transform();
+        m_camera = new Camera();
         
 //        Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0.5773f), new Vector2f(0, 0)),
 //                                          new Vertex(new Vector3f(0, -1, -1.15475f), new Vector2f(0.5f, 0)),
@@ -67,7 +85,7 @@ public class Game extends Camera {
         m_mesh = new Mesh(vertices, indices, true); // mesh = ResourceLoader.loadMesh("box.obj");
         
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-        Transform.setM_camera(this);
+        Transform.setM_camera(m_camera);
         
         PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
         PhongShader.setM_directionalLight(new DirectionalLight(new Vector3f(1, 1, 1), 0.1f, new Vector3f(1, 1, 1)));
@@ -77,12 +95,23 @@ public class Game extends Camera {
         
     }
     
+    /**
+     *
+     */
+    @Override
+    public void input() {
+        
+        m_camera.input();
+        
+    }
+    
     float temp = 0.0f;
     
     /**
      *
      */
-    public void updateGame() {
+    @Override
+    public void update() {
         
         temp += Time.getM_delta();
         float sinTemp = (float)Math.sin(temp);
@@ -95,14 +124,15 @@ public class Game extends Camera {
         m_pLights[1].setM_position(new Vector3f(7, 0, 8 * (cosTemp + 1/2) + 10));
         
         //m_transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
-        m_sLight1.setM_position(super.getM_pos());
-        m_sLight1.setM_direction(super.getM_forward());
+        m_sLight1.setM_position(m_camera.getM_pos());
+        m_sLight1.setM_direction(m_camera.getM_forward());
 
     }
     
     /**
      *
      */
+    @Override
     public void render() {
         
         RenderUtil.setClearColour(Transform.getM_camera().getM_pos().divide(2048f).abs());
@@ -111,5 +141,5 @@ public class Game extends Camera {
         m_mesh.draw();
         
     }
-    
+
 }

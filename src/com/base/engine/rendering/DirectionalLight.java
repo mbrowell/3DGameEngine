@@ -15,59 +15,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.rendering;
+
+import com.base.engine.core.Vector3f;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Attenuation {
+public class DirectionalLight extends BaseLight {
 
-    private float m_constant;
-    private float m_linear;
-    private float m_exponent;
+    private Vector3f m_direction;
     
-    public Attenuation(float constant, float linear, float exponent) {
+    /**
+     *
+     * @param colour
+     * @param intensity
+     * @param base
+     * @param direction
+     */
+    public DirectionalLight(Vector3f colour, float intensity, Vector3f direction) {
         
-        this.m_constant = constant;
-        this.m_linear = linear;
-        this.m_exponent = exponent;
-        
-    }
-
-    public float getM_constant() {
-        
-        return m_constant;
-        
-    }
-
-    public void setM_constant(float constant) {
-        
-        this.m_constant = constant;
+        super(colour, intensity);
+        this.m_direction = direction.normalized();
         
     }
 
-    public float getM_linear() {
+    public Vector3f getM_direction() {
         
-        return m_linear;
-        
-    }
-
-    public void setM_linear(float linear) {
-        
-        this.m_linear = linear;
+        return m_direction;
         
     }
-
-    public float getM_exponent() {
+    
+    public void setM_direction(Vector3f direction) {
         
-        return m_exponent;
-        
-    }
-
-    public void setM_exponent(float exponent) {
-        
-        this.m_exponent = exponent;
+        this.m_direction = direction;
         
     }
     

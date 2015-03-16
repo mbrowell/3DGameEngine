@@ -15,40 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.game;
+
+import com.base.engine.core.CoreEngine;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class DirectionalLight extends BaseLight {
+public class Main {
 
-    private Vector3f m_direction;
-    
-    /**
-     *
-     * @param colour
-     * @param intensity
-     * @param base
-     * @param direction
-     */
-    public DirectionalLight(Vector3f colour, float intensity, Vector3f direction) {
+    public static void main(String[] args) {
         
-        super(colour, intensity);
-        this.m_direction = direction.normalized();
+        CoreEngine engine = new CoreEngine(800, 600, 60, new TestGame());
+        engine.createWindow("3D Game Engine");
+        engine.start();
         
     }
 
-    public Vector3f getM_direction() {
-        
-        return m_direction;
-        
-    }
-    
-    public void setM_direction(Vector3f direction) {
-        
-        this.m_direction = direction;
-        
-    }
-    
 }

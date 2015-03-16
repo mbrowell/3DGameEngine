@@ -15,7 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.rendering;
+
+import com.base.engine.core.Vector3f;
 
 /**
  *

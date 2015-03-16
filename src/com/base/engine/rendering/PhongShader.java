@@ -15,8 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.rendering;
 
+import com.base.engine.core.Matrix4f;
+import com.base.engine.core.Transform;
+import com.base.engine.core.Vector3f;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.DirectionalLight;
+import com.base.engine.rendering.Attenuation;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

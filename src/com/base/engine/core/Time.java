@@ -14,39 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package com.base.engine;
+package com.base.engine.core;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class BaseLight {
-
-    private Vector3f m_colour;
-    private float m_intensity;
+public class Time {
     
-    public BaseLight(Vector3f colour, float intensity) {
+    static final long SECOND = 1000000000L;
         
-        this.m_colour = colour;
-        this.m_intensity = intensity;
+    private static float m_delta;
+
+    /**
+     *
+     * @return
+     */
+    public static long getTime() {
+            
+        return System.nanoTime();
+                
+    }
         
-    }
-
-    public Vector3f getM_colour() {
-        return m_colour;
-    }
-
-    public void setM_colour(Vector3f m_colour) {
-        this.m_colour = m_colour;
-    }
-
-    public float getM_intensity() {
-        return m_intensity;
-    }
-
-    public void setM_intensity(float m_intensity) {
-        this.m_intensity = m_intensity;
-    }
-    
+    /**
+     *
+     * @return
+     */
+    public static float getM_delta() {
+            
+            return m_delta;
+            
+        }
+        
+    /**
+     *
+     * @param delta
+     */
+    public static void setM_delta(float delta){
+            
+            Time.m_delta = delta;
+            
+        }
+        
 }

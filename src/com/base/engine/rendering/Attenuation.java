@@ -15,46 +15,59 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.base.engine;
+package com.base.engine.rendering;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class SpotLight extends PointLight {
+public class Attenuation {
 
-    private Vector3f m_direction;
-    private float m_cutoff;
-
-    public SpotLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range, Vector3f direction, float cutoff) {
+    private float m_constant;
+    private float m_linear;
+    private float m_exponent;
+    
+    public Attenuation(float constant, float linear, float exponent) {
         
-        super(colour, intensity, atten, position, range);
-        this.m_direction = direction.normalized();
-        this.m_cutoff = cutoff;
+        this.m_constant = constant;
+        this.m_linear = linear;
+        this.m_exponent = exponent;
         
     }
 
-    public Vector3f getM_direction() {
+    public float getM_constant() {
         
-        return m_direction;
-        
-    }
-
-    public void setM_direction(Vector3f direction) {
-        
-        this.m_direction = direction;
+        return m_constant;
         
     }
 
-    public float getM_cutoff() {
+    public void setM_constant(float constant) {
         
-        return m_cutoff;
+        this.m_constant = constant;
         
     }
 
-    public void setM_cutoff(float cutoff) {
+    public float getM_linear() {
         
-        this.m_cutoff = cutoff;
+        return m_linear;
+        
+    }
+
+    public void setM_linear(float linear) {
+        
+        this.m_linear = linear;
+        
+    }
+
+    public float getM_exponent() {
+        
+        return m_exponent;
+        
+    }
+
+    public void setM_exponent(float exponent) {
+        
+        this.m_exponent = exponent;
         
     }
     
