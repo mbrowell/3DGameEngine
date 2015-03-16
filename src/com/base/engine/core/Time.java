@@ -22,38 +22,16 @@ package com.base.engine.core;
  */
 public class Time {
     
-    static final long SECOND = 1000000000L;
-        
-    private static float m_delta;
+    private static final double SECOND = 1000000000;
 
     /**
      *
      * @return
      */
-    public static long getTime() {
+    public static double getTime() {
             
-        return System.nanoTime();
+        return System.nanoTime() / SECOND;
                 
     }
-        
-    /**
-     *
-     * @return
-     */
-    public static float getM_delta() {
-            
-            return m_delta;
-            
-        }
-        
-    /**
-     *
-     * @param delta
-     */
-    public static void setM_delta(float delta){
-            
-            Time.m_delta = delta;
-            
-        }
         
 }

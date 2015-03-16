@@ -88,6 +88,21 @@ public class Matrix4f {
 
     }
     
+    public Matrix4f initOrthographic(float left, float right, float bottom, float top, float near, float far) {
+        
+        float width = right - left;
+        float height = top - bottom;
+        float depth = far - near;
+
+        m_m[0][0] = 2 / width; m_m[0][1] = 0;          m_m[0][2] = 0;          m_m[0][3] = -(right + left) / width;
+        m_m[1][0] = 0;         m_m[1][1] = 2 / height; m_m[1][2] = 0;          m_m[1][3] = -(top + bottom) / height;
+        m_m[2][0] = 0;         m_m[2][1] = 0;          m_m[2][2] = -2 / depth; m_m[2][3] = -(far + near) / depth;
+        m_m[3][0] = 0;         m_m[3][1] = 0;          m_m[3][2] = 0;          m_m[3][3] = 1;
+
+        return this;
+
+    }
+    
     /**
      *
      * @param forward
@@ -104,10 +119,10 @@ public class Matrix4f {
         
         up = forward.cross(right);
 
-        m_m[0][0] = right.getX();   m_m[0][1] = right.getY();   m_m[0][2] = right.getZ();   m_m[0][3] = 0;
-        m_m[1][0] = up.getX();      m_m[1][1] = up.getY();      m_m[1][2] = up.getZ();      m_m[1][3] = 0;
-        m_m[2][0] = forward.getX(); m_m[2][1] = forward.getY(); m_m[2][2] = forward.getZ(); m_m[2][3] = 0;
-        m_m[3][0] = 0;              m_m[3][1] = 0;              m_m[3][2] = 0;              m_m[3][3] = 1;
+        m_m[0][0] = right.getM_x();   m_m[0][1] = right.getM_y();   m_m[0][2] = right.getM_z();   m_m[0][3] = 0;
+        m_m[1][0] = up.getM_x();      m_m[1][1] = up.getM_y();      m_m[1][2] = up.getM_z();      m_m[1][3] = 0;
+        m_m[2][0] = forward.getM_x(); m_m[2][1] = forward.getM_y(); m_m[2][2] = forward.getM_z(); m_m[2][3] = 0;
+        m_m[3][0] = 0;                m_m[3][1] = 0;                m_m[3][2] = 0;                m_m[3][3] = 1;
 
         return this;
 

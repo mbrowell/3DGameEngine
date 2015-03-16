@@ -19,7 +19,6 @@ package com.base.engine.rendering;
 
 import com.base.engine.core.Input;
 import com.base.engine.core.Matrix4f;
-import com.base.engine.core.Time;
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
 
@@ -37,7 +36,7 @@ public class Camera {
     private Vector3f m_pos;
     private Vector3f m_forward;
     private Vector3f m_up;
-    private Matrix4f m_projection;
+    private final Matrix4f m_projection;
     
     /**
      *
@@ -58,7 +57,7 @@ public class Camera {
     public Matrix4f getViewProjection() {
         
         Matrix4f cameraRotation = new Matrix4f().initRotation(m_forward, m_up);
-        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-m_pos.getX(), -m_pos.getY(), -m_pos.getZ());
+        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-m_pos.getM_x(), -m_pos.getM_y(), -m_pos.getM_z());
         
         return m_projection.multiply(cameraRotation.multiply(cameraTranslation));
         
@@ -69,11 +68,12 @@ public class Camera {
     
     /**
      *
+     * @param delta
      */
-    public void input() {
+    public void input(float delta) {
         
         float sensitivity = 0.5f;
-        float moveAmt = (float)(10 * Time.getM_delta());
+        float moveAmt = (float)(10 * delta);
         //float rotAmt = (float)(100 * Time.getM_delta());
         
         if(Input.getKey(Input.KEY_ESCAPE)) {
@@ -114,17 +114,17 @@ public class Camera {
             
             Vector2f deltaPos = Input.getMousePosition().subtract(centrePosition);
             
-            boolean rotY = deltaPos.getX() != 0;
-            boolean rotX = deltaPos.getY() != 0;
+            boolean rotY = deltaPos.getM_x() != 0;
+            boolean rotX = deltaPos.getM_y() != 0;
             
             if(rotY) {
                 
-                rotateY(deltaPos.getX() * sensitivity);
+                rotateY(deltaPos.getM_x() * sensitivity);
                 
             }
             if(rotX) {
                 
-                rotateX(-deltaPos.getY() * sensitivity);
+                rotateX(-deltaPos.getM_y() * sensitivity);
                 
             }
             

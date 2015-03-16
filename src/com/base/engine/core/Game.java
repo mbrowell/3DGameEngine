@@ -30,15 +30,15 @@ public abstract class Game {
         
     }
     
-    public void input() {
+    public void input(float delta) {
         
-        getRootObject().input();
+        getRootObject().input(delta);
         
     }
     
-    public void update() {
+    public void update(float delta) {
         
-        getRootObject().update();
+        getRootObject().update(delta);
         
     }
     

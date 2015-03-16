@@ -17,16 +17,14 @@
 
 package com.base.engine.core;
 
-import com.base.engine.rendering.Camera;
-
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
 public class Transform {
 
-    private Vector3f m_translation;
-    private Vector3f m_rotation;
+    private Vector3f m_pos;
+    private Vector3f m_rot;
     private Vector3f m_scale;
     
     /**
@@ -34,8 +32,8 @@ public class Transform {
      */
     public Transform() {
         
-        m_translation = new Vector3f(0, 0, 0);
-        m_rotation = new Vector3f(0, 0, 0);
+        m_pos = new Vector3f(0, 0, 0);
+        m_rot = new Vector3f(0, 0, 0);
         m_scale = new Vector3f(1, 1, 1);
         
     }
@@ -46,11 +44,11 @@ public class Transform {
      */
     public Matrix4f getTransformation() {
         
-        Matrix4f translation = new Matrix4f().initTranslation(m_translation.getX(), m_translation.getY(), m_translation.getZ());
-        Matrix4f rotation = new Matrix4f().initRotation(m_rotation.getX(), m_rotation.getY(), m_rotation.getZ());
-        Matrix4f scale = new Matrix4f().initScale(m_scale.getX(), m_scale.getY(), m_scale.getZ());
+        Matrix4f pos = new Matrix4f().initTranslation(m_pos.getM_x(), m_pos.getM_y(), m_pos.getM_z());
+        Matrix4f rot = new Matrix4f().initRotation(m_rot.getM_x(), m_rot.getM_y(), m_rot.getM_z());
+        Matrix4f scale = new Matrix4f().initScale(m_scale.getM_x(), m_scale.getM_y(), m_scale.getM_z());
         
-        return translation.multiply(rotation.multiply(scale));
+        return pos.multiply(rot.multiply(scale));
         
     }
 
@@ -58,19 +56,19 @@ public class Transform {
      *
      * @return
      */
-    public Vector3f getM_translation() {
+    public Vector3f getM_pos() {
         
-        return m_translation;
+        return m_pos;
         
     }
 
     /**
      *
-     * @param m_translation
+     * @param pos
      */
-    public void setM_translation(Vector3f m_translation) {
+    public void setM_pos(Vector3f pos) {
         
-        this.m_translation = m_translation;
+        this.m_pos = pos;
         
     }
     
@@ -80,9 +78,9 @@ public class Transform {
      * @param y
      * @param z
      */
-    public void setM_translation(float x, float y, float z) {
+    public void setM_pos(float x, float y, float z) {
         
-        this.m_translation = new Vector3f(x, y, z);
+        this.m_pos = new Vector3f(x, y, z);
         
     }
 
@@ -90,19 +88,19 @@ public class Transform {
      *
      * @return
      */
-    public Vector3f getM_rotation() {
+    public Vector3f getM_rot() {
         
-        return m_rotation;
+        return m_rot;
         
     }
 
     /**
      *
-     * @param rotation
+     * @param rot
      */
-    public void setM_rotation(Vector3f rotation) {
+    public void setM_rot(Vector3f rot) {
         
-        this.m_rotation = rotation;
+        this.m_rot = rot;
         
     }
     
@@ -112,9 +110,9 @@ public class Transform {
      * @param y
      * @param z
      */
-    public void setM_rotation(float x, float y, float z) {
+    public void setM_rot(float x, float y, float z) {
         
-        this.m_rotation = new Vector3f(x, y, z);
+        this.m_rot = new Vector3f(x, y, z);
         
     }
 

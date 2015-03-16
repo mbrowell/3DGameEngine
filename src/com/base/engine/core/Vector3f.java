@@ -16,14 +16,14 @@
  */
 package com.base.engine.core;
 
-import com.base.engine.core.Quaternion;
-
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class Vector3f extends Vector2f {
-
+public class Vector3f {
+    
+    private float m_x;
+    private float m_y;
     private float m_z;
 
     /**
@@ -34,8 +34,9 @@ public class Vector3f extends Vector2f {
      */
     public Vector3f(float x, float y, float z) {
         
-        super(x, y);
-        this.m_z = z;
+        m_x = x;
+        m_y = y;
+        m_z = z;
 
     }
 
@@ -43,10 +44,9 @@ public class Vector3f extends Vector2f {
      *
      * @return
      */
-    @Override
     public float length() {
 
-        return (float)Math.sqrt(super.getX() * super.getX() + super.getY() * super.getY() + m_z * m_z);
+        return (float)Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 
     }
 
@@ -57,10 +57,10 @@ public class Vector3f extends Vector2f {
      */
     public float dot(Vector3f r) {
 
-        return super.getX() * r.getX() + super.getY() * r.getY() + m_z * r.getZ();
+        return m_x * r.getM_x() + m_y * r.getM_y() + m_z * r.getM_z();
 
     }
-
+    
     /**
      *
      * @param r
@@ -68,9 +68,9 @@ public class Vector3f extends Vector2f {
      */
     public Vector3f cross(Vector3f r) {
 
-        float x_ = super.getY() * r.getZ() - m_z * r.getY();
-        float y_ = m_z * r.getX() - super.getX() * r.getZ();
-        float z_ = super.getX() * r.getY() - super.getY() * r.getX();
+        float x_ = m_y * r.getM_z() - m_z * r.getM_y();
+        float y_ = m_z * r.getM_x() - m_x * r.getM_z();
+        float z_ = m_x * r.getM_y() - m_y * r.getM_x();
 
         return new Vector3f(x_, y_, z_);
 
@@ -80,12 +80,11 @@ public class Vector3f extends Vector2f {
      *
      * @return
      */
-    @Override
     public Vector3f normalized() {
 
         float length = length();
 
-        return new Vector3f(super.getX() / length, super.getY() / length, m_z / length);
+        return new Vector3f(m_x / length, m_y / length, m_z / length);
 
     }
 
@@ -100,9 +99,9 @@ public class Vector3f extends Vector2f {
         float sinHalfAngle = (float)Math.sin(Math.toRadians(angle / 2));
         float cosHalfAngle = (float)Math.cos(Math.toRadians(angle / 2));
         
-        float rX = axis.getX() * sinHalfAngle;
-        float rY = axis.getY() * sinHalfAngle;
-        float rZ = axis.getZ() * sinHalfAngle;
+        float rX = axis.getM_x() * sinHalfAngle;
+        float rY = axis.getM_y() * sinHalfAngle;
+        float rZ = axis.getM_z() * sinHalfAngle;
         float rW = cosHalfAngle;
         
         Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
@@ -110,8 +109,14 @@ public class Vector3f extends Vector2f {
         
         Quaternion w = rotation.multiply(this).multiply(conjugate);
 
-        return new Vector3f(w.getX(), w.getY(), w.getZ());
+        return new Vector3f(w.getM_x(), w.getM_y(), w.getM_z());
 
+    }
+    
+    public Vector3f lerp(Vector3f dest, float lerpFactor) {
+        
+        return this.add(dest.subtract(this).multiply(lerpFactor));
+        
     }
 
     /**
@@ -121,7 +126,7 @@ public class Vector3f extends Vector2f {
      */
     public Vector3f add(Vector3f r) {
 
-        return new Vector3f(super.getX() + r.getX(), super.getY() + r.getY(), m_z + r.getZ());
+        return new Vector3f(m_x + r.getM_x(), m_y + r.getM_y(), m_z + r.getM_z());
 
     }
 
@@ -130,10 +135,9 @@ public class Vector3f extends Vector2f {
      * @param r
      * @return
      */
-    @Override
     public Vector3f add(float r) {
 
-        return new Vector3f(super.getX() + r, super.getY() + r, m_z + r);
+        return new Vector3f(m_x + r, m_y + r, m_z + r);
 
     }
 
@@ -144,7 +148,7 @@ public class Vector3f extends Vector2f {
      */
     public Vector3f subtract(Vector3f r) {
 
-        return new Vector3f(super.getX() - r.getX(), super.getY() - r.getY(), m_z - r.getZ());
+        return new Vector3f(m_x - r.getM_x(), m_y - r.getM_y(), m_z - r.getM_z());
 
     }
 
@@ -153,10 +157,9 @@ public class Vector3f extends Vector2f {
      * @param r
      * @return
      */
-    @Override
     public Vector3f subtract(float r) {
 
-        return new Vector3f(super.getX() - r, super.getY() - r, m_z - r);
+        return new Vector3f(m_x - r, m_y - r, m_z - r);
 
     }
 
@@ -167,7 +170,7 @@ public class Vector3f extends Vector2f {
      */
     public Vector3f multiply(Vector3f r) {
 
-        return new Vector3f(super.getX() * r.getX(), super.getY() * r.getY(), m_z * r.getZ());
+        return new Vector3f(m_x * r.getM_x(), m_y * r.getM_y(), m_z * r.getM_z());
 
     }
 
@@ -176,10 +179,9 @@ public class Vector3f extends Vector2f {
      * @param r
      * @return
      */
-    @Override
     public Vector3f multiply(float r) {
 
-        return new Vector3f(super.getX() * r, super.getY() * r, m_z * r);
+        return new Vector3f(m_x * r, m_y * r, m_z * r);
 
     }
 
@@ -190,7 +192,7 @@ public class Vector3f extends Vector2f {
      */
     public Vector3f divide(Vector3f r) {
 
-        return new Vector3f(super.getX() / r.getX(), super.getY() / r.getY(), m_z / r.getZ());
+        return new Vector3f(m_x / r.getM_x(), m_y / r.getM_y(), m_z / r.getM_z());
 
     }
 
@@ -199,29 +201,105 @@ public class Vector3f extends Vector2f {
      * @param r
      * @return
      */
-    @Override
     public Vector3f divide(float r) {
 
-        return new Vector3f(super.getX() / r, super.getY() / r, m_z / r);
+        return new Vector3f(m_x / r, m_y / r, m_z / r);
 
+    }
+    
+    /**
+     *
+     * @param r
+     * @return
+     */
+    public boolean equals(Vector3f r) {
+            
+        return m_x == r.getM_x() && m_y == r.getM_y() && m_z == r.getM_z();
+                
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Vector3f abs() {
+        
+        return new Vector3f(Math.abs(m_x), Math.abs(m_y), Math.abs(m_z));
+        
+    }
+    
+    @Override
+    public String toString() {
+        
+        return "(" + m_x + " " + m_y + " " + m_z + ")";
+        
+    }
+    
+    public Vector2f getXY() {
+        
+        return new Vector2f(m_x, m_y);
+        
+    }
+    
+    public Vector2f getYZ() {
+        
+        return new Vector2f(m_y, m_z);
+        
+    }
+
+    public Vector2f getZX() {
+        
+        return new Vector2f(m_z, m_x);
+        
+    }
+    
+    public Vector2f getYX() {
+        
+        return new Vector2f(m_y, m_x);
+        
+    }
+    
+    public Vector2f getZY() {
+        
+        return new Vector2f(m_z, m_y);
+        
+    }
+
+    public Vector2f getXZ() {
+        
+        return new Vector2f(m_x, m_z);
+        
+    }
+
+    public float getM_x() {
+        
+        return m_x;
+        
+    }
+
+    public void setM_x(float m_x) {
+        
+        this.m_x = m_x;
+        
+    }
+
+    public float getM_y() {
+        
+        return m_y;
+        
+    }
+
+    public void setM_y(float m_y) {
+        
+        this.m_y = m_y;
+        
     }
     
     /**
      *
      * @return
      */
-    @Override
-    public Vector3f abs() {
-        
-        return new Vector3f(Math.abs(super.getX()), Math.abs(super.getY()), Math.abs(m_z));
-        
-    }
-
-    /**
-     *
-     * @return
-     */
-    public float getZ() {
+    public float getM_z() {
 
         return m_z;
 
@@ -231,7 +309,7 @@ public class Vector3f extends Vector2f {
      *
      * @param z
      */
-    public void setZ(float z) {
+    public void setM_z(float z) {
 
         this.m_z = z;
 

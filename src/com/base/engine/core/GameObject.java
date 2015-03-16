@@ -52,33 +52,33 @@ public class GameObject {
         
     }
     
-    public void input() {
+    public void input(float delta) {
         
         for(GameComponent component : m_components) {
             
-            component.input(m_transform);
+            component.input(m_transform, delta);
             
         }
 
         for(GameObject child : m_children) {
             
-            child.input();
+            child.input(delta);
             
         }
         
     }
     
-    public void update() {
+    public void update(float delta) {
         
         for(GameComponent component : m_components) {
             
-            component.update(m_transform);
+            component.update(m_transform, delta);
             
         }
 
         for(GameObject child : m_children) {
             
-            child.update();
+            child.update(delta);
             
         }
         

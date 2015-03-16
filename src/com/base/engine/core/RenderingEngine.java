@@ -64,9 +64,9 @@ public class RenderingEngine {
         
     }
     
-    public void input() {
+    public void input(float delta) {
         
-        m_mainCamera.input();
+        m_mainCamera.input(delta);
         
     }
     
@@ -124,7 +124,7 @@ public class RenderingEngine {
      */
     private static void setClearColour(Vector3f colour) {
         
-        glClearColor(colour.getX(), colour.getY(), colour.getZ(), 1.0f);
+        glClearColor(colour.getM_x(), colour.getM_y(), colour.getM_z(), 1.0f);
         
     }
     

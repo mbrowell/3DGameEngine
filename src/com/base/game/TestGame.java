@@ -31,16 +31,12 @@ import com.base.engine.rendering.Vertex;
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
 public class TestGame extends Game {
-
-//    private Camera m_camera;
     
     /**
      *
      */
     @Override
     public void init() {
-        
-//        m_camera = new Camera();
         
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -60,46 +56,10 @@ public class TestGame extends Game {
         
         GameObject planeObject = new GameObject();
         planeObject.addComponent(meshRenderer);
-        planeObject.getM_transform().setM_translation(0, -1, 5);
+        planeObject.getM_transform().setM_pos(0, -1, 5);
         
         getRootObject().addChild(planeObject);
         
-//        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-//        Transform.setM_camera(m_camera);
-        
     }
-    
-//    /**
-//     *
-//     */
-//    @Override
-//    public void input() {
-//        
-//        m_camera.input();
-//        
-//    }
-//    
-//    float temp = 0.0f;
-//    
-//    /**
-//     *
-//     */
-//    @Override
-//    public void update() {
-//       
-//        m_root.getM_transform().setM_translation(0, -1, 5);
-//        
-//
-//    }
-//    
-//    /**
-//     *
-//     */
-//    @Override
-//    public void render() {
-//        
-//        
-//        
-//    }
 
 }

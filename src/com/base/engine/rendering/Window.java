@@ -121,5 +121,5 @@ public class Window {
         return new Vector2f(getWidth() / 2, getHeight() / 2);
 
     }
-
+    
 }

@@ -17,7 +17,6 @@
 
 package com.base.engine.core;
 
-import com.base.engine.core.Matrix4f;
 import com.base.engine.rendering.Vertex;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -78,16 +77,16 @@ public class Util {
         
         for (Vertex vertex : vertices) {
             
-            buffer.put(vertex.getM_pos().getX());
-            buffer.put(vertex.getM_pos().getY());
-            buffer.put(vertex.getM_pos().getZ());
+            buffer.put(vertex.getM_pos().getM_x());
+            buffer.put(vertex.getM_pos().getM_y());
+            buffer.put(vertex.getM_pos().getM_z());
             
-            buffer.put(vertex.getM_textCoord().getX());
-            buffer.put(vertex.getM_textCoord().getY());
+            buffer.put(vertex.getM_textCoord().getM_x());
+            buffer.put(vertex.getM_textCoord().getM_y());
             
-            buffer.put(vertex.getM_normal().getX());
-            buffer.put(vertex.getM_normal().getY());
-            buffer.put(vertex.getM_normal().getZ());
+            buffer.put(vertex.getM_normal().getM_x());
+            buffer.put(vertex.getM_normal().getM_y());
+            buffer.put(vertex.getM_normal().getM_z());
             
         }
         
