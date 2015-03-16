@@ -20,11 +20,37 @@ package com.base.engine.core;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public interface Game {
+public abstract class Game {
     
-    public void init();
-    public void input();
-    public void update();
-    public void render();
+    private GameObject m_root;
+    
+    public void init() {
+        
+        
+        
+    }
+    
+    public void input() {
+        
+        getRootObject().input();
+        
+    }
+    
+    public void update() {
+        
+        getRootObject().update();
+        
+    }
+    
+    public GameObject getRootObject() {
+        
+        if(m_root == null) {
+            
+            m_root = new GameObject();
+            
+        }
+        return m_root;
+        
+    }
     
 }

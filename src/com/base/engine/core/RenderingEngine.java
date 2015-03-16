@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.base.engine.rendering;
 
-import com.base.engine.core.Vector3f;
+package com.base.engine.core;
+
+import com.base.engine.rendering.BasicShader;
 import static org.lwjgl.opengl.GL11.GL_BACK;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
@@ -39,12 +40,34 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class RenderUtil {
+public class RenderingEngine {
+    
+    public RenderingEngine() {
+        
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        glFrontFace(GL_CW);
+        glCullFace(GL_BACK);
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_DEPTH_TEST);
+        
+        glEnable(GL_DEPTH_CLAMP);
+        
+        glEnable(GL_TEXTURE_2D);
+
+    }
+    
+    public void render(GameObject gameObject) {
+        
+        clearScreen();
+        gameObject.render(BasicShader.getM_instance());
+        
+    }
     
     /**
      *
      */
-    public static void clearScreen() {
+    private static void clearScreen() {
         
         //TODO: Stencil Buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -55,7 +78,7 @@ public class RenderUtil {
      *
      * @param enabled
      */
-    public static void setTextures(boolean enabled) {
+    private static void setTextures(boolean enabled) {
         
         if(enabled) {
             
@@ -72,7 +95,7 @@ public class RenderUtil {
     /**
      *
      */
-    public static void unbindTextures() {
+    private static void unbindTextures() {
         
         glBindTexture(GL_TEXTURE_2D, 0);
         
@@ -82,27 +105,9 @@ public class RenderUtil {
      *
      * @param colour
      */
-    public static void setClearColour(Vector3f colour) {
+    private static void setClearColour(Vector3f colour) {
         
         glClearColor(colour.getX(), colour.getY(), colour.getZ(), 1.0f);
-        
-    }
-    
-    /**
-     *
-     */
-    public static void initGraphics() {
-        
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        
-        glFrontFace(GL_CW);
-        glCullFace(GL_BACK);
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_DEPTH_TEST);
-        
-        glEnable(GL_DEPTH_CLAMP);
-        
-        glEnable(GL_TEXTURE_2D);
         
     }
     
@@ -115,5 +120,5 @@ public class RenderUtil {
         return glGetString(GL_VERSION);
         
     }
-    
+
 }

@@ -33,11 +33,9 @@ import com.base.engine.rendering.Window;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class TestGame implements Game {
+public class TestGame extends Game {
 
     private Camera m_camera;
-    
-    private GameObject m_root;
     
     /**
      *
@@ -46,7 +44,6 @@ public class TestGame implements Game {
     public void init() {
         
         m_camera = new Camera();
-        m_root = new GameObject();
         
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -64,45 +61,48 @@ public class TestGame implements Game {
         
         MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
         
-        m_root.addComponent(meshRenderer);
+        GameObject planeObject = new GameObject();
+        planeObject.addComponent(meshRenderer);
+        planeObject.getM_transform().setM_translation(0, -1, 5);
+        
+        getRootObject().addChild(planeObject);
         
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
         Transform.setM_camera(m_camera);
         
     }
     
-    /**
-     *
-     */
-    @Override
-    public void input() {
-        
-        m_camera.input();
-        m_root.input();
-        
-    }
-    
-    float temp = 0.0f;
-    
-    /**
-     *
-     */
-    @Override
-    public void update() {
-       
-        m_root.getM_transform().setM_translation(0, -1, 5);
-        m_root.update();
-
-    }
-    
-    /**
-     *
-     */
-    @Override
-    public void render() {
-        
-        m_root.render();
-        
-    }
+//    /**
+//     *
+//     */
+//    @Override
+//    public void input() {
+//        
+//        m_camera.input();
+//        
+//    }
+//    
+//    float temp = 0.0f;
+//    
+//    /**
+//     *
+//     */
+//    @Override
+//    public void update() {
+//       
+//        m_root.getM_transform().setM_translation(0, -1, 5);
+//        
+//
+//    }
+//    
+//    /**
+//     *
+//     */
+//    @Override
+//    public void render() {
+//        
+//        
+//        
+//    }
 
 }

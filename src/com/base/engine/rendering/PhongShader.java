@@ -20,9 +20,6 @@ package com.base.engine.rendering;
 import com.base.engine.core.Matrix4f;
 import com.base.engine.core.Transform;
 import com.base.engine.core.Vector3f;
-import com.base.engine.rendering.Material;
-import com.base.engine.rendering.DirectionalLight;
-import com.base.engine.rendering.Attenuation;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,15 +98,7 @@ public class PhongShader extends Shader {
     @Override
     public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
         
-        if(material.getM_texture() != null) {
-            
-            material.getM_texture().bind();
-            
-        } else {
-            
-            RenderUtil.unbindTextures();
-            
-        }
+        material.getM_texture().bind();
         
         setUniform("transform", worldMatrix);
         setUniform("transformProjected", projectedMatrix);

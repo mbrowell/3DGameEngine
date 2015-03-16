@@ -17,7 +17,6 @@
 package com.base.engine.core;
 
 import com.base.engine.rendering.Window;
-import com.base.engine.rendering.RenderUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +27,9 @@ import java.util.logging.Logger;
 public class CoreEngine {
     
     private boolean m_isRunning;
+    
     private final Game m_game;
+    private RenderingEngine m_renderingEngine;
     
     private final int m_width;
     private final int m_height;
@@ -45,6 +46,7 @@ public class CoreEngine {
     public CoreEngine(int width, int height, double frameRate, Game game) {
         
         m_isRunning = false;
+        
         m_game = game;
         
         m_width = width;
@@ -54,17 +56,10 @@ public class CoreEngine {
         
     }
     
-    private void initializeRenderingSystem() {
-        
-        System.out.println(RenderUtil.getOpenGLVersion());
-        RenderUtil.initGraphics();
-        
-    }
-    
     public void createWindow(String title) {
         
         Window.createWindow(m_width, m_height, title);
-        initializeRenderingSystem();
+        m_renderingEngine = new RenderingEngine();
         
     }
     
@@ -160,7 +155,8 @@ public class CoreEngine {
             
             if(render) {
                 
-                doRender();
+                m_renderingEngine.render(m_game.getRootObject());
+                Window.render();
                 frames++;
                 
             } else {
@@ -181,14 +177,6 @@ public class CoreEngine {
         }
         
         cleanUp();
-        
-    }
-    
-    private void doRender() {
-        
-        RenderUtil.clearScreen();
-        m_game.render();
-        Window.render();
         
     }
     
