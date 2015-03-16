@@ -18,7 +18,6 @@ package com.base.engine.core;
 
 import com.base.engine.rendering.Window;
 import com.base.engine.rendering.RenderUtil;
-import com.base.game.Game;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

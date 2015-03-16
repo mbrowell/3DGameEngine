@@ -17,20 +17,14 @@
 
 package com.base.game;
 
-import com.base.engine.core.Time;
+import com.base.engine.core.Game;
+import com.base.engine.core.GameObject;
 import com.base.engine.core.Transform;
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
-import com.base.engine.rendering.Attenuation;
 import com.base.engine.rendering.Camera;
-import com.base.engine.rendering.DirectionalLight;
 import com.base.engine.rendering.Material;
 import com.base.engine.rendering.Mesh;
-import com.base.engine.rendering.PhongShader;
-import com.base.engine.rendering.PointLight;
-import com.base.engine.rendering.RenderUtil;
-import com.base.engine.rendering.Shader;
-import com.base.engine.rendering.SpotLight;
 import com.base.engine.rendering.Texture;
 import com.base.engine.rendering.Vertex;
 import com.base.engine.rendering.Window;
@@ -41,14 +35,9 @@ import com.base.engine.rendering.Window;
  */
 public class TestGame implements Game {
 
-    private Mesh m_mesh;
-    private Material m_material;
-    private Shader m_shader;
-    private Transform m_transform;
     private Camera m_camera;
-    PointLight[] m_pLights = new PointLight[]{new PointLight(new Vector3f(1, 0.5f, 0), 0.8f, new Attenuation(0, 0, 1), new Vector3f(-2, 0, 5f), 10),
-                                             new PointLight(new Vector3f(0, 0.5f, 1), 0.8f, new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f), 10)};
-    SpotLight m_sLight1 = new SpotLight(new Vector3f(0, 1, 1), 0.8f, new Attenuation(0, 0, 0.01f), new Vector3f(-2, 0, 5f), 30, new Vector3f(1, 1, 1), 0.7f);
+    
+    private GameObject m_root;
     
     /**
      *
@@ -56,20 +45,8 @@ public class TestGame implements Game {
     @Override
     public void init() {
         
-        m_material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
-        m_shader = PhongShader.getM_instance();
-        m_transform = new Transform();
         m_camera = new Camera();
-        
-//        Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1, -1, 0.5773f), new Vector2f(0, 0)),
-//                                          new Vertex(new Vector3f(0, -1, -1.15475f), new Vector2f(0.5f, 0)),
-//                                          new Vertex(new Vector3f(1, -1, 0.5773f), new Vector2f(1, 0)),
-//                                          new Vertex(new Vector3f(0, 1, 0), new Vector2f(0.5f, 1))};
-//        
-//        int[] indices = new int[] {0, 3, 1,
-//                                   1, 3, 2,
-//                                   2, 3, 0,
-//                                   1, 2, 0};
+        m_root = new GameObject();
         
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -82,16 +59,15 @@ public class TestGame implements Game {
         int indices[] = {0, 1, 2,
                          2, 1, 3};
         
-        m_mesh = new Mesh(vertices, indices, true); // mesh = ResourceLoader.loadMesh("box.obj");
+        Mesh mesh = new Mesh(vertices, indices, true);
+        Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
+        
+        MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
+        
+        m_root.addComponent(meshRenderer);
         
         Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
         Transform.setM_camera(m_camera);
-        
-        PhongShader.setM_ambientLight(new Vector3f(0.1f, 0.1f, 0.1f));
-        PhongShader.setM_directionalLight(new DirectionalLight(new Vector3f(1, 1, 1), 0.1f, new Vector3f(1, 1, 1)));
-        
-        PhongShader.setM_pointLights(m_pLights);
-        PhongShader.setM_spotLights(new SpotLight[] {m_sLight1});
         
     }
     
@@ -102,6 +78,7 @@ public class TestGame implements Game {
     public void input() {
         
         m_camera.input();
+        m_root.input();
         
     }
     
@@ -112,20 +89,9 @@ public class TestGame implements Game {
      */
     @Override
     public void update() {
-        
-        temp += Time.getM_delta();
-        float sinTemp = (float)Math.sin(temp);
-        float cosTemp = (float)Math.cos(temp);
-        
-        m_transform.setM_translation(0, -1, 5);
-        //m_transform.setM_rotation(0 , sinTemp * 180, 0);
-        
-        m_pLights[0].setM_position(new Vector3f(3, 0, 8 * (sinTemp + 1/2) + 10));
-        m_pLights[1].setM_position(new Vector3f(7, 0, 8 * (cosTemp + 1/2) + 10));
-        
-        //m_transform.setM_scale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
-        m_sLight1.setM_position(m_camera.getM_pos());
-        m_sLight1.setM_direction(m_camera.getM_forward());
+       
+        m_root.getM_transform().setM_translation(0, -1, 5);
+        m_root.update();
 
     }
     
@@ -135,10 +101,7 @@ public class TestGame implements Game {
     @Override
     public void render() {
         
-        RenderUtil.setClearColour(Transform.getM_camera().getM_pos().divide(2048f).abs());
-        m_shader.bind();
-        m_shader.updateUniforms(m_transform.getTransformation(), m_transform.getProjectedTransformation(), m_material);
-        m_mesh.draw();
+        m_root.render();
         
     }
 

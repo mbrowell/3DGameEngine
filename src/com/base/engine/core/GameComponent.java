@@ -14,17 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.base.game;
+
+package com.base.engine.core;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public interface Game {
+public interface GameComponent {
     
-    public void init();
-    public void input();
-    public void update();
-    public void render();
+    
+    public void input(Transform transform);
+    public void update(Transform transform);
+    
+    public void render(Transform transform);
     
 }
