@@ -35,6 +35,7 @@ import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
 import static org.lwjgl.opengl.GL20.GL_VALIDATE_STATUS;
 import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 import static org.lwjgl.opengl.GL20.glAttachShader;
+import static org.lwjgl.opengl.GL20.glBindAttribLocation;
 import static org.lwjgl.opengl.GL20.glCompileShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
 import static org.lwjgl.opengl.GL20.glCreateShader;
@@ -210,6 +211,12 @@ public class Shader {
     public void addFragmentShader(String text) {
         
         addProgram(text, GL_FRAGMENT_SHADER);
+        
+    }
+    
+    public void setAttribLocation(int location, String attribute) {
+        
+        glBindAttribLocation(m_program, location, attribute);
         
     }
     
