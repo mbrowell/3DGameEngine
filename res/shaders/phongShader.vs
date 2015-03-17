@@ -19,3 +19,4 @@ void main() {
     worldPos0 = (transform * vec4(position, 1.0)).xyz;
 
 }
+

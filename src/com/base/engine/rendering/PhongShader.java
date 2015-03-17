@@ -52,11 +52,13 @@ public class PhongShader extends Shader {
         
         addUniform("transform");
         addUniform("transformProjected");
+        
         addUniform("baseColour");
+        
+        addUniform("eyePos");
         
         addUniform("specularIntensity");
         addUniform("specularExponent");
-        addUniform("eyePos");
         
         addUniform("ambientLight");
         addUniform("directionalLight.base.colour");

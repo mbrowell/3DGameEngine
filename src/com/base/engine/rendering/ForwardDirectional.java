@@ -20,34 +20,45 @@ package com.base.engine.rendering;
 import com.base.engine.core.Matrix4f;
 import com.base.engine.core.RenderingEngine;
 import com.base.engine.core.Transform;
-import com.base.engine.core.Vector3f;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class ForwardAmbient extends Shader { 
+public class ForwardDirectional extends Shader {
     
-    private static final ForwardAmbient m_instance = new ForwardAmbient();
-    private Vector3f m_ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
+    private static final ForwardDirectional m_instance = new ForwardDirectional();
+    
+    private DirectionalLight m_directionalLight;
+    private DirectionalLight m_directionalLight2;
 
     /**
      *
      */
-    public ForwardAmbient() {
+    public ForwardDirectional() {
         
         super();
         
-        addVertexShaderFromFile("forward-ambient.vs");
-        addFragmentShaderFromFile("forward-ambient.fs");
+        addVertexShaderFromFile("forward-directional.vs");
+        addFragmentShaderFromFile("forward-directional.fs");
         
         setAttribLocation(0, "position");
         setAttribLocation(1, "texCoord");
+        setAttribLocation(2, "normal");
         
         linkShader();
         
+        addUniform("model");
         addUniform("MVP");
-        addUniform("ambientIntensity");
+        
+        addUniform("eyePos");
+        
+        addUniform("specularIntensity");
+        addUniform("specularExponent");
+        
+        addUniform("directionalLight.base.colour");
+        addUniform("directionalLight.base.intensity");
+        addUniform("directionalLight.direction");
         
     }
     
@@ -63,8 +74,15 @@ public class ForwardAmbient extends Shader {
         
         material.getM_texture().bind();
         
+        setUniform("model", worldMatrix);
         setUniform("MVP", projectedMatrix);
-        setUniform("ambientIntensity", getM_renderingEngine().getM_ambientLight());
+        
+        setUniform("eyePos", getM_renderingEngine().getM_mainCamera().getM_pos());
+        
+        setUniformf("specularIntensity", material.getM_specularIntensity());
+        setUniformf("specularExponent", material.getM_specularExponent());
+        
+        setUniform("directionalLight", getM_renderingEngine().getM_directionalLight());
         
     }
     
@@ -72,9 +90,17 @@ public class ForwardAmbient extends Shader {
      *
      * @return
      */
-    public static ForwardAmbient getM_instance() {
+    public static ForwardDirectional getM_instance() {
         
         return m_instance;
+        
+    }
+    
+    public void setUniform(String uniformName, DirectionalLight directionalLight) {
+        
+        setUniform(uniformName + ".base.colour", directionalLight.getM_colour());
+        setUniformf(uniformName + ".base.intensity", directionalLight.getM_intensity());
+        setUniform(uniformName + ".direction", directionalLight.getM_direction());
         
     }
     
