@@ -18,9 +18,7 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Matrix4f;
-import com.base.engine.core.RenderingEngine;
 import com.base.engine.core.Transform;
-import com.base.engine.core.Vector3f;
 
 /**
  *
@@ -29,7 +27,6 @@ import com.base.engine.core.Vector3f;
 public class ForwardAmbient extends Shader { 
     
     private static final ForwardAmbient m_instance = new ForwardAmbient();
-    private Vector3f m_ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
 
     /**
      *

@@ -24,19 +24,19 @@ import com.base.engine.core.Transform;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class ForwardDirectional extends Shader {
+public class ForwardSpot extends Shader {
     
-    private static final ForwardDirectional m_instance = new ForwardDirectional();
+    private static final ForwardSpot m_instance = new ForwardSpot();
 
     /**
      *
      */
-    public ForwardDirectional() {
+    public ForwardSpot() {
         
         super();
         
-        addVertexShaderFromFile("forward-directional.vs");
-        addFragmentShaderFromFile("forward-directional.fs");
+        addVertexShaderFromFile("forward-spot.vs");
+        addFragmentShaderFromFile("forward-spot.fs");
         
         setAttribLocation(0, "position");
         setAttribLocation(1, "texCoord");
@@ -52,9 +52,15 @@ public class ForwardDirectional extends Shader {
         addUniform("specularIntensity");
         addUniform("specularExponent");
         
-        addUniform("directionalLight.base.colour");
-        addUniform("directionalLight.base.intensity");
-        addUniform("directionalLight.direction");
+        addUniform("spotLight.pointLight.base.colour");
+        addUniform("spotLight.pointLight.base.intensity");
+        addUniform("spotLight.pointLight.atten.constant");
+        addUniform("spotLight.pointLight.atten.linear");
+        addUniform("spotLight.pointLight.atten.exponent");
+        addUniform("spotLight.pointLight.position");
+        addUniform("spotLight.pointLight.range");
+        addUniform("spotLight.direction");
+        addUniform("spotLight.cutoff");
         
     }
     
@@ -78,14 +84,23 @@ public class ForwardDirectional extends Shader {
         setUniformf("specularIntensity", material.getM_specularIntensity());
         setUniformf("specularExponent", material.getM_specularExponent());
         
-        setUniform("directionalLight", getM_renderingEngine().getM_directionalLight());
+        setUniform("spotLight", getM_renderingEngine().getM_spotLight());
         
     }
     
-    public void setUniform(String uniformName, DirectionalLight directionalLight) {
+    public void setUniform(String uniformName, SpotLight spotLight) {
         
-        setUniform(uniformName + ".base", directionalLight.getM_base());
-        setUniform(uniformName + ".direction", directionalLight.getM_direction());
+        setUniform(uniformName + ".pointLight", spotLight.getM_pointLight());
+        setUniformf(uniformName + ".cutoff", spotLight.getM_cutoff());
+        
+    }
+    
+    public void setUniform(String uniformName, PointLight pointLight) {
+        
+        setUniform(uniformName + ".base", pointLight.getM_base());
+        setUniform(uniformName + ".atten", pointLight.getM_atten());
+        setUniform(uniformName + ".position", pointLight.getM_position());
+        setUniformf(uniformName + ".range", pointLight.getM_range());
         
     }
     
@@ -96,11 +111,19 @@ public class ForwardDirectional extends Shader {
         
     }
     
+    public void setUniform(String uniformName, Attenuation attenuation) {
+        
+        setUniformf(uniformName + ".constant", attenuation.getM_constant());
+        setUniformf(uniformName + ".linear", attenuation.getM_linear());
+        setUniformf(uniformName + ".exponent", attenuation.getM_exponent());
+        
+    }
+    
     /**
      *
      * @return
      */
-    public static ForwardDirectional getM_instance() {
+    public static ForwardSpot getM_instance() {
         
         return m_instance;
         

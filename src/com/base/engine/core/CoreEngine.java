@@ -74,15 +74,7 @@ public class CoreEngine {
             
         }
             
-        try {
-            
-            run();
-            
-        } catch (InterruptedException e) {
-            
-            Logger.getLogger(CoreEngine.class.getName()).log(Level.SEVERE, null, e);
-            
-        }
+        run();
         
     }
     
@@ -102,7 +94,7 @@ public class CoreEngine {
     }
     
     @SuppressWarnings("SleepWhileInLoop")
-    private void run() throws InterruptedException {
+    private void run() {
         
         m_isRunning = true;
         

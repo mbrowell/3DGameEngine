@@ -203,18 +203,23 @@ public class PhongShader extends Shader {
         
     }
     
+    public void setUniform(String uniformName, BaseLight base) {
+        
+        setUniform(uniformName + ".colour", base.getM_colour());
+        setUniformf(uniformName + ".intensity", base.getM_intensity());
+        
+    }
+    
     public void setUniform(String uniformName, DirectionalLight directionalLight) {
         
-        setUniform(uniformName + ".base.colour", directionalLight.getM_colour());
-        setUniformf(uniformName + ".base.intensity", directionalLight.getM_intensity());
+        setUniform(uniformName + ".base", directionalLight.getM_base());
         setUniform(uniformName + ".direction", directionalLight.getM_direction());
         
     }
     
     public void setUniform(String uniformName, PointLight pointLight) {
         
-        setUniform(uniformName + ".base.colour", pointLight.getM_colour());
-        setUniformf(uniformName + ".base.intensity", pointLight.getM_intensity());
+        setUniform(uniformName + ".base", pointLight.getM_base());
         setUniform(uniformName + ".atten", pointLight.getM_atten());
         setUniform(uniformName + ".position", pointLight.getM_position());
         setUniformf(uniformName + ".range", pointLight.getM_range());
@@ -223,12 +228,7 @@ public class PhongShader extends Shader {
     
     public void setUniform(String uniformName, SpotLight spotLight) {
         
-        setUniform(uniformName + ".pointLight.base.colour", spotLight.getM_colour());
-        setUniformf(uniformName + ".pointLight.base.intensity", spotLight.getM_intensity());
-        setUniform(uniformName + ".pointLight.atten", spotLight.getM_atten());
-        setUniform(uniformName + ".pointLight.position", spotLight.getM_position());
-        setUniformf(uniformName + ".pointLight.range", spotLight.getM_range());
-        setUniform(uniformName + ".direction", spotLight.getM_direction());
+        setUniform(uniformName + ".pointLight", spotLight.getM_pointLight());
         setUniformf(uniformName + ".cutoff", spotLight.getM_cutoff());
         
     }

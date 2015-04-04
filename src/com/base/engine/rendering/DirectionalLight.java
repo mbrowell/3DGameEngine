@@ -23,8 +23,9 @@ import com.base.engine.core.Vector3f;
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class DirectionalLight extends BaseLight {
+public class DirectionalLight {
 
+    private BaseLight m_base;
     private Vector3f m_direction;
     
     /**
@@ -36,8 +37,20 @@ public class DirectionalLight extends BaseLight {
      */
     public DirectionalLight(Vector3f colour, float intensity, Vector3f direction) {
         
-        super(colour, intensity);
+        this.m_base = new BaseLight(colour, intensity);
         this.m_direction = direction.normalized();
+        
+    }
+    
+    public BaseLight getM_base() {
+        
+        return m_base;
+        
+    }
+
+    public void setM_base(BaseLight base) {
+        
+        this.m_base = base;
         
     }
 

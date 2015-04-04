@@ -18,26 +18,37 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Vector3f;
-import com.base.engine.rendering.PointLight;
-import com.base.engine.rendering.Attenuation;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class SpotLight extends PointLight {
-
+public class SpotLight {
+    
+    private PointLight m_pointLight;
     private Vector3f m_direction;
     private float m_cutoff;
 
-    public SpotLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range, Vector3f direction, float cutoff) {
+    public SpotLight(PointLight pointLight, Vector3f direction, float cutoff) {
         
-        super(colour, intensity, atten, position, range);
+        this.m_pointLight = pointLight;
         this.m_direction = direction.normalized();
         this.m_cutoff = cutoff;
         
     }
 
+    public PointLight getM_pointLight() {
+        
+        return m_pointLight;
+        
+    }
+
+    public void setM_pointLight(PointLight pointLight) {
+        
+        this.m_pointLight = pointLight;
+        
+    }
+    
     public Vector3f getM_direction() {
         
         return m_direction;

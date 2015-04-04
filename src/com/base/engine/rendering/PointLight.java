@@ -18,28 +18,39 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Vector3f;
-import com.base.engine.rendering.BaseLight;
-import com.base.engine.rendering.Attenuation;
 
 /**
  *
  * @author Michael Browell <mbrowell1984@gmail.com>
  */
-public class PointLight extends BaseLight {
+public class PointLight {
 
+    private BaseLight m_base;
     private Attenuation m_atten;
     private Vector3f m_position;
     private float m_range;
 
-    public PointLight(Vector3f colour, float intensity, Attenuation atten, Vector3f position, float range) {
+    public PointLight(BaseLight baseLight, Attenuation atten, Vector3f position, float range) {
         
-        super(colour, intensity);
+        this.m_base = baseLight;
         this.m_atten = atten;
         this.m_position = position;
         this.m_range = range;
         
     }
 
+    public BaseLight getM_base() {
+        
+        return m_base;
+        
+    }
+
+    public void setM_base(BaseLight base) {
+        
+        this.m_base = base;
+        
+    }
+    
     public Attenuation getM_atten() {
         
         return m_atten;
@@ -64,11 +75,15 @@ public class PointLight extends BaseLight {
     }
 
     public float getM_range() {
+        
         return m_range;
+        
     }
 
     public void setM_range(float m_range) {
+        
         this.m_range = m_range;
+        
     }
     
 }

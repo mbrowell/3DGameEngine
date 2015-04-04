@@ -17,11 +17,17 @@
 
 package com.base.engine.core;
 
+import com.base.engine.rendering.Attenuation;
+import com.base.engine.rendering.BaseLight;
 import com.base.engine.rendering.Camera;
 import com.base.engine.rendering.DirectionalLight;
 import com.base.engine.rendering.ForwardAmbient;
 import com.base.engine.rendering.ForwardDirectional;
+import com.base.engine.rendering.ForwardPoint;
+import com.base.engine.rendering.ForwardSpot;
+import com.base.engine.rendering.PointLight;
 import com.base.engine.rendering.Shader;
+import com.base.engine.rendering.SpotLight;
 import com.base.engine.rendering.Window;
 import static org.lwjgl.opengl.GL11.GL_BACK;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
@@ -59,6 +65,10 @@ public class RenderingEngine {
     private Vector3f m_ambientLight;
     private DirectionalLight m_directionalLight;
     private DirectionalLight m_directionalLight2;
+    private PointLight m_pointLight;
+    private SpotLight m_spotLight;
+    
+    private PointLight[] pointLightList;
     
     public RenderingEngine() {
         
@@ -76,8 +86,38 @@ public class RenderingEngine {
         m_mainCamera = new Camera((float)Math.toRadians(70), (float)Window.getWidth() / (float)Window.getHeight(), 0.1f, 1000);
         
         m_ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
+        
         m_directionalLight = new DirectionalLight(new Vector3f(0, 0, 1), 0.4f, new Vector3f(1, 1, 1));
         m_directionalLight2 = new DirectionalLight(new Vector3f(1, 0, 0), 0.4f, new Vector3f(-1, 1, -1));
+        
+        int lightFieldWidth = 5;
+        int lightFieldDepth = 5;
+        
+        float lightFieldStartX = 0;
+        float lightFieldStartY = 0;
+        float lightFieldStepX = 7;
+        float lightFieldStepY = 7;
+        
+        pointLightList = new PointLight[lightFieldWidth * lightFieldDepth];
+        
+        for(int i = 0; i < lightFieldWidth; i++) {
+            
+            for(int j = 0; j < lightFieldDepth; j++) {
+                
+                pointLightList[i * lightFieldWidth + j] = new PointLight(new BaseLight(new Vector3f(0,1,0), 0.4f),
+                        new Attenuation(0,0,1),
+                        new Vector3f(lightFieldStartX + lightFieldStepX * i, 0, lightFieldStartY + lightFieldStepY * j), 100);
+                
+            }
+            
+        }
+        
+        m_pointLight = pointLightList[0];//new PointLight(new BaseLight(new Vector3f(0,1,0), 0.4f), new Attenuation(0,0,1), new Vector3f(5,0,5), 100);
+        
+        m_spotLight = new SpotLight(new PointLight(new BaseLight(new Vector3f(0, 1, 1), 0.4f),
+                new Attenuation(0, 0, 0.1f),
+                new Vector3f(lightFieldStartX, 0, lightFieldStartY), 100),
+                new Vector3f(1, 0, 0), 0.7f);
         
     }
     
@@ -92,9 +132,13 @@ public class RenderingEngine {
         clearScreen();
   
         Shader forwardAmbient = ForwardAmbient.getM_instance();
+        Shader forwardPoint = ForwardPoint.getM_instance();
+        Shader forwardSpot = ForwardSpot.getM_instance();
         Shader forwardDirectional = ForwardDirectional.getM_instance();
         forwardAmbient.setRenderingEngine(this);
         forwardDirectional.setRenderingEngine(this);
+        forwardPoint.setRenderingEngine(this);
+        forwardSpot.setRenderingEngine(this);
         
         gameObject.render(forwardAmbient);
         
@@ -104,18 +148,30 @@ public class RenderingEngine {
         glDepthFunc(GL_EQUAL);
         
         gameObject.render(forwardDirectional);
-        
         DirectionalLight temp = m_directionalLight;
-        
         m_directionalLight = m_directionalLight2;
-        
+        m_directionalLight2 = temp;
         gameObject.render(forwardDirectional);
+        temp = m_directionalLight;
+        m_directionalLight = m_directionalLight2;
+        m_directionalLight2 = temp;
         
-        m_directionalLight = temp;
+        int i = 0;
+        do {
+            
+            gameObject.render(forwardPoint);
+            i++;
+            m_pointLight = pointLightList[i];
+            
+        } while(i < pointLightList.length - 1);
+        
+        gameObject.render(forwardSpot);
         
         glDepthFunc(GL_LESS);
         glDepthMask(true);
         glDisable(GL_BLEND);
+        
+        
         
 //        Shader shader = BasicShader.getM_instance();
 //        shader.setRenderingEngine(this);
@@ -208,6 +264,18 @@ public class RenderingEngine {
     public DirectionalLight getM_directionalLight2() {
         
         return m_directionalLight2;
+        
+    }
+
+    public PointLight getM_pointLight() {
+        
+        return m_pointLight;
+        
+    }
+
+    public SpotLight getM_spotLight() {
+        
+        return m_spotLight;
         
     }
     

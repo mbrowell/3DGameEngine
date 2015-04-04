@@ -11,10 +11,20 @@ struct BaseLight {
     
 };
 
-struct DirectionalLight {
+struct Attenuation {
+    
+    float constant;
+    float linear;
+    float exponent;
+    
+};
+
+struct PointLight {
     
     BaseLight base;
-    vec3 direction;
+    Attenuation atten;
+    vec3 position;
+    float range;
     
 };
 
@@ -25,9 +35,9 @@ uniform vec3 eyePos;
 uniform float specularIntensity;
 uniform float specularExponent;
 
-uniform DirectionalLight directionalLight;
+uniform PointLight pointLight;
 
-vec4 calcLight(BaseLight base, vec3 direction, vec3 normal) {
+vec4 calcLight (BaseLight base, vec3 direction, vec3 normal) {
     
     float diffuseFactor = dot(normal, -direction);
     
@@ -56,15 +66,33 @@ vec4 calcLight(BaseLight base, vec3 direction, vec3 normal) {
     
 }
 
-vec4 calcDirectionalLight(DirectionalLight directionalLight, vec3 normal) {
+vec4 calcPointLight(PointLight pointLight, vec3 normal) {
     
-    return calcLight(directionalLight.base, -directionalLight.direction, normal);
+    vec3 lightDirection = worldPos0 - pointLight.position;
+    float distanceToPoint = length(lightDirection);
+    
+    if(distanceToPoint > pointLight.range) {
+        
+        return vec4(0, 0, 0, 0);
+        
+    }
+    
+    lightDirection = normalize(lightDirection);
+    
+    vec4 colour = calcLight(pointLight.base, lightDirection, normal);
+    
+    float attenuation = pointLight.atten.constant +
+                        pointLight.atten.linear * distanceToPoint +
+                        pointLight.atten.exponent * distanceToPoint * distanceToPoint +
+                        0.00000000000000000000001;
+                        
+    return colour / attenuation;
     
 }
 
 void main() {
     
-    gl_FragColor = texture2D(diffuse, texCoord0.xy) * calcDirectionalLight(directionalLight, normalize(normal0));
+    gl_FragColor = texture2D(diffuse, texCoord0.xy) * calcPointLight(pointLight, normalize(normal0));
         
 }
 
