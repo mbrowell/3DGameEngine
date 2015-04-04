@@ -57,10 +57,10 @@ public class MeshRenderer implements GameComponent {
         m_mesh.draw();
         
     }
-
+    
     @Override
     public void input(Transform transform, float delta) {}
-
+    
     @Override
     public void update(Transform transform, float delta) {}
     
